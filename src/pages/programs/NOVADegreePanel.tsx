@@ -9,12 +9,13 @@ import { cn } from "@/lib/utils"
 
 type PlacementOption = "none" | "option1" | "option2"
 
+const SECTION_ORDER = ["core", "math", "science", "general-ed", "elective"] as const
 
-const sections = [
-  {
-    key: "core",
+const sectionMeta = {
+  core: {
     label: "Core CS Courses",
-    shortLabel: "Core",
+    shortLabel: "Core CS",
+    icon: GraduationCap,
     color: "var(--brand)",
     bgClass: "bg-blue-50",
     textClass: "text-blue-700",
@@ -22,21 +23,21 @@ const sections = [
     description: "Required computer science courses",
     note: "These four courses form the required CS sequence at NOVA and transfer directly toward your bachelor's degree.",
   },
-  {
-    key: "math",
+  math: {
     label: "Math Requirements",
     shortLabel: "Math",
+    icon: Calculator,
     color: "oklch(0.55 0.18 250)",
     bgClass: "bg-sky-50",
     textClass: "text-sky-700",
     borderClass: "border-sky-200",
     description: "Calculus, discrete math, and optional precalculus",
-    note: "MTH 167 (PreCalculus) is only required for Option 1. If you place into Calculus, you follow Option 2 and can use those 5 credits for electives instead.",
+    note: "MTH 167 (PreCalculus) is only required for Option 1. If you place into Calculus, you follow Option 2 and use those 5 credits for electives instead.",
   },
-  {
-    key: "science",
+  science: {
     label: "Physical/Life Sciences",
     shortLabel: "Science",
+    icon: FlaskConical,
     color: "oklch(0.50 0.18 60)",
     bgClass: "bg-amber-50",
     textClass: "text-amber-700",
@@ -44,10 +45,10 @@ const sections = [
     description: "8 credits — two lab science courses",
     note: "You must complete two lab science courses totaling 8 credits. Choose any two from BIO, CHM, PHY, or GOL — sequential pairs strongly recommended.",
   },
-  {
-    key: "general-ed",
+  "general-ed": {
     label: "General Education",
     shortLabel: "Gen Ed",
+    icon: BookOpen,
     color: "oklch(0.55 0.15 145)",
     bgClass: "bg-emerald-50",
     textClass: "text-emerald-700",
@@ -55,18 +56,18 @@ const sections = [
     description: "English, history, humanities, social sciences",
     note: "Standard college-wide requirements. Humanities/Fine Arts courses must come from two different areas (Fine Arts, Humanities, or Literature).",
   },
-  {
-    key: "elective",
+  elective: {
     label: "Approved Electives",
-    shortLabel: "Elective",
+    shortLabel: "Electives",
+    icon: Lightbulb,
     color: "oklch(0.55 0.12 320)",
     bgClass: "bg-pink-50",
     textClass: "text-pink-700",
     borderClass: "border-pink-200",
-    description: "3–4 credits — PHY 201, CSC, MTH, EGR, or science courses",
-    note: "Option 1 students get 3–4 elective credits. Option 2 students place out of MTH 167 and replace those 5 credits with an elective from the approved list instead.",
+    description: "3–4 credits (Option 1) or 6–8 credits (Option 2)",
+    note: "Option 1 students get 3–4 elective credits. Option 2 students place out of MTH 167 and replace those 5 credits with additional electives from the approved list.",
   },
-]
+}
 
 const scienceOptions = [
   { code: "BIO 101", name: "General Biology I", credits: 4 },
@@ -93,16 +94,17 @@ const genEdSubSections = [
     key: "sdv",
     label: "Student Development",
     creditsRequired: 1,
+    note: "Choose one.",
     courses: [
       { code: "SDV 100", name: "College Success Skills", credits: 1 },
       { code: "SDV 101", name: "New Student Orientation", credits: 1 },
     ],
-    note: "Choose one.",
   },
   {
     key: "his",
     label: "History",
     creditsRequired: 3,
+    note: "Choose one.",
     courses: [
       { code: "HIS 101", name: "Western Civilizations Pre-1600 CE", credits: 3 },
       { code: "HIS 102", name: "Western Civilizations Post-1600 CE", credits: 3 },
@@ -117,9 +119,9 @@ const genEdSubSections = [
   },
   {
     key: "hum-fa",
-    label: "Humanities/Fine Arts",
+    label: "Humanities / Fine Arts",
     creditsRequired: "6–8",
-    note: "6–8 credits required from two different areas (Fine Arts, Humanities, or Literature). Each area list is expandable below.",
+    note: "6–8 credits required from two different areas (Fine Arts, Humanities, or Literature).",
     subGroups: [
       {
         label: "Fine Arts",
@@ -201,8 +203,9 @@ const genEdSubSections = [
   },
   {
     key: "soc",
-    label: "Social/Behavioral Sciences",
+    label: "Social / Behavioral Sciences",
     creditsRequired: 3,
+    note: "Choose one.",
     courses: [
       { code: "ADJ 100", name: "Survey of Criminal Justice", credits: 3 },
       { code: "ECO 150", name: "Economic Essentials: Theory and Application", credits: 3 },
@@ -228,9 +231,8 @@ const genEdSubSections = [
 
 const approvedElectives = [
   { code: "PHY 201", name: "General College Physics I", credits: 4 },
-  { code: "CSC 205", name: "Computer Organization", credits: 3 },
-  { code: "CSC 215", name: "Computer Systems", credits: 3 },
   { code: "CSC 195", name: "Topics In: (variable)", credits: 3 },
+  { code: "CSC 215", name: "Computer Systems", credits: 3 },
   { code: "CSC 295", name: "Topics In: (variable)", credits: 3 },
   { code: "EGR 121", name: "Foundations of Engineering", credits: 2 },
   { code: "EGR 122", name: "Engineering Design", credits: 3 },
@@ -269,34 +271,74 @@ function CourseChip({ code, name, credits, textClass, bgClass, borderClass }: Co
   )
 }
 
+interface ChooseOneDropdownProps {
+  label: string
+  courses: { code: string; name: string; credits: number }[]
+  textClass: string
+  bgClass: string
+  borderClass: string
+  isOpen: boolean
+  onToggle: () => void
+  creditNote?: string
+}
+
+function ChooseOneDropdown({ label, courses, textClass, bgClass, borderClass, isOpen, onToggle, creditNote }: ChooseOneDropdownProps) {
+  return (
+    <div className={cn("rounded-lg border overflow-hidden", borderClass)}>
+      <button
+        className={cn("w-full flex items-center justify-between px-3 py-2.5 text-left transition-colors", bgClass, "hover:brightness-95")}
+        onClick={onToggle}
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-2">
+          <span className={cn("text-xs font-semibold", textClass)}>Choose one</span>
+          <span className="text-xs text-slate-500">— {label}</span>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {creditNote && <span className={cn("text-xs font-bold tabular-nums", textClass)}>{creditNote}</span>}
+          <ChevronDown
+            className={cn("h-3.5 w-3.5 transition-transform duration-200", textClass)}
+            style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+          />
+        </div>
+      </button>
+      {isOpen && (
+        <div className="bg-white px-3 py-2 space-y-1">
+          {courses.map((c) => (
+            <CourseChip key={c.code} {...c} textClass={textClass} bgClass={bgClass} borderClass={borderClass} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function NOVADegreePanel() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const [expandedGenEdSub, setExpandedGenEdSub] = useState<string | null>(null)
   const [expandedHumSub, setExpandedHumSub] = useState<string | null>(null)
+  const [expandedChooseOne, setExpandedChooseOne] = useState<string | null>(null)
   const [placement, setPlacement] = useState<PlacementOption>("none")
 
-  const coreReqs = novaCSAssociate.requirements.filter((r) => r.category === "core")
-  const allMathReqs = novaCSAssociate.requirements.filter((r) => r.category === "math")
+  const totalCredits = placement === "option1" ? 61 : placement === "option2" ? 58 : 60
+  const totalRange = placement === "option1" ? "60–63" : placement === "option2" ? "58–62" : "58–63"
 
-  const mathReqs = placement === "option2"
-    ? allMathReqs.filter((r) => r.code !== "MTH 167")
-    : allMathReqs
-
-  const mathCredits = mathReqs.reduce((s, r) => s + r.credits, 0)
-
-  const totalRange = placement === "option1"
-    ? "60–63 credits"
-    : placement === "option2"
-    ? "58–62 credits"
-    : "58–63 credits"
-
-  const sectionCreditMap: Record<string, number | string> = {
-    core: coreReqs.reduce((s, r) => s + r.credits, 0),
-    math: mathCredits,
+  const sectionCredits: Record<string, string | number> = {
+    core: 14,
+    math: placement === "option1" ? "16" : placement === "option2" ? "11" : "11–16",
     science: 8,
     "general-ed": 20,
-    elective: placement === "option2" ? "6–8" : "3–4",
+    elective: placement === "option2" ? "6–8" : "3–8",
   }
+
+  const barSegments = [
+    { key: "core", credits: 14, color: sectionMeta.core.color },
+    { key: "math", credits: placement === "option1" ? 16 : 11, color: sectionMeta.math.color },
+    { key: "science", credits: 8, color: sectionMeta.science.color },
+    { key: "general-ed", credits: 20, color: sectionMeta["general-ed"].color },
+    { key: "elective", credits: placement === "option2" ? 6 : 3, color: sectionMeta.elective.color },
+  ]
+  const barTotal = barSegments.reduce((s, seg) => s + seg.credits, 0)
 
   const placementOptions: { value: PlacementOption; label: string; sublabel: string }[] = [
     { value: "option1", label: "Need PreCalc", sublabel: "MTH 167 required" },
@@ -310,7 +352,7 @@ export function NOVADegreePanel() {
       <div className="mb-4">
         <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
         <p className="text-xs text-slate-500 leading-relaxed">
-          This degree requires <strong className="text-slate-900">{totalRange}</strong> depending on your math placement.
+          This degree requires <strong className="text-slate-900">{totalRange} credits</strong> depending on your math placement. Tap any section to see the courses.
         </p>
       </div>
 
@@ -355,28 +397,49 @@ export function NOVADegreePanel() {
         {placement === "option2" && (
           <div className="mt-2.5 flex items-start gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-2">
             <Info className="h-3 w-3 text-emerald-500 flex-shrink-0 mt-0.5" />
-            <p className="text-[10px] text-emerald-700 leading-relaxed">MTH 167 is skipped. Those credits become an additional elective, keeping your total at <strong>58–62 credits</strong>.</p>
+            <p className="text-[10px] text-emerald-700 leading-relaxed">MTH 167 is skipped. Those credits become additional electives, keeping your total at <strong>58–62 credits</strong>.</p>
           </div>
         )}
+      </div>
+
+      <div className="mb-5">
+        <div className="flex rounded-full overflow-hidden h-3 gap-px">
+          {barSegments.map((seg) => (
+            <div
+              key={seg.key}
+              className="h-full transition-all duration-300"
+              style={{ width: `${(seg.credits / barTotal) * 100}%`, backgroundColor: seg.color }}
+              title={`${sectionMeta[seg.key as keyof typeof sectionMeta].label}: ${seg.credits} credits`}
+            />
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+          {SECTION_ORDER.map((key) => {
+            const s = sectionMeta[key]
+            return (
+              <div key={key} className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
+                <span className="text-xs text-slate-500">{s.shortLabel} <span className="font-semibold text-slate-900">{sectionCredits[key]}</span></span>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
       <Separator className="mb-4 bg-slate-200" />
 
       <div className="space-y-2">
-        {sections.map((section) => {
-          const isOpen = expandedSection === section.key
-          const Icon = section.key === "core" ? GraduationCap
-            : section.key === "math" ? Calculator
-            : section.key === "science" ? FlaskConical
-            : section.key === "general-ed" ? BookOpen
-            : Lightbulb
-          const sectionCredits = sectionCreditMap[section.key]
+        {SECTION_ORDER.map((key) => {
+          const section = sectionMeta[key]
+          const Icon = section.icon
+          const isOpen = expandedSection === key
+          const credits = sectionCredits[key]
 
           return (
-            <div key={section.key} className={cn("rounded-xl border overflow-hidden transition-all", section.borderClass)}>
+            <div key={key} className={cn("rounded-xl border overflow-hidden transition-all", section.borderClass)}>
               <button
                 className={cn("w-full flex items-center gap-3 px-4 py-3 text-left transition-colors", section.bgClass, "hover:brightness-95")}
-                onClick={() => setExpandedSection(isOpen ? null : section.key)}
+                onClick={() => setExpandedSection(isOpen ? null : key)}
                 aria-expanded={isOpen}
               >
                 <div
@@ -392,7 +455,7 @@ export function NOVADegreePanel() {
                       className="text-xs font-bold px-2 py-0 text-white border-0"
                       style={{ backgroundColor: section.color }}
                     >
-                      {sectionCredits} cr
+                      {credits} cr
                     </Badge>
                   </div>
                   <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
@@ -410,38 +473,42 @@ export function NOVADegreePanel() {
                     <p className="text-xs text-slate-500 leading-relaxed">{section.note}</p>
                   </div>
 
-                  {section.key === "core" && (
+                  {key === "core" && (
                     <div className="space-y-1.5">
-                      {coreReqs.map((r) => (
-                        <div key={r.code} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
-                          <div className={cn("flex items-start gap-3 px-3 py-2.5", section.bgClass)}>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-baseline gap-2 flex-wrap">
-                                <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{r.code}</span>
-                                <span className="text-sm font-medium text-slate-800 leading-snug">{r.name}</span>
-                              </div>
-                              {r.isOption && (
-                                <div className="flex items-center gap-1 mt-1">
-                                  <TriangleAlert className="h-3 w-3 text-amber-500 flex-shrink-0" />
-                                  <p className="text-xs text-amber-600 leading-snug">{r.notes}</p>
-                                </div>
-                              )}
-                            </div>
-                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", section.textClass)}>{r.credits} cr</span>
-                          </div>
-                        </div>
+                      {/* Fixed required courses */}
+                      {[
+                        { code: "CSC 221", name: "Introduction to Problem Solving and Programming", credits: 3 },
+                        { code: "CSC 222", name: "Object Oriented Programming", credits: 4 },
+                        { code: "CSC 223", name: "Data Structures and Analysis of Algorithms", credits: 4 },
+                      ].map((r) => (
+                        <CourseChip key={r.code} {...r} textClass={section.textClass} bgClass={section.bgClass} borderClass={section.borderClass} />
                       ))}
+                      {/* CSC 205 / CSC 215 / MTH 265 choice */}
+                      <ChooseOneDropdown
+                        label="Computer Organization / Systems / Calculus III"
+                        courses={[
+                          { code: "CSC 205", name: "Computer Organization", credits: 3 },
+                          { code: "CSC 215", name: "Computer Systems", credits: 3 },
+                          { code: "MTH 265", name: "Calculus III", credits: 4 },
+                        ]}
+                        textClass={section.textClass}
+                        bgClass={section.bgClass}
+                        borderClass={section.borderClass}
+                        isOpen={expandedChooseOne === "core-org"}
+                        onToggle={() => setExpandedChooseOne(expandedChooseOne === "core-org" ? null : "core-org")}
+                        creditNote="3–4 cr"
+                      />
                     </div>
                   )}
 
-                  {section.key === "math" && (
+                  {key === "math" && (
                     <div className="space-y-1.5">
-                      {allMathReqs.map((r) => {
-                        const isSkipped = r.code === "MTH 167" && placement === "option2"
-                        const isHighlighted = r.code === "MTH 167" && placement === "option1"
+                      {/* MTH 167 — placement-aware */}
+                      {(() => {
+                        const isSkipped = placement === "option2"
+                        const isHighlighted = placement === "option1"
                         return (
                           <div
-                            key={r.code}
                             className={cn(
                               "flex items-start gap-3 px-3 py-2.5 rounded-lg border transition-all",
                               isSkipped
@@ -453,24 +520,68 @@ export function NOVADegreePanel() {
                           >
                             <div className="flex-1 min-w-0">
                               <div className="flex items-baseline gap-2 flex-wrap">
-                                <span className={cn("text-xs font-mono font-bold flex-shrink-0", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>{r.code}</span>
-                                <span className={cn("text-sm font-medium leading-snug", isSkipped ? "text-slate-400 line-through" : "text-slate-800")}>{r.name}</span>
+                                <span className={cn("text-xs font-mono font-bold flex-shrink-0", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>MTH 167</span>
+                                <span className={cn("text-sm font-medium leading-snug", isSkipped ? "text-slate-400 line-through" : "text-slate-800")}>PreCalculus with Trigonometry</span>
                                 {isSkipped && <span className="text-[10px] font-semibold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-full">not needed</span>}
+                                {!isSkipped && placement === "none" && <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full">Option 1 only</span>}
                               </div>
-                              {r.notes && !isSkipped && (
+                              {!isSkipped && (
                                 <p className={cn("text-xs mt-0.5 leading-snug", isHighlighted ? "text-amber-600 font-medium" : "text-slate-500")}>
-                                  {r.notes}
+                                  Required if you need PreCalculus before Calculus I
                                 </p>
                               )}
                             </div>
-                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>{r.credits} cr</span>
+                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>5 cr</span>
                           </div>
                         )
-                      })}
+                      })()}
+                      {/* Fixed math courses */}
+                      {[
+                        { code: "MTH 263", name: "Calculus I", credits: 4, note: "Required" },
+                      ].map((r) => (
+                        <div key={r.code} className={cn("flex items-start gap-3 px-3 py-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-baseline gap-2 flex-wrap">
+                              <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{r.code}</span>
+                              <span className="text-sm font-medium text-slate-800 leading-snug">{r.name}</span>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-0.5 leading-snug">{r.note}</p>
+                          </div>
+                          <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", section.textClass)}>{r.credits} cr</span>
+                        </div>
+                      ))}
+                      {/* MTH 264 / MTH 245 choice */}
+                      <ChooseOneDropdown
+                        label="Calculus II or Statistics I"
+                        courses={[
+                          { code: "MTH 264", name: "Calculus II", credits: 4 },
+                          { code: "MTH 245", name: "Statistics I", credits: 3 },
+                        ]}
+                        textClass={section.textClass}
+                        bgClass={section.bgClass}
+                        borderClass={section.borderClass}
+                        isOpen={expandedChooseOne === "math-calc2"}
+                        onToggle={() => setExpandedChooseOne(expandedChooseOne === "math-calc2" ? null : "math-calc2")}
+                        creditNote="3–4 cr"
+                      />
+                      {/* CSC 208 / MTH 288 choice */}
+                      <ChooseOneDropdown
+                        label="Discrete Structures or Discrete Mathematics"
+                        courses={[
+                          { code: "CSC 208", name: "Introduction to Discrete Structures", credits: 3 },
+                          { code: "MTH 288", name: "Discrete Mathematics", credits: 3 },
+                        ]}
+                        textClass={section.textClass}
+                        bgClass={section.bgClass}
+                        borderClass={section.borderClass}
+                        isOpen={expandedChooseOne === "math-discrete"}
+                        onToggle={() => setExpandedChooseOne(expandedChooseOne === "math-discrete" ? null : "math-discrete")}
+                        creditNote="3 cr"
+                      />
                     </div>
                   )}
 
-                  {section.key === "science" && (
+                  {key === "science" && (
                     <div className="space-y-1.5">
                       <p className="text-xs font-semibold text-slate-500 mb-2">Choose any 2 courses (8 credits total):</p>
                       {scienceOptions.map((c) => (
@@ -479,7 +590,7 @@ export function NOVADegreePanel() {
                     </div>
                   )}
 
-                  {section.key === "general-ed" && (
+                  {key === "general-ed" && (
                     <div className="space-y-2">
                       {genEdSubSections.map((sub) => {
                         const isSubOpen = expandedGenEdSub === sub.key
@@ -558,7 +669,7 @@ export function NOVADegreePanel() {
                     </div>
                   )}
 
-                  {section.key === "elective" && (
+                  {key === "elective" && (
                     <div className="space-y-1.5">
                       <p className="text-xs font-semibold text-slate-500 mb-2">Approved elective options:</p>
                       {approvedElectives.map((c) => (
@@ -575,43 +686,33 @@ export function NOVADegreePanel() {
 
       <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Credit Breakdown</p>
-        <div className="space-y-2.5">
-          {placement !== "option2" && (
-            <div className={cn("flex items-center justify-between", placement === "none" && "opacity-60")}>
-              <span className={cn("text-sm", placement === "option1" ? "text-slate-700 font-medium" : "text-slate-500")}>
-                PreCalculus (MTH 167){placement === "none" && " — Option 1 only"}
-              </span>
-              <span className={cn("text-sm font-bold tabular-nums", placement === "option1" ? "text-amber-700" : "text-slate-400")}>5 credits</span>
-            </div>
-          )}
-          {placement === "option2" && (
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500 line-through">PreCalculus (MTH 167)</span>
-              <span className="text-sm font-medium text-slate-400 line-through">5 credits</span>
-            </div>
-          )}
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">Program Requirements</span>
-            <span className="text-sm font-bold tabular-nums text-slate-900">32 credits</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">General Education</span>
-            <span className="text-sm font-bold tabular-nums text-slate-900">20–22 credits</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">
-              Electives{placement === "option2" ? " (includes replaced PreCalc slot)" : ""}
-            </span>
-            <span className="text-sm font-bold tabular-nums text-slate-900">
-              {placement === "option2" ? "6–8 credits" : "3–4 credits"}
-            </span>
-          </div>
-          <Separator className="bg-slate-100" />
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-slate-700">
+        <div className="space-y-2">
+          {SECTION_ORDER.map((key) => {
+            const s = sectionMeta[key]
+            const credits = sectionCredits[key]
+            const barWidth = typeof credits === "number" ? (credits / barTotal) * 100 : 15
+            return (
+              <div key={key} className="flex items-center gap-3">
+                <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
+                <span className="text-sm text-slate-700 flex-1">{s.label}</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${barWidth}%`, backgroundColor: s.color }} />
+                  </div>
+                  <span className="text-sm font-bold tabular-nums text-slate-900 w-16 text-right">{credits} cr</span>
+                </div>
+              </div>
+            )
+          })}
+          <Separator className="my-2 bg-slate-200" />
+          <div className="flex items-center gap-3">
+            <div className="w-2.5 h-2.5 flex-shrink-0" />
+            <span className="text-sm font-semibold text-slate-900 flex-1">
               {placement === "none" ? "Total (both options)" : "Your Total"}
             </span>
-            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>{totalRange}</span>
+            <span className="text-sm font-bold tabular-nums w-16 text-right" style={{ color: "var(--brand)" }}>
+              {totalCredits}+ cr
+            </span>
           </div>
         </div>
       </div>

@@ -133,18 +133,18 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
   const noYear = plan.requirements.filter((r) => !r.year)
 
   const vsuPills = [
-    { cat: "general-ed", label: "Gen Ed", credits: vsuCSBachelorfull.creditSummary.generalEducation },
     { cat: "core", label: "Core CS", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
     { cat: "math", label: "Math", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
+    { cat: "general-ed", label: "Gen Ed", credits: vsuCSBachelorfull.creditSummary.generalEducation },
     { cat: "elective", label: "Electives", credits: vsuCSBachelorfull.creditSummary.electives },
   ]
 
   const novaPills = [
     { cat: "core", label: "Core CS", credits: "14" },
-    { cat: "math", label: "Math", credits: "16–21" },
+    { cat: "math", label: "Math", credits: "11–16" },
     { cat: "science", label: "Science", credits: "8" },
     { cat: "general-ed", label: "Gen Ed", credits: "20" },
-    { cat: "elective", label: "Electives", credits: "3–12" },
+    { cat: "elective", label: "Electives", credits: "3–8" },
   ]
 
   return (
@@ -176,7 +176,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Clock className="h-3 w-3" />
-                    <span className="font-medium">{isNOVA ? "60–66" : plan.totalCredits} cr</span>
+                    <span className="font-medium">{isNOVA ? "58–63" : plan.totalCredits} cr</span>
                   </div>
                   <ChevronDown
                     className="h-4 w-4 text-muted-foreground transition-transform duration-200"
