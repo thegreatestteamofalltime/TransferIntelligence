@@ -17,9 +17,9 @@ const sections = [
     credits: creditSummary.generalEducation,
     icon: BookOpen,
     color: "oklch(0.55 0.15 145)",
-    bgClass: "bg-emerald-50 dark:bg-emerald-950/30",
-    textClass: "text-emerald-700 dark:text-emerald-400",
-    borderClass: "border-emerald-200 dark:border-emerald-800",
+    bgClass: "bg-emerald-50",
+    textClass: "text-emerald-700",
+    borderClass: "border-emerald-200",
     description: "English, history, social sciences, and other required general courses",
     note: "These are standard college-wide requirements — many transfer directly from your community college.",
   },
@@ -30,9 +30,9 @@ const sections = [
     credits: creditSummary.coreRequirements,
     icon: GraduationCap,
     color: "var(--brand)",
-    bgClass: "bg-blue-50 dark:bg-blue-950/30",
-    textClass: "text-blue-700 dark:text-blue-400",
-    borderClass: "border-blue-200 dark:border-blue-800",
+    bgClass: "bg-blue-50",
+    textClass: "text-blue-700",
+    borderClass: "border-blue-200",
     description: "Required computer science courses at VSU",
     note: "These are the heart of the CS degree — taken at VSU after you transfer.",
   },
@@ -43,9 +43,9 @@ const sections = [
     credits: creditSummary.majorConcentration,
     icon: Calculator,
     color: "oklch(0.55 0.18 250)",
-    bgClass: "bg-sky-50 dark:bg-sky-950/30",
-    textClass: "text-sky-700 dark:text-sky-400",
-    borderClass: "border-sky-200 dark:border-sky-800",
+    bgClass: "bg-sky-50",
+    textClass: "text-sky-700",
+    borderClass: "border-sky-200",
     description: "Calculus, discrete math, and probability/statistics",
     note: "Calculus I & II can often be completed at your community college before transferring.",
   },
@@ -56,32 +56,29 @@ const sections = [
     credits: creditSummary.electives,
     icon: Lightbulb,
     color: "oklch(0.55 0.12 320)",
-    bgClass: "bg-pink-50 dark:bg-pink-950/30",
-    textClass: "text-pink-700 dark:text-pink-400",
-    borderClass: "border-pink-200 dark:border-pink-800",
+    bgClass: "bg-pink-50",
+    textClass: "text-pink-700",
+    borderClass: "border-pink-200",
     description: "Choose from approved CSCI/MATH lists and science lab courses",
     note: "You pick these! See the options below to find topics that interest you.",
   },
 ]
 
-const electiveColorMap: Record<string, { text: string; bg: string; border: string; dot: string }> = {
+const electiveColorMap: Record<string, { text: string; bg: string; border: string }> = {
   csci: {
-    text: "text-blue-700 dark:text-blue-400",
-    bg: "bg-blue-50 dark:bg-blue-950/30",
-    border: "border-blue-200 dark:border-blue-800",
-    dot: "oklch(0.55 0.18 250)",
+    text: "text-blue-700",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
   },
   math: {
-    text: "text-sky-700 dark:text-sky-400",
-    bg: "bg-sky-50 dark:bg-sky-950/30",
-    border: "border-sky-200 dark:border-sky-800",
-    dot: "oklch(0.55 0.18 250)",
+    text: "text-sky-700",
+    bg: "bg-sky-50",
+    border: "border-sky-200",
   },
   science: {
-    text: "text-emerald-700 dark:text-emerald-400",
-    bg: "bg-emerald-50 dark:bg-emerald-950/30",
-    border: "border-emerald-200 dark:border-emerald-800",
-    dot: "oklch(0.55 0.15 145)",
+    text: "text-emerald-700",
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
   },
 }
 
@@ -100,13 +97,13 @@ export function VSUDegreePanel() {
   }
 
   return (
-    <div className="px-5 py-5 border-t border-border bg-muted/20">
+    <div className="light px-5 py-5 border-t border-slate-200 bg-slate-50 text-slate-900">
 
       {/* Plain-language header */}
       <div className="mb-5">
-        <p className="text-sm font-semibold text-foreground mb-1">What you need to graduate</p>
-        <p className="text-xs text-muted-foreground leading-relaxed">
-          This degree takes <strong className="text-foreground">120 credits</strong> total. Here's exactly what those credits cover — tap any section to see the courses.
+        <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
+        <p className="text-xs text-slate-500 leading-relaxed">
+          This degree takes <strong className="text-slate-900">120 credits</strong> total. Here's exactly what those credits cover — tap any section to see the courses.
         </p>
       </div>
 
@@ -129,13 +126,13 @@ export function VSUDegreePanel() {
           {sections.map((s) => (
             <div key={s.key} className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
-              <span className="text-xs text-muted-foreground">{s.shortLabel} <span className="font-semibold text-foreground">{s.credits}</span></span>
+              <span className="text-xs text-slate-500">{s.shortLabel} <span className="font-semibold text-slate-900">{s.credits}</span></span>
             </div>
           ))}
         </div>
       </div>
 
-      <Separator className="mb-4" />
+      <Separator className="mb-4 bg-slate-200" />
 
       {/* Sections */}
       <div className="space-y-2">
@@ -175,7 +172,7 @@ export function VSUDegreePanel() {
                       {section.credits} credits
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{section.description}</p>
+                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
                 </div>
                 <ChevronDown
                   className={cn(
@@ -187,15 +184,14 @@ export function VSUDegreePanel() {
               </button>
 
               {isOpen && (
-                <div className="bg-background px-4 pt-3 pb-4">
+                <div className="bg-white px-4 pt-3 pb-4">
                   {/* Plain-language tip */}
-                  <div className="flex gap-2 mb-3 p-2.5 rounded-lg bg-muted/50">
-                    <Info className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-muted-foreground" />
-                    <p className="text-xs text-muted-foreground leading-relaxed">{section.note}</p>
+                  <div className="flex gap-2 mb-3 p-2.5 rounded-lg bg-slate-100">
+                    <Info className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-slate-400" />
+                    <p className="text-xs text-slate-500 leading-relaxed">{section.note}</p>
                   </div>
 
                   {isGenEd ? (
-                    /* Gen Ed: no specific course list, just the category breakdown */
                     <div className="space-y-2">
                       {[
                         { label: "English Composition (ENGL 110 & 111)", credits: 6, note: "Freshman writing sequence" },
@@ -211,28 +207,27 @@ export function VSUDegreePanel() {
                         <div key={item.label} className={cn("flex items-start gap-3 p-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
                           <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 w-12", section.textClass)}>{item.credits} cr</span>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground leading-snug">{item.label}</p>
-                            <p className="text-xs text-muted-foreground mt-0.5">{item.note}</p>
+                            <p className="text-sm font-medium text-slate-800 leading-snug">{item.label}</p>
+                            <p className="text-xs text-slate-500 mt-0.5">{item.note}</p>
                           </div>
                         </div>
                       ))}
                     </div>
                   ) : section.key === "elective" ? (
-                    /* Electives: show placeholders + expandable option lists */
                     <div className="space-y-3">
                       <div className="space-y-1.5">
                         {electiveReqs.map((req, i) => (
                           <div key={i} className={cn("flex items-start gap-3 p-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
                             <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 w-12", section.textClass)}>{req.credits} cr</span>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-foreground leading-snug">{req.name}</p>
-                              {req.notes && <p className="text-xs text-muted-foreground mt-0.5">{req.notes}</p>}
+                              <p className="text-sm font-medium text-slate-800 leading-snug">{req.name}</p>
+                              {req.notes && <p className="text-xs text-slate-500 mt-0.5">{req.notes}</p>}
                             </div>
                           </div>
                         ))}
                       </div>
 
-                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-4 mb-2">Browse Your Options</p>
+                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-4 mb-2">Browse Your Options</p>
                       <div className="space-y-2">
                         {electiveOptions.map((group) => {
                           const colors = electiveColorMap[group.category] ?? electiveColorMap.csci
@@ -246,7 +241,7 @@ export function VSUDegreePanel() {
                               >
                                 <div className="flex items-center gap-2">
                                   <span className={cn("text-xs font-semibold", colors.text)}>{group.label}</span>
-                                  <span className="text-xs text-muted-foreground">— {group.courses.length} choices</span>
+                                  <span className="text-xs text-slate-500">— {group.courses.length} choices</span>
                                 </div>
                                 <ChevronDown
                                   className={cn("h-3.5 w-3.5 transition-transform duration-200", colors.text)}
@@ -254,19 +249,17 @@ export function VSUDegreePanel() {
                                 />
                               </button>
                               {isEOpen && (
-                                <div className="bg-background px-3 py-3">
+                                <div className="bg-white px-3 py-3">
                                   {group.note && (
-                                    <p className="text-xs text-muted-foreground italic mb-2 leading-relaxed">{group.note}</p>
+                                    <p className="text-xs text-slate-500 italic mb-2 leading-relaxed">{group.note}</p>
                                   )}
                                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                                     {group.courses.map((c) => (
                                       <div key={c.code} className="flex items-center gap-2 py-1">
-                                        <span
-                                          className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", colors.text)}
-                                        >
+                                        <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", colors.text)}>
                                           {c.code}
                                         </span>
-                                        <span className="text-xs text-muted-foreground leading-tight">{c.name}</span>
+                                        <span className="text-xs text-slate-500 leading-tight">{c.name}</span>
                                       </div>
                                     ))}
                                   </div>
@@ -278,7 +271,6 @@ export function VSUDegreePanel() {
                       </div>
                     </div>
                   ) : (
-                    /* Core & Math: simple course list */
                     <div className="space-y-1.5">
                       {courses?.map((course, i) => (
                         <div key={i} className={cn("flex items-start gap-3 p-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
@@ -286,10 +278,10 @@ export function VSUDegreePanel() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-baseline gap-2 flex-wrap">
                               <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{course.code}</span>
-                              <span className="text-sm font-medium text-foreground leading-snug">{course.name}</span>
+                              <span className="text-sm font-medium text-slate-800 leading-snug">{course.name}</span>
                             </div>
                             {course.notes && (
-                              <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{course.notes}</p>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-snug">{course.notes}</p>
                             )}
                           </div>
                         </div>
@@ -304,15 +296,15 @@ export function VSUDegreePanel() {
       </div>
 
       {/* Credit summary table */}
-      <div className="mt-5 rounded-xl border border-border bg-card p-4">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Credit Breakdown</p>
+      <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
+        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Credit Breakdown</p>
         <div className="space-y-2">
           {sections.map((s) => (
             <div key={s.key} className="flex items-center gap-3">
               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
-              <span className="text-sm text-foreground flex-1">{s.label}</span>
+              <span className="text-sm text-slate-700 flex-1">{s.label}</span>
               <div className="flex items-center gap-2">
-                <div className="w-20 h-1.5 rounded-full bg-muted overflow-hidden">
+                <div className="w-20 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
                     className="h-full rounded-full"
                     style={{
@@ -321,16 +313,15 @@ export function VSUDegreePanel() {
                     }}
                   />
                 </div>
-                <span className="text-sm font-bold tabular-nums text-foreground w-12 text-right">{s.credits} cr</span>
+                <span className="text-sm font-bold tabular-nums text-slate-900 w-12 text-right">{s.credits} cr</span>
               </div>
             </div>
           ))}
-          <Separator className="my-2" />
+          <Separator className="my-2 bg-slate-200" />
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 flex-shrink-0" />
-            <span className="text-sm font-semibold text-foreground flex-1">Total</span>
-            <span className="text-sm font-bold tabular-nums text-foreground w-12 text-right"
-              style={{ color: "var(--brand)" }}>
+            <span className="text-sm font-semibold text-slate-900 flex-1">Total</span>
+            <span className="text-sm font-bold tabular-nums w-12 text-right" style={{ color: "var(--brand)" }}>
               120 cr
             </span>
           </div>
@@ -339,7 +330,7 @@ export function VSUDegreePanel() {
 
       {/* Source + CTA */}
       <div className="mt-4 flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">Source: {vsuCSBachelorfull.source}</p>
+        <p className="text-xs text-slate-400">Source: {vsuCSBachelorfull.source}</p>
         <Button
           size="sm"
           className="gap-1.5 text-white text-xs"
