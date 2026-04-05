@@ -207,8 +207,8 @@ function AgreementCard({ agreement }: { agreement: ArticulationAgreement }) {
         </a>
       </div>
 
-      <div className="rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-950/20 p-4">
-        <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+      <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+        <p className="text-xs text-amber-800 leading-relaxed">
           <strong>Data Currency Notice:</strong> The articulation agreement information on this page reflects
           the VCCS–VSU Guaranteed Admission Agreement as last updated <strong>{agreement.lastUpdated}</strong>.
           This data is for reference purposes only. Always confirm current requirements with an academic
