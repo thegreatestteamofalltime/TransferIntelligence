@@ -50,6 +50,7 @@ export function PlannerPage() {
     return (
       <PlannerStep2
         currentSchool={currentSchool}
+        currentDegree={currentDegree}
         completedCourses={completedCourses}
         setCompletedCourses={setCompletedCourses}
         onNext={() => setStep("results")}

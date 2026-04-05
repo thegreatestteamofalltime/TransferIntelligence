@@ -1,6 +1,56 @@
 import { type DegreePlan, type DegreeRequirement } from "@/data/degrees"
 import { type TransferAgreement, type CourseMapping } from "@/data/courses"
-import { type CatalogCourse } from "@/data/courseCatalog"
+import { type CatalogCourse, getCoursesBySchool } from "@/data/courseCatalog"
+
+function isChoicePlaceholder(code: string): boolean {
+  const upper = code.toUpperCase()
+  return (
+    upper.includes("ELECTIVE") ||
+    upper.includes("W/LAB") ||
+    upper.includes("APPROVED") ||
+    upper.includes("CHOOSE") ||
+    upper.includes("HUM ") ||
+    upper.includes("SOC/") ||
+    upper.includes("ARTS/") ||
+    upper === "HIS ELECTIVE" ||
+    upper === "HUM ELECTIVE" ||
+    upper === "SOC/BEH ELECTIVE" ||
+    upper === "ARTS/LIT ELECTIVE" ||
+    upper === "LAB SCIENCE" ||
+    upper === "SCIENCE W/LAB" ||
+    upper === "HUM/FA ELECTIVE"
+  )
+}
+
+export function getRequiredCoursesForDegree(
+  degree: DegreePlan,
+  school: string
+): { required: CatalogCourse[]; choiceCount: number; electiveCount: number } {
+  const catalog = getCoursesBySchool(school)
+  const catalogByCode = new Map(catalog.map((c) => [c.code.trim().toUpperCase(), c]))
+
+  let choiceCount = 0
+  let electiveCount = 0
+  const required: CatalogCourse[] = []
+
+  for (const req of degree.requirements) {
+    if (isChoicePlaceholder(req.code)) {
+      if (req.category === "elective") {
+        electiveCount++
+      } else {
+        choiceCount++
+      }
+      continue
+    }
+
+    const catalogCourse = catalogByCode.get(req.code.trim().toUpperCase())
+    if (catalogCourse) {
+      required.push(catalogCourse)
+    }
+  }
+
+  return { required, choiceCount, electiveCount }
+}
 
 export interface DegreeGapResult {
   completedCredits: number
