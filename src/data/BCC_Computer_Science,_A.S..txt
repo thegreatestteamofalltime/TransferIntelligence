@@ -1,0 +1,124 @@
+﻿Computer Science, A.S.
+Brightpoint Community College
+Transfer Degree
+
+
+Major Course Requirements: 17 credits
+CSC 221 - Introduction to Problem Solving and Programming 3 credits
+CSC 222 - Object-Oriented Programming 4 credits
+CSC 205 - Computer Organization 3 credits
+CSC 223 - Data Structures and Analysis of Algorithms 4 credits
+CSC 208 - Introduction to Discrete Structures 3 credits
+
+
+General Education Requirements: 35 credits
+Student Development
+1 credit
+SDV 100 - College Success Skills 1 credit
+
+
+English
+6 credits
+ENG 111 - College Composition I 3 credits
+ENG 112 - College Composition II 3 credits
+
+
+Math
+8 credits
+MTH 263 - Calculus l 4 credits
+MTH 264 - Calculus ll 4 credits
+
+
+Lab Science
+8 credits required
+Choose two in a sequence
+BIO 101 - General Biology I 4 credits
+BIO 102 - General Biology II 4 credits
+CHM 111 - General Chemistry I 4 credits
+CHM 112 - General Chemistry II 4 credits
+PHY 201 - General College Physics I 4 credits
+PHY 202 - General College Physics II 4 credits
+PHY 241 - University Physics I 4 credits
+PHY 242 - University Physics II 4 credits
+
+
+History
+3 credits required
+Choose one
+HIS 101 - Western Civilizations Pre-1600 CE 3 credits
+HIS 102 - Western Civilizations Post-1600 CE 3 credits
+HIS 111 - World Civilization Pre-1500 CE 3 credits
+HIS 112 - World Civilization Post-1500 CE 3 credits
+HIS 121 - United States History to 1877 3 credits
+HIS 122 - United States History Since 1865 3 credits
+
+
+Humanities
+3 credits required
+Choose one
+PHI 100 - Introduction to Philosophy 3 credits
+PHI 111 - Logic 3 credits
+PHI 220 - Ethics and Society 3 credits
+REL 100 - Introduction to the Study of Religion 3 credits
+REL 230 - Religions of the World 3 credits
+
+
+Social/Behavioral Sciences
+3 credits required
+Choose one
+ECO 150 - Economic Essentials: Theory and Application 3 credits
+ECO 201 - Principles of Macroeconomics 3 credits
+ECO 202 - Principles of Microeconomics 3 credits
+GEO 210 - People and the Land: An Introduction to Cultural Geography 3 credits
+GEO 220 - World Regional Geography 3 credits
+PLS 135 - U.S. Government and Politics 3 credits
+PLS 140 - Introduction to Comparative Politics 3 credits
+PLS 241 - Introduction to International Relations 3 credits
+PSY 200 - Principles of Psychology 3 credits
+SOC 200 - Introduction to Sociology 3 credits
+SOC 211 - Cultural Anthropology 3 credits
+SOC 268 - Social Problems 3 credits
+
+
+Arts/Literature
+3 credits required
+Choose one
+ART 101 - History of Art: Prehistoric to Gothic 3 credits
+ART 102 - History of Art: Renaissance to Modern 3 credits
+CST 130 - Introduction to the Theatre 3 credits
+CST 151 - Film Appreciation I 3 credits
+MUS 121 - Music in Society 3 credits
+MUS 226 - World Music 3 credits
+ENG 245 - British Literature 3 credits
+ENG 246 - American Literature 3 credits
+ENG 255 - World Literature 3 credits
+ENG 258 - African American Literature 3 credits
+ENG 275 - Women in Literature 3 credits
+ENG 225 - Reading Literature: Culture and Ideas 3 credits
+
+
+Electives Requirements: 8 credits (minimum)
+Choose two (2) or three (3)
+CHM 111 - General Chemistry I 4 credits
+CHM 112 - General Chemistry II 4 credits
+CST 100 - Principles of Public Speaking 3 credits
+CST 110 - Introduction to Human Communication 3 credits
+EGR 121 - Foundations of Engineering 2 credits
+EGR 122 - Engineering Design 3 credits
+EGR 270 - Fundamentals of Computer Engineering 4 credits
+ITE 152 - Introduction to Digital Literacy and Computer Applications 3 credits
+MTH 161 - Precalculus l 3 credits
+MTH 162 - Precalculus ll 3 credits
+MTH 245 - Statistics l 3 credits
+MTH 265 - Calculus lll 4 credits
+MTH 266 - Linear Algebra 3 credits
+PHY 241 - University Physics I 4 credits
+PHY 242 - University Physics II 4 credits
+CSC 195 - AI Foundations for Computer Science 3 credits
+
+
+Summary
+Major Course Requirements: 17 credits
+General Education Requirements: 35 credits
+Electives Requirements: 8 credits (minimum)
+Total Minimum Credits to Complete: 60
