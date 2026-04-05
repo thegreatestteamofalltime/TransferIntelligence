@@ -67,7 +67,10 @@ function isChoicePlaceholder(code: string): boolean {
     u.startsWith("SOC/") ||
     u.startsWith("ARTS/") ||
     u === "LAB SCIENCE" ||
-    u === "SCIENCE W/LAB"
+    u === "SCIENCE W/LAB" ||
+    u === "SCIENCE W/LAB 1" ||
+    u === "SCIENCE W/LAB 2" ||
+    u === "SDV 100/101"
   )
 }
 
@@ -81,23 +84,29 @@ function getCoursesForRequirement(req: DegreeRequirement, catalog: CatalogCourse
   const name = req.name.toUpperCase()
   const u = req.code.trim().toUpperCase()
 
+  if (u === "SDV 100/101") {
+    return catalog.filter((c) => c.subject === "SDV")
+  }
   if (u.startsWith("HIS") || notes.includes("HIS ")) {
     return catalog.filter((c) => c.subject === "HIS")
   }
-  if (u.startsWith("HUM") || name.includes("HUMANITIES") || name.includes("FINE ARTS")) {
-    return catalog.filter((c) => ["PHI", "REL", "ART", "MUS", "CST"].includes(c.subject))
+  if (u.startsWith("HUM/FA") || name.includes("HUMANITIES/FINE ARTS")) {
+    return catalog.filter((c) => ["ART", "MUS", "CST", "PHI", "REL", "HUM", "ENG"].includes(c.subject) && !["ENG 111", "ENG 112"].includes(c.code))
+  }
+  if (u.startsWith("HUM") || name.includes("HUMANITIES")) {
+    return catalog.filter((c) => ["PHI", "REL", "ART", "MUS", "CST", "HUM"].includes(c.subject))
   }
   if (u.startsWith("SOC") || name.includes("SOCIAL") || name.includes("BEHAVIORAL")) {
-    return catalog.filter((c) => ["ECO", "PSY", "SOC", "PLS", "GEO"].includes(c.subject))
+    return catalog.filter((c) => ["ECO", "PSY", "SOC", "PLS", "GEO", "ADJ"].includes(c.subject))
   }
   if (u.startsWith("ARTS") || name.includes("ARTS/LIT")) {
-    return catalog.filter((c) => ["ART", "CST", "MUS", "ENG"].includes(c.subject))
+    return catalog.filter((c) => ["ART", "CST", "MUS", "ENG"].includes(c.subject) && !["ENG 111", "ENG 112"].includes(c.code))
   }
   if (u.includes("SCIENCE") || u.includes("LAB") || name.includes("SCIENCE")) {
     return catalog.filter((c) => ["BIO", "CHM", "PHY", "GOL"].includes(c.subject))
   }
   if (u.includes("APPROVED") || name.includes("ELECTIVE")) {
-    return catalog.filter((c) => ["CSC", "EGR", "MTH"].includes(c.subject))
+    return catalog.filter((c) => ["CSC", "EGR", "MTH", "CST", "PHY", "BIO", "CHM", "GOL"].includes(c.subject) && !["MTH 167", "MTH 263", "MTH 264", "CSC 221", "CSC 222", "CSC 223", "CSC 208"].includes(c.code))
   }
 
   return []
@@ -143,9 +152,10 @@ function buildDegreeGroups(degree: DegreePlan, catalog: CatalogCourse[]): Degree
 
   function genEdSubKey(req: DegreeRequirement): string {
     const u = req.code.trim().toUpperCase()
-    if (u.startsWith("ENG") || u.startsWith("SDV")) return u.startsWith("SDV") ? "sdv" : "eng"
+    if (u === "SDV 100/101" || u.startsWith("SDV")) return "sdv"
+    if (u.startsWith("ENG")) return "eng"
     if (u.startsWith("HIS")) return "his"
-    if (u.startsWith("HUM") || u.startsWith("ARTS/LIT")) return "hum"
+    if (u.startsWith("HUM/FA") || u.startsWith("HUM")) return "hum"
     if (u.startsWith("SOC/") || u.startsWith("SOC ")) return "soc"
     if (u.startsWith("ARTS/")) return "arts"
     return "eng"

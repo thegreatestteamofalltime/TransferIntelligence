@@ -18,7 +18,10 @@ function isChoicePlaceholder(code: string): boolean {
     upper === "ARTS/LIT ELECTIVE" ||
     upper === "LAB SCIENCE" ||
     upper === "SCIENCE W/LAB" ||
-    upper === "HUM/FA ELECTIVE"
+    upper === "SCIENCE W/LAB 1" ||
+    upper === "SCIENCE W/LAB 2" ||
+    upper === "HUM/FA ELECTIVE" ||
+    upper === "SDV 100/101"
   )
 }
 
