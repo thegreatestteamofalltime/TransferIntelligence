@@ -77,8 +77,12 @@ export const brightpointCSAssociate: DegreePlan = {
   ],
 }
 
-export { vsuCSBachelorfull as vsuCSBachelor } from "./vsuCSDegree"
-
 import { vsuCSBachelorfull } from "./vsuCSDegree"
 
+export { vsuCSBachelorfull as vsuCSBachelor } from "./vsuCSDegree"
+
 export const degreePlans: DegreePlan[] = [novaCSAssociate, brightpointCSAssociate, vsuCSBachelorfull]
+
+export const degreePlanMap: Record<string, DegreePlan> = Object.fromEntries(
+  degreePlans.map((d) => [d.id, d])
+)

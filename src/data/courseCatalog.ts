@@ -202,8 +202,19 @@ export const courseCatalog: Record<string, CatalogCourse[]> = {
   "Northern Virginia Community College": NOVA_COURSES,
 }
 
+const _catalogLookupCache: Record<string, Record<string, CatalogCourse>> = {}
+
 export function getCoursesBySchool(school: string): CatalogCourse[] {
   return courseCatalog[school] ?? []
+}
+
+export function getCourseByCode(school: string, code: string): CatalogCourse | undefined {
+  if (!_catalogLookupCache[school]) {
+    _catalogLookupCache[school] = Object.fromEntries(
+      (courseCatalog[school] ?? []).map((c) => [c.code.trim().toUpperCase(), c])
+    )
+  }
+  return _catalogLookupCache[school][code.trim().toUpperCase()]
 }
 
 export function groupCoursesBySubject(courses: CatalogCourse[]): Record<string, CatalogCourse[]> {

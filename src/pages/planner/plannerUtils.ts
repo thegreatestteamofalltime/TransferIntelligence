@@ -1,5 +1,5 @@
 import { type DegreePlan, type DegreeRequirement } from "@/data/degrees"
-import { type TransferAgreement, type CourseMapping } from "@/data/courses"
+import { type TransferAgreement, type CourseMapping, getTransferMap } from "@/data/courses"
 import { type CatalogCourse, getCoursesBySchool } from "@/data/courseCatalog"
 
 function isChoicePlaceholder(code: string): boolean {
@@ -128,18 +128,21 @@ export function computeTransferResult(
   agreement: TransferAgreement,
   completedCourses: CatalogCourse[]
 ): TransferResult {
-  const completedCodes = new Set(completedCourses.map((c) => c.code.trim().toUpperCase()))
+  const transferMap = getTransferMap(agreement.id)
 
-  const relevantMappings = agreement.courses.filter((m) =>
-    completedCodes.has(m.sourceCode.trim().toUpperCase())
-  )
+  const transferring: CourseMapping[] = []
+  const expanded: CourseMapping[] = []
+  const conditional: CourseMapping[] = []
+  const noEquiv: CourseMapping[] = []
 
-  const transferring = relevantMappings.filter((c) => c.status === "transfers")
-  const expanded = relevantMappings.filter((c) => c.status === "expanded")
-  const conditional = relevantMappings.filter((c) => c.status === "conditional")
-  const noEquiv = relevantMappings.filter(
-    (c) => c.status === "no-equivalent" || c.status === "conflict"
-  )
+  for (const course of completedCourses) {
+    const mapping = transferMap[course.code.trim().toUpperCase()]
+    if (!mapping) continue
+    if (mapping.status === "transfers") transferring.push(mapping)
+    else if (mapping.status === "expanded") expanded.push(mapping)
+    else if (mapping.status === "conditional") conditional.push(mapping)
+    else if (mapping.status === "no-equivalent" || mapping.status === "conflict") noEquiv.push(mapping)
+  }
 
   const totalTransferCredits = [...transferring, ...expanded].reduce(
     (sum, c) => sum + c.sourceCredits,
@@ -154,8 +157,7 @@ export function computeTargetDegreeGap(
   transferResult: TransferResult
 ): TargetDegreeGap {
   const allTransferredTargetCodes = new Set<string>()
-  const allTransferred = [...transferResult.transferring, ...transferResult.expanded]
-  for (const mapping of allTransferred) {
+  for (const mapping of [...transferResult.transferring, ...transferResult.expanded]) {
     for (const tc of mapping.targetCourses) {
       allTransferredTargetCodes.add(tc.code.trim().toUpperCase())
     }
@@ -165,8 +167,7 @@ export function computeTargetDegreeGap(
   const remainingAtTarget: DegreeRequirement[] = []
 
   for (const req of targetDegree.requirements) {
-    const reqCode = req.code.trim().toUpperCase()
-    if (allTransferredTargetCodes.has(reqCode)) {
+    if (allTransferredTargetCodes.has(req.code.trim().toUpperCase())) {
       coveredByTransfer.push(req)
     } else {
       remainingAtTarget.push(req)

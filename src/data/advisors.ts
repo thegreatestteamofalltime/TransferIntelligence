@@ -41,3 +41,12 @@ export const advisors: Advisor[] = [
     availability: "Mon, Wed, Fri, 9am–5pm",
   },
 ]
+
+export const advisorsBySchool: Record<string, Advisor[]> = advisors.reduce<Record<string, Advisor[]>>(
+  (acc, a) => {
+    if (!acc[a.school]) acc[a.school] = []
+    acc[a.school].push(a)
+    return acc
+  },
+  {}
+)

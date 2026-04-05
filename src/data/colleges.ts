@@ -39,3 +39,7 @@ export const colleges: College[] = [
     description: "A historically Black university with strong CS and engineering transfer programs and VCCS articulation agreements.",
   },
 ]
+
+export const collegeMap: Record<string, College> = Object.fromEntries(
+  colleges.map((c) => [c.id, c])
+)
