@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { GraduationCap, BookOpen, ArrowRight, Clock, ChevronDown, ChevronRight } from "lucide-react"
+import { GraduationCap, BookOpen, ArrowRight, Clock, ChevronDown } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { degreePlans, type DegreePlan } from "@/data/degrees"
 import { vsuCSBachelorfull } from "@/data/vsuCSDegree"
 import { navigate } from "@/lib/router"
+import { VSUDegreePanel } from "@/pages/programs/VSUDegreePanel"
 
 const associateDegrees = degreePlans.filter((p) =>
   p.degree.toLowerCase().includes("associate")
@@ -31,12 +32,6 @@ const categoryLabels: Record<string, string> = {
   "general-ed": "Gen Ed",
   science: "Science",
   elective: "Elective",
-}
-
-const electiveCategoryColors: Record<string, string> = {
-  csci: "var(--brand)",
-  math: "oklch(0.55 0.18 250)",
-  science: "oklch(0.55 0.18 60)",
 }
 
 export function ProgramsPage() {
@@ -114,14 +109,11 @@ export function ProgramsPage() {
 
 function ProgramCard({ plan }: { plan: DegreePlan }) {
   const [open, setOpen] = useState(false)
-  const [electiveOpen, setElectiveOpen] = useState<string | null>(null)
 
   const isAssociate = plan.degree.toLowerCase().includes("associate")
+  const isVSU = plan.id === "vsu-cs-bs"
   const accentColor = isAssociate ? "var(--brand)" : "oklch(0.55 0.15 145)"
   const accentMuted = isAssociate ? "var(--brand-muted)" : "oklch(0.97 0.03 145)"
-
-  const isVSU = plan.id === "vsu-cs-bs"
-  const electiveOptions = isVSU ? vsuCSBachelorfull.electiveOptions : []
 
   const categoryCounts = plan.requirements.reduce<Record<string, number>>((acc, r) => {
     acc[r.category] = (acc[r.category] ?? 0) + r.credits
@@ -137,6 +129,13 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
     .filter((g) => g.courses.length > 0)
 
   const noYear = plan.requirements.filter((r) => !r.year)
+
+  const vsuPills = [
+    { cat: "general-ed", label: "Gen Ed", credits: vsuCSBachelorfull.creditSummary.generalEducation },
+    { cat: "core", label: "Core CS", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
+    { cat: "math", label: "Math", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
+    { cat: "elective", label: "Electives", credits: vsuCSBachelorfull.creditSummary.electives },
+  ]
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
@@ -178,23 +177,16 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
 
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {isVSU ? (
-                  <>
-                    {[
-                      { cat: "general-ed", label: "Gen Ed", credits: vsuCSBachelorfull.creditSummary.generalEducation },
-                      { cat: "core", label: "Core", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
-                      { cat: "math", label: "Math", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
-                      { cat: "elective", label: "Elective", credits: vsuCSBachelorfull.creditSummary.electives },
-                    ].map(({ cat, label, credits }) => (
-                      <div
-                        key={cat}
-                        className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
-                        style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
-                      >
-                        {label}
-                        <span className="opacity-80">{credits}cr</span>
-                      </div>
-                    ))}
-                  </>
+                  vsuPills.map(({ cat, label, credits }) => (
+                    <div
+                      key={cat}
+                      className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
+                      style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
+                    >
+                      {label}
+                      <span className="opacity-80">{credits}cr</span>
+                    </div>
+                  ))
                 ) : (
                   Object.entries(categoryCounts).map(([cat, credits]) => (
                     <div
@@ -212,132 +204,47 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
           </CollapsibleTrigger>
 
           <CollapsibleContent>
-            <div style={{ backgroundColor: accentMuted }} className="px-5 py-4 border-t border-border">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Course Requirements
-              </p>
-
-              <div className="space-y-4">
-                {byYear.map(({ year, courses }) => (
-                  <div key={year}>
-                    <p className="text-xs font-semibold capitalize mb-2" style={{ color: accentColor }}>
-                      {year} Year
-                    </p>
+            {isVSU ? (
+              <VSUDegreePanel />
+            ) : (
+              <div style={{ backgroundColor: accentMuted }} className="px-5 py-4 border-t border-border">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                  Course Requirements
+                </p>
+                <div className="space-y-4">
+                  {byYear.map(({ year, courses }) => (
+                    <div key={year}>
+                      <p className="text-xs font-semibold capitalize mb-2" style={{ color: accentColor }}>
+                        {year} Year
+                      </p>
+                      <div className="space-y-1.5">
+                        {courses.map((course, i) => (
+                          <CourseRow key={`${course.code}-${i}`} course={course} />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  {noYear.length > 0 && (
                     <div className="space-y-1.5">
-                      {courses.map((course, i) => (
+                      {noYear.map((course, i) => (
                         <CourseRow key={`${course.code}-${i}`} course={course} />
                       ))}
                     </div>
-                  </div>
-                ))}
-                {noYear.length > 0 && (
-                  <div className="space-y-1.5">
-                    {noYear.map((course, i) => (
-                      <CourseRow key={`${course.code}-${i}`} course={course} />
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {isVSU && electiveOptions.length > 0 && (
-                <div className="mt-5 pt-4 border-t border-border">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                    Elective Options
-                  </p>
-                  <div className="space-y-2">
-                    {electiveOptions.map((group) => {
-                      const isOpen = electiveOpen === group.category
-                      const color = electiveCategoryColors[group.category] ?? "var(--muted-foreground)"
-                      return (
-                        <div key={group.category} className="rounded-lg border border-border overflow-hidden">
-                          <button
-                            className="w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-muted/40 transition-colors"
-                            onClick={() => setElectiveOpen(isOpen ? null : group.category)}
-                          >
-                            <div className="flex items-center gap-2">
-                              <div
-                                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                                style={{ backgroundColor: color }}
-                              />
-                              <span className="text-xs font-semibold" style={{ color }}>
-                                {group.label}
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                ({group.courses.length} options)
-                              </span>
-                            </div>
-                            <ChevronRight
-                              className="h-3.5 w-3.5 text-muted-foreground transition-transform duration-200"
-                              style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-                            />
-                          </button>
-                          {isOpen && (
-                            <div className="px-3 pb-3 pt-1 bg-background/50">
-                              {group.note && (
-                                <p className="text-xs text-muted-foreground mb-2 italic">{group.note}</p>
-                              )}
-                              <div className="space-y-1">
-                                {group.courses.map((c) => (
-                                  <div key={c.code} className="flex items-baseline gap-2">
-                                    <span
-                                      className="text-xs font-mono font-semibold whitespace-nowrap"
-                                      style={{ color }}
-                                    >
-                                      {c.code}
-                                    </span>
-                                    <span className="text-xs text-muted-foreground flex-1 truncate">{c.name}</span>
-                                    <span className="text-xs font-medium flex-shrink-0 text-muted-foreground">
-                                      {c.credits}cr
-                                    </span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
+                  )}
                 </div>
-              )}
-
-              {isVSU && (
-                <div className="mt-4 pt-3 border-t border-border">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                    Credit Summary
-                  </p>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                    {[
-                      { label: "General Education", credits: vsuCSBachelorfull.creditSummary.generalEducation },
-                      { label: "Core Requirements", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
-                      { label: "Major / Concentration", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
-                      { label: "Electives", credits: vsuCSBachelorfull.creditSummary.electives },
-                    ].map(({ label, credits }) => (
-                      <div key={label} className="flex items-center justify-between text-xs py-0.5">
-                        <span className="text-muted-foreground">{label}</span>
-                        <span className="font-semibold tabular-nums">{credits} cr</span>
-                      </div>
-                    ))}
-                    <div className="col-span-2 flex items-center justify-between text-xs pt-1 mt-0.5 border-t border-border">
-                      <span className="font-semibold">Total</span>
-                      <span className="font-bold tabular-nums" style={{ color: accentColor }}>{vsuCSBachelorfull.creditSummary.total} cr</span>
-                    </div>
-                  </div>
+                <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
+                  <p className="text-xs text-muted-foreground">Source: {plan.source}</p>
+                  <button
+                    onClick={() => navigate("/planner")}
+                    className="flex items-center gap-1 text-xs font-medium transition-colors hover:opacity-80"
+                    style={{ color: accentColor }}
+                  >
+                    Plan this degree
+                    <ArrowRight className="h-3 w-3" />
+                  </button>
                 </div>
-              )}
-
-              <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
-                <p className="text-xs text-muted-foreground">Source: {plan.source}</p>
-                <button
-                  onClick={() => navigate("/planner")}
-                  className="flex items-center gap-1 text-xs font-medium transition-colors hover:opacity-80"
-                  style={{ color: accentColor }}
-                >
-                  Plan this degree
-                  <ArrowRight className="h-3 w-3" />
-                </button>
               </div>
-            </div>
+            )}
           </CollapsibleContent>
         </CardContent>
       </Card>
@@ -363,10 +270,7 @@ function CourseRow({ course }: { course: DegreePlan["requirements"][number] }) {
           <p className="text-xs text-muted-foreground/70 mt-0.5 leading-snug">{course.notes}</p>
         )}
       </div>
-      <span
-        className="text-xs font-medium flex-shrink-0"
-        style={{ color }}
-      >
+      <span className="text-xs font-medium flex-shrink-0" style={{ color }}>
         {course.credits}cr
       </span>
     </div>
