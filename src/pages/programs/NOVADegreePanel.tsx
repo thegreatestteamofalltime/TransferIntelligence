@@ -320,8 +320,7 @@ export function NOVADegreePanel() {
   const [expandedChooseOne, setExpandedChooseOne] = useState<string | null>(null)
   const [placement, setPlacement] = useState<PlacementOption>("none")
 
-  const totalCredits = placement === "option1" ? 61 : placement === "option2" ? 58 : 60
-  const totalRange = placement === "option1" ? "60–63" : placement === "option2" ? "58–62" : "58–63"
+  const totalCredits = placement === "option1" ? 60 : 58
 
   const sectionCredits: Record<string, string | number> = {
     core: 14,
@@ -352,7 +351,7 @@ export function NOVADegreePanel() {
       <div className="mb-4">
         <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
         <p className="text-xs text-slate-500 leading-relaxed">
-          This degree requires <strong className="text-slate-900">{totalRange} credits</strong> depending on your math placement. Tap any section to see the courses.
+          This degree requires a minimum of <strong className="text-slate-900">{totalCredits} credits</strong> depending on your math placement. Tap any section or bar segment to see the courses.
         </p>
       </div>
 
@@ -405,11 +404,13 @@ export function NOVADegreePanel() {
       <div className="mb-5">
         <div className="flex rounded-full overflow-hidden h-3 gap-px">
           {barSegments.map((seg) => (
-            <div
+            <button
               key={seg.key}
-              className="h-full transition-all duration-300"
+              className="h-full transition-all duration-300 cursor-pointer hover:brightness-110 focus:outline-none focus-visible:brightness-110"
               style={{ width: `${(seg.credits / barTotal) * 100}%`, backgroundColor: seg.color }}
-              title={`${sectionMeta[seg.key as keyof typeof sectionMeta].label}: ${seg.credits} credits`}
+              title={`${sectionMeta[seg.key as keyof typeof sectionMeta].label}: ${seg.credits} credits — click to view`}
+              onClick={() => setExpandedSection(expandedSection === seg.key ? null : seg.key)}
+              aria-label={`View ${sectionMeta[seg.key as keyof typeof sectionMeta].label}`}
             />
           ))}
         </div>
@@ -708,10 +709,10 @@ export function NOVADegreePanel() {
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 flex-shrink-0" />
             <span className="text-sm font-semibold text-slate-900 flex-1">
-              {placement === "none" ? "Total (both options)" : "Your Total"}
+              Total Minimum Credits
             </span>
             <span className="text-sm font-bold tabular-nums w-16 text-right" style={{ color: "var(--brand)" }}>
-              {totalCredits}+ cr
+              {placement === "option1" ? "60" : "58"} cr
             </span>
           </div>
         </div>

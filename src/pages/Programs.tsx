@@ -12,13 +12,13 @@ import { VSUDegreePanel } from "@/pages/programs/VSUDegreePanel"
 import { NOVADegreePanel } from "@/pages/programs/NOVADegreePanel"
 import { BCCDegreePanel } from "@/pages/programs/BCCDegreePanel"
 
-const associateDegrees = degreePlans.filter((p) =>
-  p.degree.toLowerCase().includes("associate")
-)
+const associateDegrees = degreePlans
+  .filter((p) => p.degree.toLowerCase().includes("associate"))
+  .sort((a, b) => a.program.localeCompare(b.program) || a.school.localeCompare(b.school))
 
-const bachelorDegrees = degreePlans.filter((p) =>
-  p.degree.toLowerCase().includes("bachelor")
-)
+const bachelorDegrees = degreePlans
+  .filter((p) => p.degree.toLowerCase().includes("bachelor"))
+  .sort((a, b) => a.program.localeCompare(b.program) || a.school.localeCompare(b.school))
 
 const categoryColors: Record<string, string> = {
   core: "var(--brand)",
@@ -184,9 +184,12 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                   <p className="text-xs text-muted-foreground">{plan.school}</p>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Clock className="h-3 w-3" />
-                    <span className="font-medium">{isNOVA ? "58–63" : plan.totalCredits} cr</span>
+                  <div className="flex flex-col items-end gap-0">
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      <span className="font-medium">{isNOVA ? "58" : plan.totalCredits} cr</span>
+                    </div>
+                    <span className="text-[10px] text-muted-foreground/60">minimum</span>
                   </div>
 
                   <ChevronDown
