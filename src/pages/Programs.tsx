@@ -177,16 +177,36 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
               </div>
 
               <div className="flex flex-wrap gap-1.5 mt-3">
-                {Object.entries(categoryCounts).map(([cat, credits]) => (
-                  <div
-                    key={cat}
-                    className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
-                    style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
-                  >
-                    {categoryLabels[cat] ?? cat}
-                    <span className="opacity-80">{credits}cr</span>
-                  </div>
-                ))}
+                {isVSU ? (
+                  <>
+                    {[
+                      { cat: "general-ed", label: "Gen Ed", credits: vsuCSBachelorfull.creditSummary.generalEducation },
+                      { cat: "core", label: "Core", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
+                      { cat: "math", label: "Math", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
+                      { cat: "elective", label: "Elective", credits: vsuCSBachelorfull.creditSummary.electives },
+                    ].map(({ cat, label, credits }) => (
+                      <div
+                        key={cat}
+                        className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
+                        style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
+                      >
+                        {label}
+                        <span className="opacity-80">{credits}cr</span>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  Object.entries(categoryCounts).map(([cat, credits]) => (
+                    <div
+                      key={cat}
+                      className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
+                      style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
+                    >
+                      {categoryLabels[cat] ?? cat}
+                      <span className="opacity-80">{credits}cr</span>
+                    </div>
+                  ))
+                )}
               </div>
             </button>
           </CollapsibleTrigger>
@@ -288,10 +308,10 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                   </p>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                     {[
-                      { label: "General Education", credits: 33 },
-                      { label: "Core Requirements", credits: 54 },
-                      { label: "Major / Concentration", credits: 14 },
-                      { label: "Electives", credits: 19 },
+                      { label: "General Education", credits: vsuCSBachelorfull.creditSummary.generalEducation },
+                      { label: "Core Requirements", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
+                      { label: "Major / Concentration", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
+                      { label: "Electives", credits: vsuCSBachelorfull.creditSummary.electives },
                     ].map(({ label, credits }) => (
                       <div key={label} className="flex items-center justify-between text-xs py-0.5">
                         <span className="text-muted-foreground">{label}</span>
@@ -300,7 +320,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                     ))}
                     <div className="col-span-2 flex items-center justify-between text-xs pt-1 mt-0.5 border-t border-border">
                       <span className="font-semibold">Total</span>
-                      <span className="font-bold tabular-nums" style={{ color: accentColor }}>120 cr</span>
+                      <span className="font-bold tabular-nums" style={{ color: accentColor }}>{vsuCSBachelorfull.creditSummary.total} cr</span>
                     </div>
                   </div>
                 </div>
