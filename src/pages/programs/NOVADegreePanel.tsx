@@ -7,8 +7,6 @@ import { novaCSAssociate } from "@/data/degrees"
 import { navigate } from "@/lib/router"
 import { cn } from "@/lib/utils"
 
-const OPTION1_CREDITS = { programReqs: 37, genEd: 21, electives: 3, total: 61 }
-const OPTION2_CREDITS = { programReqs: 32, genEd: 21, electives: 9, total: 62 }
 
 const sections = [
   {
@@ -63,8 +61,8 @@ const sections = [
     bgClass: "bg-pink-50",
     textClass: "text-pink-700",
     borderClass: "border-pink-200",
-    description: "3–4 credits (Option 1) or 9–12 credits (Option 2)",
-    note: "Option 2 students gain more elective flexibility by placing out of MTH 167. Use credits for CSC, MTH, EGR, CST, or science courses.",
+    description: "3–4 credits — PHY 201, CSC, MTH, EGR, or science courses",
+    note: "Option 1 students get 3–4 elective credits. Option 2 students place out of MTH 167 and replace those 5 credits with an elective from the approved list instead.",
   },
 ]
 
@@ -137,11 +135,15 @@ const genEdSubSections = [
           { code: "MUS 221", name: "History of Western Music pre-1750", credits: 3 },
           { code: "MUS 222", name: "History of Western Music 1750 to Present", credits: 3 },
           { code: "MUS 225", name: "The History of Jazz", credits: 3 },
+          { code: "PHT 110", name: "History of Photography", credits: 3 },
         ],
       },
       {
         label: "Humanities",
         courses: [
+          { code: "ARC 200", name: "History of Architecture", credits: 4 },
+          { code: "ASL 201", name: "Intermediate American Sign Language I", credits: 3 },
+          { code: "ASL 202", name: "Intermediate American Sign Language II", credits: 3 },
           { code: "HUM 201", name: "Early Humanities", credits: 3 },
           { code: "HUM 202", name: "Modern Humanities", credits: 3 },
           { code: "HUM 210", name: "Introduction to Women and Gender Studies", credits: 3 },
@@ -156,6 +158,22 @@ const genEdSubSections = [
           { code: "REL 233", name: "Introduction to Islam", credits: 3 },
           { code: "REL 237", name: "Religions of the East", credits: 3 },
           { code: "REL 238", name: "Religions of the West", credits: 3 },
+          { code: "ARA 201", name: "Intermediate Arabic I", credits: 4 },
+          { code: "ARA 202", name: "Intermediate Arabic II", credits: 4 },
+          { code: "CHI 201", name: "Intermediate Chinese I", credits: 4 },
+          { code: "CHI 202", name: "Intermediate Chinese II", credits: 4 },
+          { code: "FRE 201", name: "Intermediate French I", credits: 3 },
+          { code: "FRE 202", name: "Intermediate French II", credits: 3 },
+          { code: "GER 201", name: "Intermediate German I", credits: 3 },
+          { code: "GER 202", name: "Intermediate German II", credits: 3 },
+          { code: "JPN 201", name: "Intermediate Japanese I", credits: 4 },
+          { code: "JPN 202", name: "Intermediate Japanese II", credits: 4 },
+          { code: "LAT 201", name: "Intermediate Latin I", credits: 3 },
+          { code: "LAT 202", name: "Intermediate Latin II", credits: 3 },
+          { code: "RUS 201", name: "Intermediate Russian I", credits: 4 },
+          { code: "RUS 202", name: "Intermediate Russian II", credits: 4 },
+          { code: "SPA 201", name: "Intermediate Spanish I", credits: 3 },
+          { code: "SPA 202", name: "Intermediate Spanish II", credits: 3 },
         ],
       },
       {
@@ -271,7 +289,7 @@ export function NOVADegreePanel() {
       <div className="mb-4">
         <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
         <p className="text-xs text-slate-500 leading-relaxed">
-          This degree requires <strong className="text-slate-900">60–66 credits</strong> depending on your math placement. Tap any section to see the courses.
+          This degree requires <strong className="text-slate-900">58–63 credits</strong> depending on your math placement. Tap any section to see the courses.
         </p>
       </div>
 
@@ -279,12 +297,12 @@ export function NOVADegreePanel() {
         <div className="rounded-xl border border-slate-200 bg-white p-3">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Option 1</p>
           <p className="text-xs text-slate-500 leading-snug">If PreCalculus is needed</p>
-          <p className="text-sm font-bold text-slate-900 mt-1">{OPTION1_CREDITS.total} credits</p>
+          <p className="text-sm font-bold text-slate-900 mt-1">60–63 credits</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-3">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Option 2</p>
           <p className="text-xs text-slate-500 leading-snug">Placed out of PreCalculus</p>
-          <p className="text-sm font-bold text-slate-900 mt-1">{OPTION2_CREDITS.total}+ credits</p>
+          <p className="text-sm font-bold text-slate-900 mt-1">55–58 credits</p>
         </div>
       </div>
 
@@ -490,15 +508,19 @@ export function NOVADegreePanel() {
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Credit Breakdown</p>
         <div className="space-y-2.5">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">Program Requirements (Option 1)</span>
-            <span className="text-sm font-bold tabular-nums text-slate-900">{OPTION1_CREDITS.programReqs} credits</span>
+            <span className="text-sm text-slate-700">PreCalculus Prerequisite (Option 1)</span>
+            <span className="text-sm font-bold tabular-nums text-slate-900">5 credits</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-700">Program Requirements</span>
+            <span className="text-sm font-bold tabular-nums text-slate-900">32 credits</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-slate-700">General Education</span>
             <span className="text-sm font-bold tabular-nums text-slate-900">20–22 credits</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">Electives (Option 1)</span>
+            <span className="text-sm text-slate-700">Electives</span>
             <span className="text-sm font-bold tabular-nums text-slate-900">3–4 credits</span>
           </div>
           <Separator className="bg-slate-100" />
@@ -508,7 +530,7 @@ export function NOVADegreePanel() {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold text-slate-700">Option 2 Total</span>
-            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>61–66 credits</span>
+            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>55–58 credits</span>
           </div>
         </div>
       </div>
