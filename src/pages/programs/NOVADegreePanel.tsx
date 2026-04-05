@@ -1,0 +1,530 @@
+import { useState } from "react"
+import { ChevronDown, ArrowRight, BookOpen, Calculator, FlaskConical, GraduationCap, Lightbulb, Info, TriangleAlert } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { novaCSAssociate } from "@/data/degrees"
+import { navigate } from "@/lib/router"
+import { cn } from "@/lib/utils"
+
+const OPTION1_CREDITS = { programReqs: 37, genEd: 21, electives: 3, total: 61 }
+const OPTION2_CREDITS = { programReqs: 32, genEd: 21, electives: 9, total: 62 }
+
+const sections = [
+  {
+    key: "core",
+    label: "Core CS Courses",
+    shortLabel: "Core",
+    color: "var(--brand)",
+    bgClass: "bg-blue-50",
+    textClass: "text-blue-700",
+    borderClass: "border-blue-200",
+    description: "Required computer science courses",
+    note: "These four courses form the required CS sequence at NOVA and transfer directly toward your bachelor's degree.",
+  },
+  {
+    key: "math",
+    label: "Math Requirements",
+    shortLabel: "Math",
+    color: "oklch(0.55 0.18 250)",
+    bgClass: "bg-sky-50",
+    textClass: "text-sky-700",
+    borderClass: "border-sky-200",
+    description: "Calculus, discrete math, and optional precalculus",
+    note: "MTH 167 (PreCalculus) is only required for Option 1. If you place into Calculus, you follow Option 2 and can use those 5 credits for electives instead.",
+  },
+  {
+    key: "science",
+    label: "Physical/Life Sciences",
+    shortLabel: "Science",
+    color: "oklch(0.50 0.18 60)",
+    bgClass: "bg-amber-50",
+    textClass: "text-amber-700",
+    borderClass: "border-amber-200",
+    description: "8 credits — two lab science courses",
+    note: "You must complete two lab science courses totaling 8 credits. Choose any two from BIO, CHM, PHY, or GOL — sequential pairs strongly recommended.",
+  },
+  {
+    key: "general-ed",
+    label: "General Education",
+    shortLabel: "Gen Ed",
+    color: "oklch(0.55 0.15 145)",
+    bgClass: "bg-emerald-50",
+    textClass: "text-emerald-700",
+    borderClass: "border-emerald-200",
+    description: "English, history, humanities, social sciences",
+    note: "Standard college-wide requirements. Humanities/Fine Arts courses must come from two different areas (Fine Arts, Humanities, or Literature).",
+  },
+  {
+    key: "elective",
+    label: "Approved Electives",
+    shortLabel: "Elective",
+    color: "oklch(0.55 0.12 320)",
+    bgClass: "bg-pink-50",
+    textClass: "text-pink-700",
+    borderClass: "border-pink-200",
+    description: "3–4 credits (Option 1) or 9–12 credits (Option 2)",
+    note: "Option 2 students gain more elective flexibility by placing out of MTH 167. Use credits for CSC, MTH, EGR, CST, or science courses.",
+  },
+]
+
+const scienceOptions = [
+  { code: "BIO 101", name: "General Biology I", credits: 4 },
+  { code: "BIO 102", name: "General Biology II", credits: 4 },
+  { code: "CHM 111", name: "General Chemistry I", credits: 4 },
+  { code: "CHM 112", name: "General Chemistry II", credits: 4 },
+  { code: "PHY 241", name: "University Physics I", credits: 4 },
+  { code: "PHY 242", name: "University Physics II", credits: 4 },
+  { code: "GOL 105", name: "Physical Geology", credits: 4 },
+  { code: "GOL 106", name: "Historical Geology", credits: 4 },
+]
+
+const genEdSubSections = [
+  {
+    key: "eng",
+    label: "English Composition",
+    creditsRequired: 6,
+    courses: [
+      { code: "ENG 111", name: "College Composition I", credits: 3 },
+      { code: "ENG 112", name: "College Composition II", credits: 3 },
+    ],
+  },
+  {
+    key: "sdv",
+    label: "Student Development",
+    creditsRequired: 1,
+    courses: [
+      { code: "SDV 100", name: "College Success Skills", credits: 1 },
+      { code: "SDV 101", name: "New Student Orientation", credits: 1 },
+    ],
+    note: "Choose one.",
+  },
+  {
+    key: "his",
+    label: "History",
+    creditsRequired: 3,
+    courses: [
+      { code: "HIS 101", name: "Western Civilizations Pre-1600 CE", credits: 3 },
+      { code: "HIS 102", name: "Western Civilizations Post-1600 CE", credits: 3 },
+      { code: "HIS 111", name: "World Civilizations Pre-1500 CE", credits: 3 },
+      { code: "HIS 112", name: "World Civilizations Post-1500 CE", credits: 3 },
+      { code: "HIS 121", name: "United States History to 1877", credits: 3 },
+      { code: "HIS 122", name: "United States History Since 1865", credits: 3 },
+      { code: "HIS 203", name: "History of African Civilizations", credits: 3 },
+      { code: "HIS 231", name: "Introduction to Latin American History", credits: 3 },
+      { code: "HIS 254", name: "History of Modern East Asian Civilizations", credits: 3 },
+    ],
+  },
+  {
+    key: "hum-fa",
+    label: "Humanities/Fine Arts",
+    creditsRequired: "6–8",
+    note: "6–8 credits required from two different areas (Fine Arts, Humanities, or Literature). Each area list is expandable below.",
+    subGroups: [
+      {
+        label: "Fine Arts",
+        courses: [
+          { code: "ART 100", name: "Art Appreciation", credits: 3 },
+          { code: "ART 101", name: "History of Art: Prehistoric to Gothic", credits: 3 },
+          { code: "ART 102", name: "History of Art: Renaissance to Modern", credits: 3 },
+          { code: "ART 150", name: "History of Film & Animation", credits: 3 },
+          { code: "ART 215", name: "History of Modern Art", credits: 3 },
+          { code: "ART 250", name: "History of Design", credits: 3 },
+          { code: "CST 130", name: "Introduction to the Theatre", credits: 3 },
+          { code: "CST 141", name: "Theatre Appreciation I", credits: 3 },
+          { code: "CST 151", name: "Film Appreciation I", credits: 3 },
+          { code: "MUS 121", name: "Music in Society", credits: 3 },
+          { code: "MUS 221", name: "History of Western Music pre-1750", credits: 3 },
+          { code: "MUS 222", name: "History of Western Music 1750 to Present", credits: 3 },
+          { code: "MUS 225", name: "The History of Jazz", credits: 3 },
+        ],
+      },
+      {
+        label: "Humanities",
+        courses: [
+          { code: "HUM 201", name: "Early Humanities", credits: 3 },
+          { code: "HUM 202", name: "Modern Humanities", credits: 3 },
+          { code: "HUM 210", name: "Introduction to Women and Gender Studies", credits: 3 },
+          { code: "HUM 220", name: "Introduction to African American Studies", credits: 3 },
+          { code: "HUM 259", name: "The Greek and Roman Tradition", credits: 3 },
+          { code: "PHI 100", name: "Introduction to Philosophy", credits: 3 },
+          { code: "PHI 111", name: "Logic", credits: 3 },
+          { code: "PHI 220", name: "Ethics and Society", credits: 3 },
+          { code: "PHI 227", name: "Biomedical Ethics", credits: 3 },
+          { code: "REL 100", name: "Introduction to the Study of Religion", credits: 3 },
+          { code: "REL 230", name: "Religions of the World", credits: 3 },
+          { code: "REL 233", name: "Introduction to Islam", credits: 3 },
+          { code: "REL 237", name: "Religions of the East", credits: 3 },
+          { code: "REL 238", name: "Religions of the West", credits: 3 },
+        ],
+      },
+      {
+        label: "Literature",
+        courses: [
+          { code: "ENG 225", name: "Reading Literature: Culture and Ideas", credits: 3 },
+          { code: "ENG 230", name: "Mystery in Literature & Film", credits: 3 },
+          { code: "ENG 236", name: "Introduction to the Short Story", credits: 3 },
+          { code: "ENG 237", name: "Introduction to Poetry", credits: 3 },
+          { code: "ENG 245", name: "British Literature", credits: 3 },
+          { code: "ENG 246", name: "American Literature", credits: 3 },
+          { code: "ENG 250", name: "Children's Literature", credits: 3 },
+          { code: "ENG 255", name: "World Literature", credits: 3 },
+          { code: "ENG 256", name: "Literature of Science Fiction", credits: 3 },
+          { code: "ENG 257", name: "Mythological Literature", credits: 3 },
+          { code: "ENG 258", name: "African American Literature", credits: 3 },
+          { code: "ENG 271", name: "The Works of Shakespeare I", credits: 3 },
+          { code: "ENG 275", name: "Women in Literature", credits: 3 },
+          { code: "ENG 279", name: "Film and Literature", credits: 3 },
+        ],
+      },
+    ],
+  },
+  {
+    key: "soc",
+    label: "Social/Behavioral Sciences",
+    creditsRequired: 3,
+    courses: [
+      { code: "ADJ 100", name: "Survey of Criminal Justice", credits: 3 },
+      { code: "ECO 150", name: "Economic Essentials: Theory and Application", credits: 3 },
+      { code: "ECO 201", name: "Principles of Macroeconomics", credits: 3 },
+      { code: "ECO 202", name: "Principles of Microeconomics", credits: 3 },
+      { code: "GEO 200", name: "Introduction to Physical Geography", credits: 3 },
+      { code: "GEO 210", name: "People & the Land: Intro. to Cultural Geography", credits: 3 },
+      { code: "GEO 220", name: "World Regional Geography", credits: 3 },
+      { code: "PLS 135", name: "U.S. Government and Politics", credits: 3 },
+      { code: "PLS 140", name: "Introduction to Comparative Politics", credits: 3 },
+      { code: "PLS 200", name: "Introduction to Political and Democratic Theory", credits: 3 },
+      { code: "PLS 241", name: "Introduction to International Relations", credits: 3 },
+      { code: "PSY 200", name: "Principles of Psychology", credits: 3 },
+      { code: "PSY 216", name: "Social Psychology", credits: 3 },
+      { code: "PSY 219", name: "Cross-Cultural Psychology", credits: 3 },
+      { code: "PSY 230", name: "Developmental Psychology", credits: 3 },
+      { code: "SOC 200", name: "Introduction to Sociology", credits: 3 },
+      { code: "SOC 211", name: "Cultural Anthropology", credits: 3 },
+      { code: "SOC 268", name: "Social Problems", credits: 3 },
+    ],
+  },
+]
+
+const approvedElectives = [
+  { code: "PHY 201", name: "General College Physics I", credits: 4 },
+  { code: "CSC 205", name: "Computer Organization", credits: 3 },
+  { code: "CSC 215", name: "Computer Systems", credits: 3 },
+  { code: "CSC 195", name: "Topics In: (variable)", credits: 3 },
+  { code: "CSC 295", name: "Topics In: (variable)", credits: 3 },
+  { code: "EGR 121", name: "Foundations of Engineering", credits: 2 },
+  { code: "EGR 122", name: "Engineering Design", credits: 3 },
+  { code: "EGR 270", name: "Fundamentals of Computer Engineering", credits: 4 },
+  { code: "CST 100", name: "Principles of Public Speaking", credits: 3 },
+  { code: "CST 110", name: "Introduction to Human Communication", credits: 3 },
+  { code: "MTH 265", name: "Calculus III", credits: 4 },
+  { code: "MTH 266", name: "Linear Algebra", credits: 3 },
+  { code: "MTH 283", name: "Probability and Statistics", credits: 3 },
+  { code: "BIO 101", name: "General Biology I", credits: 4 },
+  { code: "BIO 102", name: "General Biology II", credits: 4 },
+  { code: "CHM 111", name: "General Chemistry I", credits: 4 },
+  { code: "CHM 112", name: "General Chemistry II", credits: 4 },
+  { code: "PHY 241", name: "University Physics I", credits: 4 },
+  { code: "PHY 242", name: "University Physics II", credits: 4 },
+  { code: "GOL 105", name: "Physical Geology", credits: 4 },
+  { code: "GOL 106", name: "Historical Geology", credits: 4 },
+]
+
+interface CourseChipProps {
+  code: string
+  name: string
+  credits: number
+  textClass: string
+  bgClass: string
+  borderClass: string
+}
+
+function CourseChip({ code, name, credits, textClass, bgClass, borderClass }: CourseChipProps) {
+  return (
+    <div className={cn("flex items-center gap-2 px-2.5 py-2 rounded-lg border", borderClass, bgClass)}>
+      <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-16", textClass)}>{code}</span>
+      <span className="text-xs text-slate-600 leading-tight flex-1">{name}</span>
+      <span className={cn("text-xs font-bold tabular-nums flex-shrink-0 ml-1", textClass)}>{credits}cr</span>
+    </div>
+  )
+}
+
+export function NOVADegreePanel() {
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
+  const [expandedGenEdSub, setExpandedGenEdSub] = useState<string | null>(null)
+  const [expandedHumSub, setExpandedHumSub] = useState<string | null>(null)
+
+  const coreReqs = novaCSAssociate.requirements.filter((r) => r.category === "core")
+  const mathReqs = novaCSAssociate.requirements.filter((r) => r.category === "math")
+
+  const sectionCreditMap: Record<string, number> = {
+    core: coreReqs.reduce((s, r) => s + r.credits, 0),
+    math: mathReqs.reduce((s, r) => s + r.credits, 0),
+    science: 8,
+    "general-ed": 20,
+    elective: 3,
+  }
+
+  return (
+    <div className="light px-5 py-5 border-t border-slate-200 bg-slate-50 text-slate-900">
+
+      <div className="mb-4">
+        <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
+        <p className="text-xs text-slate-500 leading-relaxed">
+          This degree requires <strong className="text-slate-900">60–66 credits</strong> depending on your math placement. Tap any section to see the courses.
+        </p>
+      </div>
+
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <div className="rounded-xl border border-slate-200 bg-white p-3">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Option 1</p>
+          <p className="text-xs text-slate-500 leading-snug">If PreCalculus is needed</p>
+          <p className="text-sm font-bold text-slate-900 mt-1">{OPTION1_CREDITS.total} credits</p>
+        </div>
+        <div className="rounded-xl border border-slate-200 bg-white p-3">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Option 2</p>
+          <p className="text-xs text-slate-500 leading-snug">Placed out of PreCalculus</p>
+          <p className="text-sm font-bold text-slate-900 mt-1">{OPTION2_CREDITS.total}+ credits</p>
+        </div>
+      </div>
+
+      <Separator className="mb-4 bg-slate-200" />
+
+      <div className="space-y-2">
+        {sections.map((section) => {
+          const isOpen = expandedSection === section.key
+          const Icon = section.key === "core" ? GraduationCap
+            : section.key === "math" ? Calculator
+            : section.key === "science" ? FlaskConical
+            : section.key === "general-ed" ? BookOpen
+            : Lightbulb
+          const sectionCredits = sectionCreditMap[section.key]
+
+          return (
+            <div key={section.key} className={cn("rounded-xl border overflow-hidden transition-all", section.borderClass)}>
+              <button
+                className={cn("w-full flex items-center gap-3 px-4 py-3 text-left transition-colors", section.bgClass, "hover:brightness-95")}
+                onClick={() => setExpandedSection(isOpen ? null : section.key)}
+                aria-expanded={isOpen}
+              >
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: section.color }}
+                >
+                  <Icon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={cn("text-sm font-semibold", section.textClass)}>{section.label}</span>
+                    <Badge
+                      className="text-xs font-bold px-2 py-0 text-white border-0"
+                      style={{ backgroundColor: section.color }}
+                    >
+                      {sectionCredits} credits
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
+                </div>
+                <ChevronDown
+                  className={cn("h-4 w-4 flex-shrink-0 transition-transform duration-200", section.textClass)}
+                  style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                />
+              </button>
+
+              {isOpen && (
+                <div className="bg-white px-4 pt-3 pb-4">
+                  <div className="flex gap-2 mb-3 p-2.5 rounded-lg bg-slate-100">
+                    <Info className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-slate-400" />
+                    <p className="text-xs text-slate-500 leading-relaxed">{section.note}</p>
+                  </div>
+
+                  {section.key === "core" && (
+                    <div className="space-y-1.5">
+                      {coreReqs.map((r) => (
+                        <div key={r.code} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                          <div className={cn("flex items-start gap-3 px-3 py-2.5", section.bgClass)}>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-baseline gap-2 flex-wrap">
+                                <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{r.code}</span>
+                                <span className="text-sm font-medium text-slate-800 leading-snug">{r.name}</span>
+                              </div>
+                              {r.isOption && (
+                                <div className="flex items-center gap-1 mt-1">
+                                  <TriangleAlert className="h-3 w-3 text-amber-500 flex-shrink-0" />
+                                  <p className="text-xs text-amber-600 leading-snug">{r.notes}</p>
+                                </div>
+                              )}
+                            </div>
+                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", section.textClass)}>{r.credits} cr</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.key === "math" && (
+                    <div className="space-y-1.5">
+                      {mathReqs.map((r) => (
+                        <div key={r.code} className={cn("flex items-start gap-3 px-3 py-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-baseline gap-2 flex-wrap">
+                              <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{r.code}</span>
+                              <span className="text-sm font-medium text-slate-800 leading-snug">{r.name}</span>
+                            </div>
+                            {r.notes && (
+                              <p className={cn("text-xs mt-0.5 leading-snug", r.code === "MTH 167" ? "text-amber-600 font-medium" : "text-slate-500")}>
+                                {r.notes}
+                              </p>
+                            )}
+                          </div>
+                          <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", section.textClass)}>{r.credits} cr</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.key === "science" && (
+                    <div className="space-y-1.5">
+                      <p className="text-xs font-semibold text-slate-500 mb-2">Choose any 2 courses (8 credits total):</p>
+                      {scienceOptions.map((c) => (
+                        <CourseChip key={c.code} {...c} textClass={section.textClass} bgClass={section.bgClass} borderClass={section.borderClass} />
+                      ))}
+                    </div>
+                  )}
+
+                  {section.key === "general-ed" && (
+                    <div className="space-y-2">
+                      {genEdSubSections.map((sub) => {
+                        const isSubOpen = expandedGenEdSub === sub.key
+                        const isHumFA = sub.key === "hum-fa"
+
+                        return (
+                          <div key={sub.key} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                            <button
+                              className={cn("w-full flex items-center justify-between px-3 py-2.5 text-left transition-colors", section.bgClass, "hover:brightness-95")}
+                              onClick={() => setExpandedGenEdSub(isSubOpen ? null : sub.key)}
+                              aria-expanded={isSubOpen}
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className={cn("text-xs font-semibold", section.textClass)}>{sub.label}</span>
+                                {!isHumFA && (
+                                  <span className="text-xs text-slate-500">— {(sub as { courses?: unknown[] }).courses?.length ?? 0} options</span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>
+                                  {sub.creditsRequired} cr
+                                </span>
+                                <ChevronDown
+                                  className={cn("h-3.5 w-3.5 transition-transform duration-200", section.textClass)}
+                                  style={{ transform: isSubOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                                />
+                              </div>
+                            </button>
+                            {isSubOpen && (
+                              <div className="bg-white px-3 py-3">
+                                {sub.note && (
+                                  <p className="text-xs text-slate-500 italic mb-2 leading-relaxed">{sub.note}</p>
+                                )}
+                                {isHumFA ? (
+                                  <div className="space-y-2">
+                                    {(sub as typeof genEdSubSections[3]).subGroups?.map((group) => {
+                                      const isGroupOpen = expandedHumSub === group.label
+                                      return (
+                                        <div key={group.label} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                                          <button
+                                            className={cn("w-full flex items-center justify-between px-3 py-2 text-left transition-colors", section.bgClass, "hover:brightness-95")}
+                                            onClick={() => setExpandedHumSub(isGroupOpen ? null : group.label)}
+                                          >
+                                            <span className={cn("text-xs font-semibold", section.textClass)}>{group.label}</span>
+                                            <div className="flex items-center gap-2">
+                                              <span className="text-xs text-slate-500">{group.courses.length} options</span>
+                                              <ChevronDown
+                                                className={cn("h-3 w-3 transition-transform duration-200", section.textClass)}
+                                                style={{ transform: isGroupOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                                              />
+                                            </div>
+                                          </button>
+                                          {isGroupOpen && (
+                                            <div className="bg-white px-3 py-2 space-y-1">
+                                              {group.courses.map((c) => (
+                                                <CourseChip key={c.code} {...c} textClass={section.textClass} bgClass={section.bgClass} borderClass={section.borderClass} />
+                                              ))}
+                                            </div>
+                                          )}
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                ) : (
+                                  <div className="space-y-1">
+                                    {(sub as { courses?: { code: string; name: string; credits: number }[] }).courses?.map((c) => (
+                                      <CourseChip key={c.code} {...c} textClass={section.textClass} bgClass={section.bgClass} borderClass={section.borderClass} />
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+
+                  {section.key === "elective" && (
+                    <div className="space-y-1.5">
+                      <p className="text-xs font-semibold text-slate-500 mb-2">Approved elective options:</p>
+                      {approvedElectives.map((c) => (
+                        <CourseChip key={c.code} {...c} textClass={section.textClass} bgClass={section.bgClass} borderClass={section.borderClass} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
+        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Credit Breakdown</p>
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-700">Program Requirements (Option 1)</span>
+            <span className="text-sm font-bold tabular-nums text-slate-900">{OPTION1_CREDITS.programReqs} credits</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-700">General Education</span>
+            <span className="text-sm font-bold tabular-nums text-slate-900">20–22 credits</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-700">Electives (Option 1)</span>
+            <span className="text-sm font-bold tabular-nums text-slate-900">3–4 credits</span>
+          </div>
+          <Separator className="bg-slate-100" />
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-slate-700">Option 1 Total</span>
+            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>60–63 credits</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-slate-700">Option 2 Total</span>
+            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>61–66 credits</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-between">
+        <p className="text-xs text-slate-400">Source: {novaCSAssociate.source}</p>
+        <Button
+          size="sm"
+          className="gap-1.5 text-white text-xs"
+          style={{ backgroundColor: "var(--brand)" }}
+          onClick={() => navigate("/planner")}
+        >
+          Plan this degree
+          <ArrowRight className="h-3 w-3" />
+        </Button>
+      </div>
+    </div>
+  )
+}

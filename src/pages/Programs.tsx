@@ -9,6 +9,7 @@ import { degreePlans, type DegreePlan } from "@/data/degrees"
 import { vsuCSBachelorfull } from "@/data/vsuCSDegree"
 import { navigate } from "@/lib/router"
 import { VSUDegreePanel } from "@/pages/programs/VSUDegreePanel"
+import { NOVADegreePanel } from "@/pages/programs/NOVADegreePanel"
 
 const associateDegrees = degreePlans.filter((p) =>
   p.degree.toLowerCase().includes("associate")
@@ -22,7 +23,7 @@ const categoryColors: Record<string, string> = {
   core: "var(--brand)",
   math: "oklch(0.55 0.18 250)",
   "general-ed": "oklch(0.55 0.15 145)",
-  science: "oklch(0.55 0.18 60)",
+  science: "oklch(0.50 0.18 60)",
   elective: "oklch(0.55 0.12 320)",
 }
 
@@ -112,6 +113,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
 
   const isAssociate = plan.degree.toLowerCase().includes("associate")
   const isVSU = plan.id === "vsu-cs-bs"
+  const isNOVA = plan.id === "nova-cs-as"
   const accentColor = isAssociate ? "var(--brand)" : "oklch(0.55 0.15 145)"
   const accentMuted = isAssociate ? "var(--brand-muted)" : "oklch(0.97 0.03 145)"
 
@@ -135,6 +137,14 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
     { cat: "core", label: "Core CS", credits: vsuCSBachelorfull.creditSummary.coreRequirements },
     { cat: "math", label: "Math", credits: vsuCSBachelorfull.creditSummary.majorConcentration },
     { cat: "elective", label: "Electives", credits: vsuCSBachelorfull.creditSummary.electives },
+  ]
+
+  const novaPills = [
+    { cat: "core", label: "Core CS", credits: "14" },
+    { cat: "math", label: "Math", credits: "16–21" },
+    { cat: "science", label: "Science", credits: "8" },
+    { cat: "general-ed", label: "Gen Ed", credits: "20" },
+    { cat: "elective", label: "Electives", credits: "3–12" },
   ]
 
   return (
@@ -166,7 +176,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Clock className="h-3 w-3" />
-                    <span className="font-medium">{plan.totalCredits} cr</span>
+                    <span className="font-medium">{isNOVA ? "60–66" : plan.totalCredits} cr</span>
                   </div>
                   <ChevronDown
                     className="h-4 w-4 text-muted-foreground transition-transform duration-200"
@@ -178,6 +188,17 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {isVSU ? (
                   vsuPills.map(({ cat, label, credits }) => (
+                    <div
+                      key={cat}
+                      className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
+                      style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
+                    >
+                      {label}
+                      <span className="opacity-80">{credits}cr</span>
+                    </div>
+                  ))
+                ) : isNOVA ? (
+                  novaPills.map(({ cat, label, credits }) => (
                     <div
                       key={cat}
                       className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
@@ -206,6 +227,8 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
           <CollapsibleContent>
             {isVSU ? (
               <VSUDegreePanel />
+            ) : isNOVA ? (
+              <NOVADegreePanel />
             ) : (
               <div style={{ backgroundColor: accentMuted }} className="px-5 py-4 border-t border-border">
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
