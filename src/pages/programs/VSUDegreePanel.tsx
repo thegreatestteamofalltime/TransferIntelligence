@@ -9,6 +9,19 @@ import { cn } from "@/lib/utils"
 
 const { creditSummary, requirements, electiveOptions } = vsuCSBachelorfull
 
+const GEN_ED_COURSES = [
+  { code: "ENGL 110", name: "English Composition I", credits: 3, note: "Freshman writing sequence" },
+  { code: "ENGL 111", name: "English Composition II", credits: 3, note: "Freshman writing sequence" },
+  { code: "ENGL 342/310", name: "Technical Communication", credits: 3, note: "Junior-level writing for CS" },
+  { code: "PHIL 275/450", name: "Ethics / Humanities", credits: 3, note: "Choose one philosophy course" },
+  { code: "HIST XXX", name: "History", credits: 3, note: "Any approved history course" },
+  { code: "SOSC XXX", name: "Social Science", credits: 3, note: "Any approved social science course" },
+  { code: "LITR XXX", name: "Literature", credits: 3, note: "Any approved literature course" },
+  { code: "GLBL XXX", name: "Global Studies", credits: 3, note: "Any approved global studies course" },
+  { code: "HLTH XXX", name: "Health / Wellness", credits: 2, note: "Physical education or wellness course" },
+  { code: "GEN ED", name: "Additional Gen Ed Electives", credits: 7, note: "Remaining credits to reach 33 total" },
+]
+
 const sections = [
   {
     key: "general-ed",
@@ -65,21 +78,34 @@ const sections = [
 ]
 
 const electiveColorMap: Record<string, { text: string; bg: string; border: string }> = {
-  csci: {
-    text: "text-blue-700",
-    bg: "bg-blue-50",
-    border: "border-blue-200",
-  },
-  math: {
-    text: "text-sky-700",
-    bg: "bg-sky-50",
-    border: "border-sky-200",
-  },
-  science: {
-    text: "text-emerald-700",
-    bg: "bg-emerald-50",
-    border: "border-emerald-200",
-  },
+  csci: { text: "text-blue-700", bg: "bg-blue-50", border: "border-blue-200" },
+  math: { text: "text-sky-700", bg: "bg-sky-50", border: "border-sky-200" },
+  science: { text: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
+}
+
+interface CourseRowProps {
+  code: string
+  name: string
+  credits: number
+  note?: string
+  textClass: string
+  bgClass: string
+  borderClass: string
+}
+
+function CourseRow({ code, name, credits, note, textClass, bgClass, borderClass }: CourseRowProps) {
+  return (
+    <div className={cn("flex items-start gap-3 px-3 py-2.5 rounded-lg border", borderClass, bgClass)}>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className={cn("text-xs font-mono font-bold flex-shrink-0", textClass)}>{code}</span>
+          <span className="text-sm font-medium text-slate-800 leading-snug">{name}</span>
+        </div>
+        {note && <p className="text-xs text-slate-500 mt-0.5 leading-snug">{note}</p>}
+      </div>
+      <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", textClass)}>{credits} cr</span>
+    </div>
+  )
 }
 
 export function VSUDegreePanel() {
@@ -99,7 +125,6 @@ export function VSUDegreePanel() {
   return (
     <div className="light px-5 py-5 border-t border-slate-200 bg-slate-50 text-slate-900">
 
-      {/* Plain-language header */}
       <div className="mb-5">
         <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
         <p className="text-xs text-slate-500 leading-relaxed">
@@ -107,17 +132,13 @@ export function VSUDegreePanel() {
         </p>
       </div>
 
-      {/* Credit bar */}
       <div className="mb-5">
         <div className="flex rounded-full overflow-hidden h-3 gap-px">
           {sections.map((s) => (
             <div
               key={s.key}
               className="h-full transition-all"
-              style={{
-                width: `${(s.credits / 120) * 100}%`,
-                backgroundColor: s.color,
-              }}
+              style={{ width: `${(s.credits / 120) * 100}%`, backgroundColor: s.color }}
               title={`${s.label}: ${s.credits} credits`}
             />
           ))}
@@ -134,25 +155,18 @@ export function VSUDegreePanel() {
 
       <Separator className="mb-4 bg-slate-200" />
 
-      {/* Sections */}
       <div className="space-y-2">
         {sections.map((section) => {
           const isOpen = expandedSection === section.key
           const Icon = section.icon
           const courses = coursesBySection[section.key]
           const isGenEd = section.key === "general-ed"
+          const isElective = section.key === "elective"
 
           return (
-            <div
-              key={section.key}
-              className={cn("rounded-xl border overflow-hidden transition-all", section.borderClass)}
-            >
+            <div key={section.key} className={cn("rounded-xl border overflow-hidden transition-all", section.borderClass)}>
               <button
-                className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
-                  section.bgClass,
-                  "hover:brightness-95"
-                )}
+                className={cn("w-full flex items-center gap-3 px-4 py-3 text-left transition-colors", section.bgClass, "hover:brightness-95")}
                 onClick={() => setExpandedSection(isOpen ? null : section.key)}
                 aria-expanded={isOpen}
               >
@@ -175,55 +189,47 @@ export function VSUDegreePanel() {
                   <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
                 </div>
                 <ChevronDown
-                  className={cn(
-                    "h-4 w-4 flex-shrink-0 transition-transform duration-200",
-                    section.textClass
-                  )}
+                  className={cn("h-4 w-4 flex-shrink-0 transition-transform duration-200", section.textClass)}
                   style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
                 />
               </button>
 
               {isOpen && (
                 <div className="bg-white px-4 pt-3 pb-4">
-                  {/* Plain-language tip */}
                   <div className="flex gap-2 mb-3 p-2.5 rounded-lg bg-slate-100">
                     <Info className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-slate-400" />
                     <p className="text-xs text-slate-500 leading-relaxed">{section.note}</p>
                   </div>
 
                   {isGenEd ? (
-                    <div className="space-y-2">
-                      {[
-                        { label: "English Composition (ENGL 110 & 111)", credits: 6, note: "Freshman writing sequence" },
-                        { label: "Technical Communication (ENGL 342 or 310)", credits: 3, note: "Junior-level writing for CS" },
-                        { label: "Ethics / Humanities (PHIL 275 or 450)", credits: 3, note: "Choose one philosophy course" },
-                        { label: "History", credits: 3, note: "Any approved history course" },
-                        { label: "Social Science", credits: 3, note: "Any approved social science course" },
-                        { label: "Literature", credits: 3, note: "Any approved literature course" },
-                        { label: "Global Studies", credits: 3, note: "Any approved global studies course" },
-                        { label: "Health / Wellness", credits: 2, note: "Physical education or wellness course" },
-                        { label: "Additional Gen Ed electives", credits: 7, note: "Remaining credits to reach 33 total" },
-                      ].map((item) => (
-                        <div key={item.label} className={cn("flex items-start gap-3 p-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
-                          <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 w-12", section.textClass)}>{item.credits} cr</span>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-slate-800 leading-snug">{item.label}</p>
-                            <p className="text-xs text-slate-500 mt-0.5">{item.note}</p>
-                          </div>
-                        </div>
+                    <div className="space-y-1.5">
+                      {GEN_ED_COURSES.map((item) => (
+                        <CourseRow
+                          key={item.code}
+                          code={item.code}
+                          name={item.name}
+                          credits={item.credits}
+                          note={item.note}
+                          textClass={section.textClass}
+                          bgClass={section.bgClass}
+                          borderClass={section.borderClass}
+                        />
                       ))}
                     </div>
-                  ) : section.key === "elective" ? (
+                  ) : isElective ? (
                     <div className="space-y-3">
                       <div className="space-y-1.5">
                         {electiveReqs.map((req, i) => (
-                          <div key={i} className={cn("flex items-start gap-3 p-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
-                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 w-12", section.textClass)}>{req.credits} cr</span>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-slate-800 leading-snug">{req.name}</p>
-                              {req.notes && <p className="text-xs text-slate-500 mt-0.5">{req.notes}</p>}
-                            </div>
-                          </div>
+                          <CourseRow
+                            key={i}
+                            code={req.code}
+                            name={req.name}
+                            credits={req.credits}
+                            note={req.notes}
+                            textClass={section.textClass}
+                            bgClass={section.bgClass}
+                            borderClass={section.borderClass}
+                          />
                         ))}
                       </div>
 
@@ -253,13 +259,12 @@ export function VSUDegreePanel() {
                                   {group.note && (
                                     <p className="text-xs text-slate-500 italic mb-2 leading-relaxed">{group.note}</p>
                                   )}
-                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                                  <div className="space-y-1">
                                     {group.courses.map((c) => (
-                                      <div key={c.code} className="flex items-center gap-2 py-1">
-                                        <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", colors.text)}>
-                                          {c.code}
-                                        </span>
-                                        <span className="text-xs text-slate-500 leading-tight">{c.name}</span>
+                                      <div key={c.code} className={cn("flex items-center gap-2 px-3 py-2 rounded-lg border", colors.border, colors.bg)}>
+                                        <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", colors.text)}>{c.code}</span>
+                                        <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
+                                        <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", colors.text)}>{c.credits} cr</span>
                                       </div>
                                     ))}
                                   </div>
@@ -273,18 +278,16 @@ export function VSUDegreePanel() {
                   ) : (
                     <div className="space-y-1.5">
                       {courses?.map((course, i) => (
-                        <div key={i} className={cn("flex items-start gap-3 p-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
-                          <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 w-12", section.textClass)}>{course.credits} cr</span>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2 flex-wrap">
-                              <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{course.code}</span>
-                              <span className="text-sm font-medium text-slate-800 leading-snug">{course.name}</span>
-                            </div>
-                            {course.notes && (
-                              <p className="text-xs text-slate-500 mt-0.5 leading-snug">{course.notes}</p>
-                            )}
-                          </div>
-                        </div>
+                        <CourseRow
+                          key={i}
+                          code={course.code}
+                          name={course.name}
+                          credits={course.credits}
+                          note={course.notes}
+                          textClass={section.textClass}
+                          bgClass={section.bgClass}
+                          borderClass={section.borderClass}
+                        />
                       ))}
                     </div>
                   )}
@@ -295,7 +298,6 @@ export function VSUDegreePanel() {
         })}
       </div>
 
-      {/* Credit summary table */}
       <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Credit Breakdown</p>
         <div className="space-y-2">
@@ -307,10 +309,7 @@ export function VSUDegreePanel() {
                 <div className="w-20 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
                     className="h-full rounded-full"
-                    style={{
-                      width: `${(s.credits / 120) * 100}%`,
-                      backgroundColor: s.color,
-                    }}
+                    style={{ width: `${(s.credits / 120) * 100}%`, backgroundColor: s.color }}
                   />
                 </div>
                 <span className="text-sm font-bold tabular-nums text-slate-900 w-12 text-right">{s.credits} cr</span>
@@ -328,7 +327,6 @@ export function VSUDegreePanel() {
         </div>
       </div>
 
-      {/* Source + CTA */}
       <div className="mt-4 flex items-center justify-between">
         <p className="text-xs text-slate-400">Source: {vsuCSBachelorfull.source}</p>
         <Button
