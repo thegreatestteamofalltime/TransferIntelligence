@@ -10,6 +10,7 @@ const navLinks: { label: string; route: Route }[] = [
   { label: "Colleges", route: "/colleges" },
   { label: "Programs", route: "/programs" },
   { label: "Advisors", route: "/advisors" },
+  { label: "Agreements", route: "/agreements" },
   { label: "Terminology", route: "/terminology" },
 ]
 

@@ -12,6 +12,8 @@ import {
   Info,
   BookOpen,
   Layers,
+  FileText,
+  ShieldCheck,
   GraduationCap,
   School,
   ListChecks,
@@ -38,6 +40,7 @@ import {
   computeTransferResult,
   computeTargetDegreeGap,
 } from "./plannerUtils"
+import { VCCS_VSU_GAA, isVCCSInstitution } from "@/data/agreements/vccs-vsu-gaa"
 
 const STATUS_CONFIG: Record<
   TransferStatus,
@@ -270,6 +273,55 @@ function RequirementRow({ req, covered }: { req: DegreeRequirement; covered: boo
   )
 }
 
+function AgreementBanner({ currentSchool }: { currentSchool: string }) {
+  const gaa = VCCS_VSU_GAA
+  if (!isVCCSInstitution(currentSchool)) return null
+
+  return (
+    <div
+      className="mb-6 rounded-xl border p-4 flex items-start gap-3"
+      style={{
+        borderColor: "oklch(0.72 0.14 196 / 0.35)",
+        backgroundColor: "var(--brand-muted)",
+      }}
+    >
+      <ShieldCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "var(--brand)" }} />
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-2 mb-1">
+          <span className="text-sm font-semibold text-foreground">Guaranteed Admission Agreement</span>
+          <Badge
+            variant="outline"
+            className="text-xs"
+            style={{ borderColor: "oklch(0.72 0.14 196 / 0.4)", color: "var(--brand)" }}
+          >
+            GAA
+          </Badge>
+        </div>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          As a VCCS student, you may qualify for guaranteed admission to VSU by completing your{" "}
+          transfer associate degree (AA, AS, or AA&S) with a minimum {gaa.admissionRequirements.minimumGPA.toFixed(1)} GPA
+          and at least {gaa.admissionRequirements.minimumCreditsAtVCCS} credits at your current institution.
+          Completing your degree also satisfies all lower-division general education requirements at VSU.
+        </p>
+        <div className="flex flex-wrap items-center gap-3 mt-2">
+          <span className="text-xs text-muted-foreground flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            Data last updated: <strong className="text-foreground ml-0.5">{gaa.lastUpdated}</strong>
+          </span>
+          <button
+            onClick={() => navigate("/agreements")}
+            className="text-xs font-medium flex items-center gap-1 hover:underline"
+            style={{ color: "var(--brand)" }}
+          >
+            <FileText className="h-3 w-3" />
+            View full agreement
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 interface Props {
   currentSchool: string
   currentDegree: DegreePlan
@@ -328,6 +380,8 @@ export function PlannerResults({
           Edit
         </Button>
       </div>
+
+      <AgreementBanner currentSchool={currentSchool} />
 
       {agreement.status !== "current" && (
         <Alert className="mb-6" variant="destructive">

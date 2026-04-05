@@ -6,6 +6,7 @@ export type Route =
   | "/colleges"
   | "/programs"
   | "/advisors"
+  | "/agreements"
   | "/faq"
   | "/contact"
   | "/about"

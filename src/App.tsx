@@ -12,6 +12,7 @@ import { FAQPage } from "@/pages/FAQ"
 import { ContactPage } from "@/pages/Contact"
 import { AboutPage } from "@/pages/About"
 import { ProgramsPage } from "@/pages/Programs"
+import { AgreementsPage } from "@/pages/Agreements"
 
 function RouterView({ route }: { route: Route }) {
   switch (route) {
@@ -29,6 +30,8 @@ function RouterView({ route }: { route: Route }) {
       return <ProgramsPage />
     case "/advisors":
       return <AdvisorsPage />
+    case "/agreements":
+      return <AgreementsPage />
     case "/faq":
       return <FAQPage />
     case "/contact":
