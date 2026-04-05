@@ -70,6 +70,9 @@ const BRIGHTPOINT_COURSES: CatalogCourse[] = [
   { code: "PLS 241", name: "Introduction to International Relations", credits: 3, subject: "PLS", school: "Brightpoint Community College" },
   { code: "SOC 211", name: "Cultural Anthropology", credits: 3, subject: "SOC", school: "Brightpoint Community College" },
   { code: "SOC 268", name: "Social Problems", credits: 3, subject: "SOC", school: "Brightpoint Community College" },
+  { code: "GEO 210", name: "People and the Land: Intro to Cultural Geography", credits: 3, subject: "GEO", school: "Brightpoint Community College" },
+  { code: "GEO 220", name: "World Regional Geography", credits: 3, subject: "GEO", school: "Brightpoint Community College" },
+  { code: "ENG 246", name: "American Literature", credits: 3, subject: "ENG", school: "Brightpoint Community College" },
 ]
 
 const NOVA_COURSES: CatalogCourse[] = [

@@ -10,6 +10,7 @@ import { vsuCSBachelorfull } from "@/data/vsuCSDegree"
 import { navigate } from "@/lib/router"
 import { VSUDegreePanel } from "@/pages/programs/VSUDegreePanel"
 import { NOVADegreePanel } from "@/pages/programs/NOVADegreePanel"
+import { BCCDegreePanel } from "@/pages/programs/BCCDegreePanel"
 
 const associateDegrees = degreePlans.filter((p) =>
   p.degree.toLowerCase().includes("associate")
@@ -114,6 +115,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
   const isAssociate = plan.degree.toLowerCase().includes("associate")
   const isVSU = plan.id === "vsu-cs-bs"
   const isNOVA = plan.id === "nova-cs-as"
+  const isBCC = plan.id === "brightpoint-cs-as"
   const accentColor = isAssociate ? "var(--brand)" : "oklch(0.55 0.15 145)"
   const accentMuted = isAssociate ? "var(--brand-muted)" : "oklch(0.97 0.03 145)"
 
@@ -147,6 +149,14 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
     { cat: "elective", label: "Electives", credits: "3–8" },
   ]
 
+  const bccPills = [
+    { cat: "core", label: "Core CS", credits: "17" },
+    { cat: "math", label: "Math", credits: "8" },
+    { cat: "science", label: "Science", credits: "8" },
+    { cat: "general-ed", label: "Gen Ed", credits: "19" },
+    { cat: "elective", label: "Electives", credits: "8+" },
+  ]
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <Card className="overflow-hidden hover:shadow-md transition-shadow">
@@ -178,6 +188,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                     <Clock className="h-3 w-3" />
                     <span className="font-medium">{isNOVA ? "58–63" : plan.totalCredits} cr</span>
                   </div>
+
                   <ChevronDown
                     className="h-4 w-4 text-muted-foreground transition-transform duration-200"
                     style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
@@ -208,6 +219,17 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                       <span className="opacity-80">{credits}cr</span>
                     </div>
                   ))
+                ) : isBCC ? (
+                  bccPills.map(({ cat, label, credits }) => (
+                    <div
+                      key={cat}
+                      className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white"
+                      style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
+                    >
+                      {label}
+                      <span className="opacity-80">{credits}cr</span>
+                    </div>
+                  ))
                 ) : (
                   Object.entries(categoryCounts).map(([cat, credits]) => (
                     <div
@@ -229,6 +251,8 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
               <VSUDegreePanel />
             ) : isNOVA ? (
               <NOVADegreePanel />
+            ) : isBCC ? (
+              <BCCDegreePanel />
             ) : (
               <div style={{ backgroundColor: accentMuted }} className="px-5 py-4 border-t border-border">
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">

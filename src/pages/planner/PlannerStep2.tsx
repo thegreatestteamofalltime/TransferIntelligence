@@ -106,7 +106,7 @@ function getCoursesForRequirement(req: DegreeRequirement, catalog: CatalogCourse
     return catalog.filter((c) => ["BIO", "CHM", "PHY", "GOL"].includes(c.subject))
   }
   if (u.includes("APPROVED") || name.includes("ELECTIVE")) {
-    return catalog.filter((c) => ["CSC", "EGR", "MTH", "CST", "PHY", "BIO", "CHM", "GOL"].includes(c.subject) && !["MTH 167", "MTH 263", "MTH 264", "CSC 221", "CSC 222", "CSC 223", "CSC 208"].includes(c.code))
+    return catalog.filter((c) => ["CSC", "EGR", "MTH", "CST", "PHY", "BIO", "CHM", "GOL", "ITE"].includes(c.subject) && !["MTH 167", "MTH 263", "MTH 264", "CSC 221", "CSC 222", "CSC 223", "CSC 208", "CSC 205"].includes(c.code))
   }
 
   return []
