@@ -1,0 +1,138 @@
+# Hackathon
+
+## Team Instructions
+
+Each participating team must select one problem statement from this document and propose an AI-driven solution. 
+
+You may make reasonable assumptions where necessary, but these must be clearly justified in your presentation.
+
+You are expected to:
+• Clearly identify and analyze the problem, including user needs and key challenges
+• Design well-thought-out system with innovative features
+• Incorporate appropriate AI techniques and explain how they contribute to your solution
+• Justify your design decisions, including assumptions and trade-offs
+• Build a working prototype demonstrating core functionality
+• Prepare a clear and engaging presentation to explain and demonstrate your solution (10 mins)
+
+Teams must ensure that their work aligns with the judging criteria provided below, as all submissions will be evaluated based on these dimensions.
+
+## Judging Criteria
+
+Criterion 1: Problem Understanding
+• Clarity in identifying the problem
+• Understanding user needs
+• Identifying the challenges
+Weight: 20%
+
+Criterion 2: Solution Design & Innovation
+• Creativity, originality, and quality of the overall system design
+• Thoughtful approach beyond basic or obvious solutions
+• Features included in the solution
+Weight: 30%
+
+Criterion 3: AI Usage & Appropriateness
+• Effective and meaningful use of AI techniques (e.g., vision, NLP, recommendation)
+• Clear justification of how AI improves the solution
+Weight: 20%
+
+Criterion 4: Presentation & Explanation
+• Clarity of presentation, quality of demonstration
+• Ability to explain system design, decisions, and limitations
+Weight: 20%
+
+Criterion 5: Prototype & Functionality
+• Working prototype demonstrating core features (input → processing → output)
+• Completeness and technical execution
+Weight: 10%
+
+## Problem 3: College Transfer Planning Advising
+
+### The problem
+
+Community college students who intend to transfer to a four-year institution face a complex and often opaque process. Articulation agreements between institutions specify which courses transfer and how they map to degree requirements, but these agreements vary by school, change over time, and are frequently buried in dense catalogs that students struggle to navigate. The consequences of poor transfer planning are: students take courses that do not count toward their intended degree, waste time and financial aid, and in some cases are forced to repeat coursework.
+
+### Design considerations
+• How would the system keep its articulation data current as institutions update their transfer policies?
+• How should the system handle ambiguous or conflicting articulation rules across different target institutions?
+• What safeguards would prevent students from relying on the system’s recommendations as a substitute for official academic advising?
+• How do you design the system so that it is accessible and useful to first-generation college students who may be unfamiliar with transfer terminology?
+• What happens when the system cannot find a clean transfer path — how does it communicate that honestly without discouraging the student?
+
+## Deadline
+
+Solutions are due on April 5th. Presentations will be held on April 6th at 3:00 PM.
+
+## Team Gathered Requirements
+
+• Articulation agreements that automatically update based on new/updated transfer policies
+• A way to "handle" ambiguous/conflicting rules in articulation agreements
+• Academic advisor directory; warnings about possible out of date information
+• Terminology index; hover-over word definitions
+• Offer alternative pathways if there is no clear transfer path; provide advisor information; a simple breakdown of what doesn't map out and why
+
+## Assumptions
+
+• We assume that all publicly accessible degree information, articulation agreements, school contacts and course catalogues for colleges are up-to-date, accurate, and free to use as reference
+
+## Team Ideas
+
+• Landing page with title, tagline, mission statement, and quick links
+• Get-started guide page
+• Visual roadmap of colleges, programs, and courses
+• Header with navigations (that persist on every page on desktop; hidden in a hamburger menu on mobile)
+• Way for user to provide information (transcript) that integrates with the site
+• Conversational AI assistant that can answer simple questions in a friendly way, and otherwise provides advisor information when given complex problems or questions
+• Web app demo should include filler information of a student who currently goes to Brightpoint Community College and wants to transfer to VCU in Computer Science
+
+## Scope Statement
+TransferIntelligence (TransInt) is a web-based prototype designed to support community college students in planning their transfer to a four-year university.
+### Main Functions
+- Maps student's selected courses to university equivalents
+- Highlights transferable, partially transferable, and non-transferable credits
+- Identifies gaps in degree requirements
+- Offers suggested next steps toward successful transfer
+### Features
+- A simplified transfer planner (populated with degree information from a transfer path of Brightpoint Community College/Northern Virginia Community College → Virginia State University in Computer Science)
+- A course equivalency engine using structured mock and real mapping data
+- A live AI assistant, “Transfer Buddy,” powered by GPT-4o, which provides:
+1. Natural language explanations
+2. Transfer guidance
+3. Terminology support
+4. Escalation to advisors for complex cases
+- Informational pages explaining degree types, colleges in network, articulation agreements, transfer terminology, and advising resources
+### Limitations
+- Static, predefined datasets
+- A single primary transfer pathway
+
+The system is intended for demonstration purposes only and does not replace official academic advising or institutional transfer evaluations.
+
+## Sources Used
+
+https://www.transfervirginia.org/
+
+    Articulation agreements
+    Colleges, contacts
+
+https://www.vccs.edu/transfer-programs/
+
+    General transfer information
+
+https://courses.vccs.edu/
+
+    VCCS courses
+
+https://catalog.vsu.edu/
+
+    VSU degrees, courses
+
+https://www.vsu.edu/admissions/course-equivalency/
+
+    VSU course equivalency for transferring credits
+
+https://catalog.nvcc.edu/
+
+    NVCC degrees, courses
+
+https://catalog.brightpoint.edu/
+
+    BCC degrees, courses
