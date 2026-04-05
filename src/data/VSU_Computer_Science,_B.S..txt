@@ -1,0 +1,98 @@
+﻿Computer Science, B.S.
+Virginia State University
+
+
+Core Requirements: 54 credits
+CSCI 101    Intro the Cmptr Sci Profession    2
+CSCI 150    Programming I    3
+CSCI 151    Programming 1 Lab    1
+CSCI 250    Programming II    3
+CSCI 251    Programming II Lab    1
+CSCI 281    Discrete Structures    3
+CSCI 287    Data Structures    3
+CSCI 296    Web Programming    3
+CSCI 303    Computer Org & Architecture    3
+CSCI 356    Database Systems    3
+CSCI 358    Introd Information Assurance    3
+CSCI 392    Algorithms & Adv Data Structur    3
+CSCI 400    Computer Science Seminar    2
+CSCI 445    Computer Communication Network    3
+CSCI 471    Parallel & Distributed Program    3
+CSCI 485    Programming Languages    3
+CSCI 487    Software Design And Developmen    3
+CSCI 489    Operating Systems    3
+CSCI 493    Senior Project I    3
+CSCI 494    Senior Project II    3
+
+Major/Concentration Requirements: 14 credits
+MATH 260    Calculus I    4
+MATH 261    Calculus II    4
+MATH 280    Discrete Math Computer Science    3
+STAT 340    Probability Stat Cmptr Scienti    3
+
+Electives Requirements: 19 credits
+Unrestricted Electives: 6 credits
+Restricted Electives: 13 credits
+
+CSCI Elective Options
+CSCI 312 – Introduction to Robotics (3)
+CSCI 361 – Embedded Systems: Design/Application (3)
+CSCI 389 – Human-Computer Interaction (3)
+CSCI 396 – Advanced Web Programming (3)
+CSCI 298 – Internship Computer Science I (3)
+CSCI 398 – Internship Computer Science II (3)
+CSCI 402 – Introduction to Artificial Intelligence (3)
+CSCI 450 – Computer Forensics (3)
+CSCI 451 – Computer Security (3)
+CSCI 452 – Introduction to Cryptography (3)
+CSCI 453 – Digital Image Processing (3)
+CSCI 456 – Advanced Database Applications (3)
+CSCI 457 – Introduction to Data Mining (3)
+CSCI 460 – Computability & Formal Language Theory (3)
+CSCI 462 – Compiler Construction (3)
+CSCI 480 – Computer Graphics (3)
+CSCI 482 – Matrix Computations (3)
+CSCI 488 – Advanced Systems Architecture (3)
+CSCI 492 – Algorithms and Complexity (3)
+CSCI 495 – Topics in Computer Science (3)
+CSCI 496 – Web Design & Cyber Security (3)
+
+MATH Elective Options
+MATH 292 – Number Theory (3)
+MATH 317 – Stochastic Processes (3)
+MATH 321 – Combinatorics (3)
+MATH 325 – Linear Algebra (3)
+MATH 335 – Mathematical Modeling (3)
+MATH 340 – Geometry (3)
+MATH 348 – Game Theory (3)
+MATH 350 – Differential Equations (3)
+MATH 352 – Mathematical Biology (3)
+MATH 360 – Calculus III (3)
+MATH 392 – Linear Programming (3)
+MATH 415 – Matrix Theory (3)
+MATH 417 – Numerical Linear Algebra (3)
+MATH 425 – Abstract Algebra I (3)
+MATH 452 – Numerical Analysis (3)
+MATH 473 – Wavelets (3)
+MATH 490 – Graph Theory (3)
+STAT 380 – Probability & Statistics II (3)
+
+BIOL/CHEM/PHYS Laboratory Course Options
+Courses must be intended for science and engineering majors. Select from the following list and get the approval from the student’s academic advisor.
+PHYS 105 – Introduction to Physics I (4)
+PHYS 106 – Introduction to Physics II (4)
+PHYS 112 – General Physics I (4)
+PHYS 113 – General Physics II (4)
+CHEM 151 – General Chemistry I (3)
+CHEM 153 – General Chemistry I Lab (1)
+CHEM 152 – General Chemistry II (3)
+CHEM 154 – General Chemistry II Lab (1)
+BIOL 120 – Principles of Biology I (4)
+BIOL 121 – Principles of Biology II (4)
+
+Summary
+General Education: 33 credits
+Core Requirements: 54 credits
+Major/Concentration Requirements: 14 credits
+Electives: 19 credits
+Total Credit Hours: 120
