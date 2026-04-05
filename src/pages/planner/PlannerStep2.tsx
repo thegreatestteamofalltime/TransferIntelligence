@@ -355,7 +355,7 @@ export function PlannerStep2({
               <CheckCircle2 className="h-4 w-4" />
               Selected Courses
               <Badge variant="secondary" className="ml-auto text-xs">
-                {completedCourses.length} courses · {totalCompletedCredits} cr
+                {completedCourses.length} courses · {totalCompletedCredits} credits
               </Badge>
             </CardTitle>
           </CardHeader>
@@ -522,7 +522,7 @@ export function PlannerStep2({
       <div className="mt-3 rounded-lg border bg-muted/30 px-4 py-3 flex items-center justify-between">
         <span className="text-sm text-muted-foreground">Total credits selected</span>
         <span className="text-sm font-semibold tabular-nums" style={{ color: "var(--brand)" }}>
-          {totalCompletedCredits} cr
+          {totalCompletedCredits}
         </span>
       </div>
 
@@ -663,7 +663,7 @@ function CourseRow({ course, selected, isRequired, onClick }: CourseRowProps) {
             req
           </Badge>
         )}
-        <span className="text-xs text-muted-foreground">{course.credits} cr</span>
+        <abbr title="credits" className="text-xs text-muted-foreground no-underline">{course.credits}</abbr>
       </div>
     </button>
   )

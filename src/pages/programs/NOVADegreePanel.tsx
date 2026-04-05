@@ -266,7 +266,7 @@ function CourseChip({ code, name, credits, textClass, bgClass, borderClass }: Co
     <div className={cn("flex items-center gap-2 px-2.5 py-2 rounded-lg border", borderClass, bgClass)}>
       <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-16", textClass)}>{code}</span>
       <span className="text-xs text-slate-600 leading-tight flex-1">{name}</span>
-      <span className={cn("text-xs font-bold tabular-nums flex-shrink-0 ml-1", textClass)}>{credits}cr</span>
+      <abbr title="credits" className={cn("text-xs font-bold tabular-nums flex-shrink-0 ml-1 no-underline", textClass)}>{credits}</abbr>
     </div>
   )
 }
@@ -295,7 +295,7 @@ function ChooseOneDropdown({ label, courses, textClass, bgClass, borderClass, is
           <span className="text-xs text-slate-500">— {label}</span>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          {creditNote && <span className={cn("text-xs font-bold tabular-nums", textClass)}>{creditNote}</span>}
+          {creditNote && <abbr title="credits" className={cn("text-xs font-bold tabular-nums no-underline", textClass)}>{creditNote}</abbr>}
           <ChevronDown
             className={cn("h-3.5 w-3.5 transition-transform duration-200", textClass)}
             style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
@@ -455,8 +455,9 @@ export function NOVADegreePanel() {
                     <Badge
                       className="text-xs font-bold px-2 py-0 text-white border-0"
                       style={{ backgroundColor: section.color }}
+                      title="credits"
                     >
-                      {credits} cr
+                      {credits}
                     </Badge>
                   </div>
                   <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
@@ -497,7 +498,7 @@ export function NOVADegreePanel() {
                         borderClass={section.borderClass}
                         isOpen={expandedChooseOne === "core-org"}
                         onToggle={() => setExpandedChooseOne(expandedChooseOne === "core-org" ? null : "core-org")}
-                        creditNote="3–4 cr"
+                        creditNote="3–4"
                       />
                     </div>
                   )}
@@ -532,7 +533,7 @@ export function NOVADegreePanel() {
                                 </p>
                               )}
                             </div>
-                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>5 cr</span>
+                            <abbr title="credits" className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2 no-underline", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>5</abbr>
                           </div>
                         )
                       })()}
@@ -548,7 +549,7 @@ export function NOVADegreePanel() {
                             </div>
                             <p className="text-xs text-slate-500 mt-0.5 leading-snug">{r.note}</p>
                           </div>
-                          <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", section.textClass)}>{r.credits} cr</span>
+                          <abbr title="credits" className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2 no-underline", section.textClass)}>{r.credits}</abbr>
                         </div>
                       ))}
                       {/* MTH 264 / MTH 245 choice */}
@@ -563,7 +564,7 @@ export function NOVADegreePanel() {
                         borderClass={section.borderClass}
                         isOpen={expandedChooseOne === "math-calc2"}
                         onToggle={() => setExpandedChooseOne(expandedChooseOne === "math-calc2" ? null : "math-calc2")}
-                        creditNote="3–4 cr"
+                        creditNote="3–4"
                       />
                       {/* CSC 208 / MTH 288 choice */}
                       <ChooseOneDropdown
@@ -577,7 +578,7 @@ export function NOVADegreePanel() {
                         borderClass={section.borderClass}
                         isOpen={expandedChooseOne === "math-discrete"}
                         onToggle={() => setExpandedChooseOne(expandedChooseOne === "math-discrete" ? null : "math-discrete")}
-                        creditNote="3 cr"
+                        creditNote="3"
                       />
                     </div>
                   )}
@@ -611,9 +612,9 @@ export function NOVADegreePanel() {
                                 )}
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
-                                <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>
-                                  {sub.creditsRequired} cr
-                                </span>
+                                <abbr title="credits" className={cn("text-xs font-bold tabular-nums no-underline", section.textClass)}>
+                                  {sub.creditsRequired}
+                                </abbr>
                                 <ChevronDown
                                   className={cn("h-3.5 w-3.5 transition-transform duration-200", section.textClass)}
                                   style={{ transform: isSubOpen ? "rotate(180deg)" : "rotate(0deg)" }}
@@ -700,7 +701,7 @@ export function NOVADegreePanel() {
                   <div className="w-20 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                     <div className="h-full rounded-full" style={{ width: `${barWidth}%`, backgroundColor: s.color }} />
                   </div>
-                  <span className="text-sm font-bold tabular-nums text-slate-900 w-16 text-right">{credits} cr</span>
+                  <abbr title="credits" className="text-sm font-bold tabular-nums text-slate-900 w-16 text-right no-underline">{credits}</abbr>
                 </div>
               </div>
             )
@@ -711,9 +712,9 @@ export function NOVADegreePanel() {
             <span className="text-sm font-semibold text-slate-900 flex-1">
               Total Minimum Credits
             </span>
-            <span className="text-sm font-bold tabular-nums w-16 text-right" style={{ color: "var(--brand)" }}>
-              {placement === "option1" ? "60" : "58"} cr
-            </span>
+            <abbr title="credits" className="text-sm font-bold tabular-nums w-16 text-right no-underline" style={{ color: "var(--brand)" }}>
+              {placement === "option1" ? "60" : "58"}
+            </abbr>
           </div>
         </div>
       </div>

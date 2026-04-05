@@ -214,7 +214,7 @@ function CourseChip({ code, name, credits, textClass, bgClass, borderClass }: Co
     <div className={cn("flex items-center gap-2 px-2.5 py-2 rounded-lg border", borderClass, bgClass)}>
       <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-16", textClass)}>{code}</span>
       <span className="text-xs text-slate-600 leading-tight flex-1">{name}</span>
-      <span className={cn("text-xs font-bold tabular-nums flex-shrink-0 ml-1", textClass)}>{credits}cr</span>
+      <abbr title="credits" className={cn("text-xs font-bold tabular-nums flex-shrink-0 ml-1 no-underline", textClass)}>{credits}</abbr>
     </div>
   )
 }
@@ -240,7 +240,7 @@ function SequenceDropdown({ sequence, textClass, bgClass, borderClass, isOpen, o
           <span className={cn("text-xs font-semibold", textClass)}>{sequence.label}</span>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <span className={cn("text-xs font-bold tabular-nums", textClass)}>8 cr</span>
+          <abbr title="credits" className={cn("text-xs font-bold tabular-nums no-underline", textClass)}>8</abbr>
           <ChevronDown
             className={cn("h-3.5 w-3.5 transition-transform duration-200", textClass)}
             style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
@@ -344,8 +344,9 @@ export function BCCDegreePanel() {
                     <Badge
                       className="text-xs font-bold px-2 py-0 text-white border-0"
                       style={{ backgroundColor: section.color }}
+                      title="credits"
                     >
-                      {credits} cr
+                      {credits}
                     </Badge>
                   </div>
                   <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
@@ -416,9 +417,9 @@ export function BCCDegreePanel() {
                                 )}
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
-                                <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>
-                                  {sub.creditsRequired} cr
-                                </span>
+                                <abbr title="credits" className={cn("text-xs font-bold tabular-nums no-underline", section.textClass)}>
+                                  {sub.creditsRequired}
+                                </abbr>
                                 <ChevronDown
                                   className={cn("h-3.5 w-3.5 transition-transform duration-200", section.textClass)}
                                   style={{ transform: isSubOpen ? "rotate(180deg)" : "rotate(0deg)" }}
@@ -473,7 +474,7 @@ export function BCCDegreePanel() {
                   <div className="w-20 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                     <div className="h-full rounded-full" style={{ width: `${barWidth}%`, backgroundColor: s.color }} />
                   </div>
-                  <span className="text-sm font-bold tabular-nums text-slate-900 w-16 text-right">{credits} cr</span>
+                  <abbr title="credits" className="text-sm font-bold tabular-nums text-slate-900 w-16 text-right no-underline">{credits}</abbr>
                 </div>
               </div>
             )
@@ -482,9 +483,9 @@ export function BCCDegreePanel() {
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 flex-shrink-0" />
             <span className="text-sm font-semibold text-slate-900 flex-1">Total Minimum Credits</span>
-            <span className="text-sm font-bold tabular-nums w-16 text-right" style={{ color: "var(--brand)" }}>
-              60 cr
-            </span>
+            <abbr title="credits" className="text-sm font-bold tabular-nums w-16 text-right no-underline" style={{ color: "var(--brand)" }}>
+              60
+            </abbr>
           </div>
         </div>
       </div>

@@ -124,7 +124,7 @@ function CourseCard({ mapping }: { mapping: CourseMapping }) {
             <Badge className={`text-xs ${config.color} ${config.bg} border ${config.border} font-medium whitespace-nowrap`} variant="outline">
               {config.label}
             </Badge>
-            <span className="text-xs text-muted-foreground hidden sm:block">{mapping.sourceCredits} cr</span>
+            <abbr title="credits" className="text-xs text-muted-foreground hidden sm:block no-underline">{mapping.sourceCredits}</abbr>
             {hasDetails && (
               <button onClick={() => setOpen(!open)} className="text-muted-foreground hover:text-foreground transition-colors">
                 <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -231,7 +231,7 @@ function RemainingDegreeCourses({
                   Courses Still Needed for {currentDegree.abbreviation} Degree
                 </h2>
                 <Badge variant="secondary" className="text-xs">
-                  {remainingRequirements.length} courses · {remainingCredits} cr
+                  {remainingRequirements.length} courses · {remainingCredits} credits
                 </Badge>
                 <ChevronDown className={`h-4 w-4 text-muted-foreground flex-shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
               </div>
@@ -268,7 +268,7 @@ function RequirementRow({ req, covered }: { req: DegreeRequirement; covered: boo
         </div>
         {req.notes && <p className="text-xs text-muted-foreground/70 mt-0.5 leading-snug">{req.notes}</p>}
       </div>
-      <span className="text-xs text-muted-foreground flex-shrink-0">{req.credits} cr</span>
+      <abbr title="credits" className="text-xs text-muted-foreground flex-shrink-0 no-underline">{req.credits}</abbr>
     </div>
   )
 }
@@ -547,7 +547,7 @@ export function PlannerResults({
                     Remaining Courses at {targetSchool}
                   </h2>
                   <Badge variant="secondary" className="text-xs">
-                    {targetGap.remainingAtTarget.length} courses · {targetGap.totalRemainingCredits} cr
+                    {targetGap.remainingAtTarget.length} courses · {targetGap.totalRemainingCredits} credits
                   </Badge>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </div>

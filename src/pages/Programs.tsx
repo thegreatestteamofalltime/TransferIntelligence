@@ -187,9 +187,9 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                   <div className="flex flex-col items-end gap-0">
                     <div className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Clock className="h-3 w-3" />
-                      <span className="font-medium">{isNOVA ? "58" : plan.totalCredits} cr</span>
+                      <abbr title="credits" className="font-medium no-underline">{isNOVA ? "58" : plan.totalCredits}</abbr>
                     </div>
-                    <span className="text-[10px] text-muted-foreground/60">minimum</span>
+                    <span className="text-[10px] text-muted-foreground/60">min. credits</span>
                   </div>
 
                   <ChevronDown
@@ -208,7 +208,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                       style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
                     >
                       {label}
-                      <span className="opacity-80">{credits}cr</span>
+                      <span className="opacity-80">{credits}</span>
                     </div>
                   ))
                 ) : isNOVA ? (
@@ -219,7 +219,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                       style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
                     >
                       {label}
-                      <span className="opacity-80">{credits}cr</span>
+                      <span className="opacity-80">{credits}</span>
                     </div>
                   ))
                 ) : isBCC ? (
@@ -230,7 +230,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                       style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
                     >
                       {label}
-                      <span className="opacity-80">{credits}cr</span>
+                      <span className="opacity-80">{credits}</span>
                     </div>
                   ))
                 ) : (
@@ -241,7 +241,7 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                       style={{ backgroundColor: categoryColors[cat] ?? "var(--muted-foreground)" }}
                     >
                       {categoryLabels[cat] ?? cat}
-                      <span className="opacity-80">{credits}cr</span>
+                      <span className="opacity-80">{credits}</span>
                     </div>
                   ))
                 )}
@@ -320,9 +320,9 @@ function CourseRow({ course }: { course: DegreePlan["requirements"][number] }) {
           <p className="text-xs text-muted-foreground/70 mt-0.5 leading-snug">{course.notes}</p>
         )}
       </div>
-      <span className="text-xs font-medium flex-shrink-0" style={{ color }}>
-        {course.credits}cr
-      </span>
+      <abbr title="credits" className="text-xs font-medium flex-shrink-0 no-underline" style={{ color }}>
+        {course.credits}
+      </abbr>
     </div>
   )
 }

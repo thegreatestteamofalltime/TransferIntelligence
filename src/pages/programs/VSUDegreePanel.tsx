@@ -222,7 +222,7 @@ export function VSUDegreePanel() {
                                     <div key={c.code} className={cn("flex items-center gap-2 px-2 py-1.5 rounded border", section.borderClass, section.bgClass)}>
                                       <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", section.textClass)}>{c.code}</span>
                                       <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
-                                      <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", section.textClass)}>{c.credits} cr</span>
+                                      <abbr title="credits" className={cn("text-xs font-bold tabular-nums flex-shrink-0 no-underline", section.textClass)}>{c.credits}</abbr>
                                     </div>
                                   ))}
                                 </div>
