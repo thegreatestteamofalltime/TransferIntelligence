@@ -1,11 +1,13 @@
 import { useState } from "react"
-import { ChevronDown, ArrowRight, BookOpen, Calculator, FlaskConical, GraduationCap, Lightbulb, Info, TriangleAlert } from "lucide-react"
+import { ChevronDown, ArrowRight, BookOpen, Calculator, FlaskConical, GraduationCap, Lightbulb, Info, TriangleAlert, Circle as HelpCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { novaCSAssociate } from "@/data/degrees"
 import { navigate } from "@/lib/router"
 import { cn } from "@/lib/utils"
+
+type PlacementOption = "none" | "option1" | "option2"
 
 
 const sections = [
@@ -271,17 +273,36 @@ export function NOVADegreePanel() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const [expandedGenEdSub, setExpandedGenEdSub] = useState<string | null>(null)
   const [expandedHumSub, setExpandedHumSub] = useState<string | null>(null)
+  const [placement, setPlacement] = useState<PlacementOption>("none")
 
   const coreReqs = novaCSAssociate.requirements.filter((r) => r.category === "core")
-  const mathReqs = novaCSAssociate.requirements.filter((r) => r.category === "math")
+  const allMathReqs = novaCSAssociate.requirements.filter((r) => r.category === "math")
 
-  const sectionCreditMap: Record<string, number> = {
+  const mathReqs = placement === "option2"
+    ? allMathReqs.filter((r) => r.code !== "MTH 167")
+    : allMathReqs
+
+  const mathCredits = mathReqs.reduce((s, r) => s + r.credits, 0)
+
+  const totalRange = placement === "option1"
+    ? "60–63 credits"
+    : placement === "option2"
+    ? "58–62 credits"
+    : "58–63 credits"
+
+  const sectionCreditMap: Record<string, number | string> = {
     core: coreReqs.reduce((s, r) => s + r.credits, 0),
-    math: mathReqs.reduce((s, r) => s + r.credits, 0),
+    math: mathCredits,
     science: 8,
     "general-ed": 20,
-    elective: 3,
+    elective: placement === "option2" ? "6–8" : "3–4",
   }
+
+  const placementOptions: { value: PlacementOption; label: string; sublabel: string }[] = [
+    { value: "option1", label: "Need PreCalc", sublabel: "MTH 167 required" },
+    { value: "none", label: "Not sure yet", sublabel: "Show both options" },
+    { value: "option2", label: "Placed out", sublabel: "Skip MTH 167" },
+  ]
 
   return (
     <div className="light px-5 py-5 border-t border-slate-200 bg-slate-50 text-slate-900">
@@ -289,21 +310,54 @@ export function NOVADegreePanel() {
       <div className="mb-4">
         <p className="text-sm font-semibold text-slate-900 mb-1">What you need to graduate</p>
         <p className="text-xs text-slate-500 leading-relaxed">
-          This degree requires <strong className="text-slate-900">58–63 credits</strong> depending on your math placement. Tap any section to see the courses.
+          This degree requires <strong className="text-slate-900">{totalRange}</strong> depending on your math placement.
         </p>
       </div>
 
-      <div className="mb-4 grid grid-cols-2 gap-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-3">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Option 1</p>
-          <p className="text-xs text-slate-500 leading-snug">If PreCalculus is needed</p>
-          <p className="text-sm font-bold text-slate-900 mt-1">60–63 credits</p>
+      <div className="mb-4 rounded-xl border border-slate-200 bg-white p-3">
+        <div className="flex items-center gap-1.5 mb-2.5">
+          <HelpCircle className="h-3.5 w-3.5 text-slate-400 flex-shrink-0" />
+          <p className="text-xs font-semibold text-slate-600">Where do you place in math?</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Option 2</p>
-          <p className="text-xs text-slate-500 leading-snug">Placed out of PreCalculus</p>
-          <p className="text-sm font-bold text-slate-900 mt-1">55–58 credits</p>
+        <div className="grid grid-cols-3 gap-1.5">
+          {placementOptions.map((opt) => {
+            const isSelected = placement === opt.value
+            return (
+              <button
+                key={opt.value}
+                onClick={() => setPlacement(isSelected ? "none" : opt.value)}
+                className={cn(
+                  "flex flex-col items-center text-center px-2 py-2.5 rounded-lg border transition-all",
+                  isSelected
+                    ? "border-sky-400 bg-sky-50 shadow-sm"
+                    : "border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300"
+                )}
+              >
+                <span className={cn("text-xs font-semibold leading-snug", isSelected ? "text-sky-700" : "text-slate-700")}>
+                  {opt.label}
+                </span>
+                <span className={cn("text-[10px] leading-snug mt-0.5", isSelected ? "text-sky-500" : "text-slate-400")}>
+                  {opt.sublabel}
+                </span>
+              </button>
+            )
+          })}
         </div>
+        {placement === "none" && (
+          <p className="text-[10px] text-slate-400 mt-2 text-center">Select an option to see your personalized plan</p>
+        )}
+        {placement === "option1" && (
+          <div className="mt-2.5 flex items-start gap-1.5 rounded-lg bg-amber-50 border border-amber-200 px-2.5 py-2">
+            <TriangleAlert className="h-3 w-3 text-amber-500 flex-shrink-0 mt-0.5" />
+            <p className="text-[10px] text-amber-700 leading-relaxed">MTH 167 (5 cr) is required before Calculus. Your total is <strong>60–63 credits</strong>.</p>
+          </div>
+        )}
+        {placement === "option2" && (
+          <div className="mt-2.5 flex items-start gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-2">
+            <Info className="h-3 w-3 text-emerald-500 flex-shrink-0 mt-0.5" />
+            <p className="text-[10px] text-emerald-700 leading-relaxed">MTH 167 is skipped. Those credits become an additional elective, keeping your total at <strong>58–62 credits</strong>.</p>
+          </div>
+        )}
       </div>
 
       <Separator className="mb-4 bg-slate-200" />
@@ -338,7 +392,7 @@ export function NOVADegreePanel() {
                       className="text-xs font-bold px-2 py-0 text-white border-0"
                       style={{ backgroundColor: section.color }}
                     >
-                      {sectionCredits} credits
+                      {sectionCredits} cr
                     </Badge>
                   </div>
                   <p className="text-xs text-slate-500 mt-0.5 leading-snug">{section.description}</p>
@@ -382,22 +436,37 @@ export function NOVADegreePanel() {
 
                   {section.key === "math" && (
                     <div className="space-y-1.5">
-                      {mathReqs.map((r) => (
-                        <div key={r.code} className={cn("flex items-start gap-3 px-3 py-2.5 rounded-lg border", section.borderClass, section.bgClass)}>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2 flex-wrap">
-                              <span className={cn("text-xs font-mono font-bold flex-shrink-0", section.textClass)}>{r.code}</span>
-                              <span className="text-sm font-medium text-slate-800 leading-snug">{r.name}</span>
-                            </div>
-                            {r.notes && (
-                              <p className={cn("text-xs mt-0.5 leading-snug", r.code === "MTH 167" ? "text-amber-600 font-medium" : "text-slate-500")}>
-                                {r.notes}
-                              </p>
+                      {allMathReqs.map((r) => {
+                        const isSkipped = r.code === "MTH 167" && placement === "option2"
+                        const isHighlighted = r.code === "MTH 167" && placement === "option1"
+                        return (
+                          <div
+                            key={r.code}
+                            className={cn(
+                              "flex items-start gap-3 px-3 py-2.5 rounded-lg border transition-all",
+                              isSkipped
+                                ? "border-slate-200 bg-slate-50 opacity-50"
+                                : isHighlighted
+                                ? "border-amber-300 bg-amber-50"
+                                : cn(section.borderClass, section.bgClass)
                             )}
+                          >
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-baseline gap-2 flex-wrap">
+                                <span className={cn("text-xs font-mono font-bold flex-shrink-0", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>{r.code}</span>
+                                <span className={cn("text-sm font-medium leading-snug", isSkipped ? "text-slate-400 line-through" : "text-slate-800")}>{r.name}</span>
+                                {isSkipped && <span className="text-[10px] font-semibold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-full">not needed</span>}
+                              </div>
+                              {r.notes && !isSkipped && (
+                                <p className={cn("text-xs mt-0.5 leading-snug", isHighlighted ? "text-amber-600 font-medium" : "text-slate-500")}>
+                                  {r.notes}
+                                </p>
+                              )}
+                            </div>
+                            <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", isSkipped ? "text-slate-400" : isHighlighted ? "text-amber-700" : section.textClass)}>{r.credits} cr</span>
                           </div>
-                          <span className={cn("text-sm font-bold tabular-nums flex-shrink-0 ml-2", section.textClass)}>{r.credits} cr</span>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   )}
 
@@ -507,10 +576,20 @@ export function NOVADegreePanel() {
       <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Credit Breakdown</p>
         <div className="space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">PreCalculus Prerequisite (Option 1)</span>
-            <span className="text-sm font-bold tabular-nums text-slate-900">5 credits</span>
-          </div>
+          {placement !== "option2" && (
+            <div className={cn("flex items-center justify-between", placement === "none" && "opacity-60")}>
+              <span className={cn("text-sm", placement === "option1" ? "text-slate-700 font-medium" : "text-slate-500")}>
+                PreCalculus (MTH 167){placement === "none" && " — Option 1 only"}
+              </span>
+              <span className={cn("text-sm font-bold tabular-nums", placement === "option1" ? "text-amber-700" : "text-slate-400")}>5 credits</span>
+            </div>
+          )}
+          {placement === "option2" && (
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-500 line-through">PreCalculus (MTH 167)</span>
+              <span className="text-sm font-medium text-slate-400 line-through">5 credits</span>
+            </div>
+          )}
           <div className="flex items-center justify-between">
             <span className="text-sm text-slate-700">Program Requirements</span>
             <span className="text-sm font-bold tabular-nums text-slate-900">32 credits</span>
@@ -520,17 +599,19 @@ export function NOVADegreePanel() {
             <span className="text-sm font-bold tabular-nums text-slate-900">20–22 credits</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-700">Electives</span>
-            <span className="text-sm font-bold tabular-nums text-slate-900">3–4 credits</span>
+            <span className="text-sm text-slate-700">
+              Electives{placement === "option2" ? " (includes replaced PreCalc slot)" : ""}
+            </span>
+            <span className="text-sm font-bold tabular-nums text-slate-900">
+              {placement === "option2" ? "6–8 credits" : "3–4 credits"}
+            </span>
           </div>
           <Separator className="bg-slate-100" />
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-slate-700">Option 1 Total</span>
-            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>60–63 credits</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-slate-700">Option 2 Total</span>
-            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>55–58 credits</span>
+            <span className="text-sm font-semibold text-slate-700">
+              {placement === "none" ? "Total (both options)" : "Your Total"}
+            </span>
+            <span className="text-sm font-bold tabular-nums" style={{ color: "var(--brand)" }}>{totalRange}</span>
           </div>
         </div>
       </div>
