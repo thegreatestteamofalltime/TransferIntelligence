@@ -261,9 +261,9 @@ function RequirementRow({ req, covered }: { req: DegreeRequirement; covered: boo
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline gap-2">
           <span className="font-mono text-xs font-bold text-foreground">{req.code}</span>
-          <span className="text-xs text-muted-foreground truncate">{req.name}</span>
+          <span className="text-xs text-muted-foreground leading-snug">{req.name}</span>
         </div>
-        {req.notes && <p className="text-xs text-muted-foreground/70 mt-0.5 truncate">{req.notes}</p>}
+        {req.notes && <p className="text-xs text-muted-foreground/70 mt-0.5 leading-snug">{req.notes}</p>}
       </div>
       <span className="text-xs text-muted-foreground flex-shrink-0">{req.credits} cr</span>
     </div>

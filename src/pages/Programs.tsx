@@ -58,7 +58,7 @@ export function ProgramsPage() {
           </div>
           <div>
             <h2 className="text-lg font-bold">Associate Degrees</h2>
-            <p className="text-xs text-muted-foreground">A.S., A.A., A.A.S. and similar 2-year programs</p>
+            <p className="text-xs text-muted-foreground">A.S. and A.A. 2-year programs</p>
           </div>
         </div>
         <div className="grid gap-3">
@@ -287,7 +287,7 @@ function CourseRow({ course }: { course: DegreePlan["requirements"][number] }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline gap-2">
           <span className="text-xs font-mono font-semibold text-foreground whitespace-nowrap">{course.code}</span>
-          <span className="text-xs text-muted-foreground truncate">{course.name}</span>
+          <span className="text-xs text-muted-foreground leading-snug">{course.name}</span>
         </div>
         {course.notes && (
           <p className="text-xs text-muted-foreground/70 mt-0.5 leading-snug">{course.notes}</p>

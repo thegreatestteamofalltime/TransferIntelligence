@@ -100,8 +100,7 @@ export function GetStartedPage() {
         <Lightbulb className="h-4 w-4" style={{ color: "var(--brand)" }} />
         <AlertDescription className="text-sm">
           <strong style={{ color: "var(--brand)" }}>Pro Tip:</strong>{" "}
-          Completing an Associate of Arts and Sciences (AAS) degree at your community college before
-          transferring can guarantee admission to many Virginia universities through the VCCS Transfer Pathways program. Finishing the AAS means more of your classes are guaranteed to count at your new school.
+          Completing an Associate of Science (A.S.) or Associate of Arts (A.A.) degree at your community college before transferring can guarantee admission to many Virginia universities through the VCCS Transfer Pathways program. Finishing the degree means more of your classes are guaranteed to count at your new school.
         </AlertDescription>
       </Alert>
 

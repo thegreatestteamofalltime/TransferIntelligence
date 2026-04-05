@@ -487,10 +487,10 @@ export function PlannerStep2({
                           if (choiceCourses.length === 0) return null
                           return (
                             <div key={`${req.code}-${i}`} className="mt-2">
-                              <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-muted/50 mb-1">
+                              <div className="flex flex-wrap items-start gap-1 px-3 py-1.5 rounded bg-muted/50 mb-1">
                                 <span className="text-xs font-medium text-muted-foreground">{req.name}</span>
                                 {req.notes && (
-                                  <span className="text-xs text-muted-foreground/60 truncate">— {req.notes}</span>
+                                  <span className="text-xs text-muted-foreground/60 leading-snug">— {req.notes}</span>
                                 )}
                               </div>
                               <div className="space-y-1 pl-2">
@@ -650,7 +650,7 @@ function CourseRow({ course, selected, isRequired, onClick }: CourseRowProps) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-mono font-bold text-sm text-foreground">{course.code}</span>
-          <span className="text-xs text-muted-foreground truncate">{course.name}</span>
+          <span className="text-xs text-muted-foreground leading-snug">{course.name}</span>
         </div>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">

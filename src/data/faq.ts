@@ -45,7 +45,7 @@ export const faqs: FAQItem[] = [
     id: "6",
     question: "What is the VCCS Transfer Pathways program?",
     answer:
-      "The Virginia Community College System (VCCS) Transfer Pathways program is a statewide initiative that guarantees transfer admission to participating Virginia public universities for students who complete an Associate of Arts and Sciences (AAS) or Associate of Science (AS) degree with a qualifying GPA and curriculum requirements. It's one of the most direct and reliable ways to transfer in Virginia. Ask your advisor whether your current degree plan qualifies.",
+      "The Virginia Community College System (VCCS) Transfer Pathways program is a statewide initiative that guarantees transfer admission to participating Virginia public universities for students who complete an Associate of Science (A.S.) or Associate of Arts (A.A.) degree with a qualifying GPA and curriculum requirements. It's one of the most direct and reliable ways to transfer in Virginia. Ask your advisor whether your current degree plan qualifies.",
     category: "Virginia-Specific",
   },
   {

@@ -83,8 +83,8 @@ export function AdvisorsPage() {
                   {getInitials(advisor.name)}
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-sm leading-tight truncate">{advisor.name}</h3>
-                  <p className="text-xs text-muted-foreground truncate">{advisor.title}</p>
+                  <h3 className="font-semibold text-sm leading-tight">{advisor.name}</h3>
+                  <p className="text-xs text-muted-foreground leading-snug">{advisor.title}</p>
                 </div>
               </div>
 
