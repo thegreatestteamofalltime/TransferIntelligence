@@ -214,62 +214,64 @@ export function VSUDegreePanel() {
                       ))}
                     </div>
                   ) : isElective ? (
-                    <div className="space-y-3">
-                      <div className="space-y-1.5">
-                        {electiveReqs.map((req, i) => (
-                          <CourseRow
-                            key={i}
-                            code={req.code}
-                            name={req.name}
-                            credits={req.credits}
-                            note={req.notes}
-                            textClass={section.textClass}
-                            bgClass={section.bgClass}
-                            borderClass={section.borderClass}
-                          />
-                        ))}
+                    <div className="space-y-4">
+                      <div className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                        <div className={cn("flex items-center justify-between px-3 py-2.5", section.bgClass)}>
+                          <span className={cn("text-xs font-bold", section.textClass)}>Restricted Electives</span>
+                          <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>13 credits</span>
+                        </div>
+                        <div className="bg-white px-3 py-3 space-y-2">
+                          {electiveOptions.filter((g) => g.category !== "unrestricted").map((group) => {
+                            const colors = electiveColorMap[group.category] ?? electiveColorMap.csci
+                            const isEOpen = expandedElective === group.category
+                            return (
+                              <div key={group.category} className={cn("rounded-lg border overflow-hidden", colors.border)}>
+                                <button
+                                  className={cn("w-full flex items-center justify-between px-3 py-2.5 text-left transition-colors", colors.bg, "hover:brightness-95")}
+                                  onClick={() => setExpandedElective(isEOpen ? null : group.category)}
+                                  aria-expanded={isEOpen}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <span className={cn("text-xs font-semibold", colors.text)}>{group.label}</span>
+                                    <span className="text-xs text-slate-500">— {group.courses.length} options</span>
+                                  </div>
+                                  <ChevronDown
+                                    className={cn("h-3.5 w-3.5 transition-transform duration-200", colors.text)}
+                                    style={{ transform: isEOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                                  />
+                                </button>
+                                {isEOpen && (
+                                  <div className="bg-white px-3 py-3">
+                                    {group.note && (
+                                      <p className="text-xs text-slate-500 italic mb-2 leading-relaxed">{group.note}</p>
+                                    )}
+                                    <div className="space-y-1">
+                                      {group.courses.map((c) => (
+                                        <div key={c.code} className={cn("flex items-center gap-2 px-3 py-2 rounded-lg border", colors.border, colors.bg)}>
+                                          <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", colors.text)}>{c.code}</span>
+                                          <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
+                                          <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", colors.text)}>{c.credits} credits</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })}
+                        </div>
                       </div>
 
-                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-4 mb-2">Browse Your Options</p>
-                      <div className="space-y-2">
-                        {electiveOptions.map((group) => {
-                          const colors = electiveColorMap[group.category] ?? electiveColorMap.csci
-                          const isEOpen = expandedElective === group.category
-                          return (
-                            <div key={group.category} className={cn("rounded-lg border overflow-hidden", colors.border)}>
-                              <button
-                                className={cn("w-full flex items-center justify-between px-3 py-2.5 text-left transition-colors", colors.bg, "hover:brightness-95")}
-                                onClick={() => setExpandedElective(isEOpen ? null : group.category)}
-                                aria-expanded={isEOpen}
-                              >
-                                <div className="flex items-center gap-2">
-                                  <span className={cn("text-xs font-semibold", colors.text)}>{group.label}</span>
-                                  <span className="text-xs text-slate-500">— {group.courses.length} choices</span>
-                                </div>
-                                <ChevronDown
-                                  className={cn("h-3.5 w-3.5 transition-transform duration-200", colors.text)}
-                                  style={{ transform: isEOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                                />
-                              </button>
-                              {isEOpen && (
-                                <div className="bg-white px-3 py-3">
-                                  {group.note && (
-                                    <p className="text-xs text-slate-500 italic mb-2 leading-relaxed">{group.note}</p>
-                                  )}
-                                  <div className="space-y-1">
-                                    {group.courses.map((c) => (
-                                      <div key={c.code} className={cn("flex items-center gap-2 px-3 py-2 rounded-lg border", colors.border, colors.bg)}>
-                                        <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", colors.text)}>{c.code}</span>
-                                        <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
-                                        <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", colors.text)}>{c.credits} credits</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )
-                        })}
+                      <div className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                        <div className={cn("flex items-center justify-between px-3 py-2.5", section.bgClass)}>
+                          <span className={cn("text-xs font-bold", section.textClass)}>Unrestricted Electives</span>
+                          <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>6 credits</span>
+                        </div>
+                        <div className="bg-white px-3 py-3">
+                          <p className="text-xs text-slate-500 leading-relaxed">
+                            Any 6 credits from courses offered at VSU. These can be used to explore other interests, pick up a minor, or complete additional CSCI/MATH coursework.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ) : (
