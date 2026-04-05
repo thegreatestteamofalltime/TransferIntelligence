@@ -1,0 +1,124 @@
+export interface CatalogCourse {
+  code: string
+  name: string
+  credits: number
+  subject: string
+  school: string
+}
+
+const BRIGHTPOINT_COURSES: CatalogCourse[] = [
+  { code: "SDV 100", name: "College Success Skills", credits: 1, subject: "SDV", school: "Brightpoint Community College" },
+  { code: "ENG 111", name: "College Composition I", credits: 3, subject: "ENG", school: "Brightpoint Community College" },
+  { code: "ENG 112", name: "College Composition II", credits: 3, subject: "ENG", school: "Brightpoint Community College" },
+  { code: "ENG 245", name: "British Literature", credits: 3, subject: "ENG", school: "Brightpoint Community College" },
+  { code: "ENG 246", name: "American Literature", credits: 3, subject: "ENG", school: "Brightpoint Community College" },
+  { code: "MTH 263", name: "Calculus I", credits: 4, subject: "MTH", school: "Brightpoint Community College" },
+  { code: "MTH 264", name: "Calculus II", credits: 4, subject: "MTH", school: "Brightpoint Community College" },
+  { code: "MTH 265", name: "Calculus III", credits: 4, subject: "MTH", school: "Brightpoint Community College" },
+  { code: "MTH 266", name: "Linear Algebra", credits: 3, subject: "MTH", school: "Brightpoint Community College" },
+  { code: "CSC 195", name: "AI Foundations for Computer Science", credits: 3, subject: "CSC", school: "Brightpoint Community College" },
+  { code: "CSC 205", name: "Computer Organization", credits: 3, subject: "CSC", school: "Brightpoint Community College" },
+  { code: "CSC 208", name: "Introduction to Discrete Structures", credits: 3, subject: "CSC", school: "Brightpoint Community College" },
+  { code: "CSC 221", name: "Introduction to Problem Solving and Programming", credits: 3, subject: "CSC", school: "Brightpoint Community College" },
+  { code: "CSC 222", name: "Object-Oriented Programming", credits: 4, subject: "CSC", school: "Brightpoint Community College" },
+  { code: "CSC 223", name: "Data Structures and Analysis of Algorithms", credits: 4, subject: "CSC", school: "Brightpoint Community College" },
+  { code: "BIO 101", name: "General Biology I", credits: 4, subject: "BIO", school: "Brightpoint Community College" },
+  { code: "BIO 102", name: "General Biology II", credits: 4, subject: "BIO", school: "Brightpoint Community College" },
+  { code: "CHM 111", name: "General Chemistry I", credits: 4, subject: "CHM", school: "Brightpoint Community College" },
+  { code: "CHM 112", name: "General Chemistry II", credits: 4, subject: "CHM", school: "Brightpoint Community College" },
+  { code: "PHY 201", name: "General College Physics I", credits: 4, subject: "PHY", school: "Brightpoint Community College" },
+  { code: "PHY 202", name: "General College Physics II", credits: 4, subject: "PHY", school: "Brightpoint Community College" },
+  { code: "PHY 241", name: "University Physics I", credits: 4, subject: "PHY", school: "Brightpoint Community College" },
+  { code: "PHY 242", name: "University Physics II", credits: 4, subject: "PHY", school: "Brightpoint Community College" },
+  { code: "HIS 101", name: "Western Civilizations Pre-1600 CE", credits: 3, subject: "HIS", school: "Brightpoint Community College" },
+  { code: "HIS 102", name: "Western Civilizations Post-1600 CE", credits: 3, subject: "HIS", school: "Brightpoint Community College" },
+  { code: "HIS 121", name: "United States History to 1877", credits: 3, subject: "HIS", school: "Brightpoint Community College" },
+  { code: "HIS 122", name: "United States History Since 1865", credits: 3, subject: "HIS", school: "Brightpoint Community College" },
+  { code: "PHI 100", name: "Introduction to Philosophy", credits: 3, subject: "PHI", school: "Brightpoint Community College" },
+  { code: "PHI 111", name: "Logic", credits: 3, subject: "PHI", school: "Brightpoint Community College" },
+  { code: "PHI 220", name: "Ethics and Society", credits: 3, subject: "PHI", school: "Brightpoint Community College" },
+  { code: "REL 100", name: "Introduction to the Study of Religion", credits: 3, subject: "REL", school: "Brightpoint Community College" },
+  { code: "REL 230", name: "Religions of the World", credits: 3, subject: "REL", school: "Brightpoint Community College" },
+  { code: "ECO 201", name: "Principles of Macroeconomics", credits: 3, subject: "ECO", school: "Brightpoint Community College" },
+  { code: "ECO 202", name: "Principles of Microeconomics", credits: 3, subject: "ECO", school: "Brightpoint Community College" },
+  { code: "PSY 200", name: "Principles of Psychology", credits: 3, subject: "PSY", school: "Brightpoint Community College" },
+  { code: "SOC 200", name: "Introduction to Sociology", credits: 3, subject: "SOC", school: "Brightpoint Community College" },
+  { code: "PLS 135", name: "U.S. Government and Politics", credits: 3, subject: "PLS", school: "Brightpoint Community College" },
+  { code: "ART 101", name: "History of Art: Prehistoric to Gothic", credits: 3, subject: "ART", school: "Brightpoint Community College" },
+  { code: "MUS 121", name: "Music in Society", credits: 3, subject: "MUS", school: "Brightpoint Community College" },
+  { code: "EGR 121", name: "Foundations of Engineering", credits: 2, subject: "EGR", school: "Brightpoint Community College" },
+  { code: "EGR 122", name: "Engineering Design", credits: 3, subject: "EGR", school: "Brightpoint Community College" },
+  { code: "EGR 270", name: "Fundamentals of Computer Engineering", credits: 4, subject: "EGR", school: "Brightpoint Community College" },
+  { code: "ITE 152", name: "Introduction to Digital Literacy and Computer Applications", credits: 3, subject: "ITE", school: "Brightpoint Community College" },
+  { code: "CST 100", name: "Principles of Public Speaking", credits: 3, subject: "CST", school: "Brightpoint Community College" },
+  { code: "CST 110", name: "Introduction to Human Communication", credits: 3, subject: "CST", school: "Brightpoint Community College" },
+]
+
+const NOVA_COURSES: CatalogCourse[] = [
+  { code: "SDV 100", name: "College Success Skills", credits: 1, subject: "SDV", school: "Northern Virginia Community College" },
+  { code: "SDV 101", name: "New Student Orientation", credits: 1, subject: "SDV", school: "Northern Virginia Community College" },
+  { code: "ENG 111", name: "College Composition I", credits: 3, subject: "ENG", school: "Northern Virginia Community College" },
+  { code: "ENG 112", name: "College Composition II", credits: 3, subject: "ENG", school: "Northern Virginia Community College" },
+  { code: "ENG 245", name: "British Literature", credits: 3, subject: "ENG", school: "Northern Virginia Community College" },
+  { code: "ENG 246", name: "American Literature", credits: 3, subject: "ENG", school: "Northern Virginia Community College" },
+  { code: "MTH 167", name: "PreCalculus with Trigonometry", credits: 5, subject: "MTH", school: "Northern Virginia Community College" },
+  { code: "MTH 263", name: "Calculus I", credits: 4, subject: "MTH", school: "Northern Virginia Community College" },
+  { code: "MTH 264", name: "Calculus II", credits: 4, subject: "MTH", school: "Northern Virginia Community College" },
+  { code: "MTH 265", name: "Calculus III", credits: 4, subject: "MTH", school: "Northern Virginia Community College" },
+  { code: "MTH 266", name: "Linear Algebra", credits: 3, subject: "MTH", school: "Northern Virginia Community College" },
+  { code: "MTH 288", name: "Discrete Mathematics", credits: 3, subject: "MTH", school: "Northern Virginia Community College" },
+  { code: "CSC 205", name: "Computer Organization", credits: 3, subject: "CSC", school: "Northern Virginia Community College" },
+  { code: "CSC 208", name: "Introduction to Discrete Structures", credits: 3, subject: "CSC", school: "Northern Virginia Community College" },
+  { code: "CSC 215", name: "Computer Systems", credits: 3, subject: "CSC", school: "Northern Virginia Community College" },
+  { code: "CSC 221", name: "Introduction to Problem Solving and Programming", credits: 3, subject: "CSC", school: "Northern Virginia Community College" },
+  { code: "CSC 222", name: "Object Oriented Programming", credits: 4, subject: "CSC", school: "Northern Virginia Community College" },
+  { code: "CSC 223", name: "Data Structures and Analysis of Algorithms", credits: 4, subject: "CSC", school: "Northern Virginia Community College" },
+  { code: "PHY 241", name: "University Physics I", credits: 4, subject: "PHY", school: "Northern Virginia Community College" },
+  { code: "PHY 242", name: "University Physics II", credits: 4, subject: "PHY", school: "Northern Virginia Community College" },
+  { code: "BIO 101", name: "General Biology I", credits: 4, subject: "BIO", school: "Northern Virginia Community College" },
+  { code: "BIO 102", name: "General Biology II", credits: 4, subject: "BIO", school: "Northern Virginia Community College" },
+  { code: "CHM 111", name: "General Chemistry I", credits: 4, subject: "CHM", school: "Northern Virginia Community College" },
+  { code: "CHM 112", name: "General Chemistry II", credits: 4, subject: "CHM", school: "Northern Virginia Community College" },
+  { code: "GOL 105", name: "Physical Geology", credits: 4, subject: "GOL", school: "Northern Virginia Community College" },
+  { code: "HIS 101", name: "Western Civilizations Pre-1600 CE", credits: 3, subject: "HIS", school: "Northern Virginia Community College" },
+  { code: "HIS 102", name: "Western Civilizations Post-1600 CE", credits: 3, subject: "HIS", school: "Northern Virginia Community College" },
+  { code: "HIS 111", name: "World History I", credits: 3, subject: "HIS", school: "Northern Virginia Community College" },
+  { code: "HIS 112", name: "World History II", credits: 3, subject: "HIS", school: "Northern Virginia Community College" },
+  { code: "HIS 121", name: "United States History to 1877", credits: 3, subject: "HIS", school: "Northern Virginia Community College" },
+  { code: "HIS 122", name: "United States History Since 1865", credits: 3, subject: "HIS", school: "Northern Virginia Community College" },
+  { code: "PHI 100", name: "Introduction to Philosophy", credits: 3, subject: "PHI", school: "Northern Virginia Community College" },
+  { code: "PHI 111", name: "Logic", credits: 3, subject: "PHI", school: "Northern Virginia Community College" },
+  { code: "PHI 220", name: "Ethics and Society", credits: 3, subject: "PHI", school: "Northern Virginia Community College" },
+  { code: "REL 100", name: "Introduction to the Study of Religion", credits: 3, subject: "REL", school: "Northern Virginia Community College" },
+  { code: "ART 101", name: "History of Art: Prehistoric to Gothic", credits: 3, subject: "ART", school: "Northern Virginia Community College" },
+  { code: "ART 102", name: "History of Art: Renaissance to Present", credits: 3, subject: "ART", school: "Northern Virginia Community College" },
+  { code: "MUS 121", name: "Music in Society", credits: 3, subject: "MUS", school: "Northern Virginia Community College" },
+  { code: "ECO 201", name: "Principles of Macroeconomics", credits: 3, subject: "ECO", school: "Northern Virginia Community College" },
+  { code: "ECO 202", name: "Principles of Microeconomics", credits: 3, subject: "ECO", school: "Northern Virginia Community College" },
+  { code: "GEO 200", name: "World Regional Geography", credits: 3, subject: "GEO", school: "Northern Virginia Community College" },
+  { code: "PLS 135", name: "U.S. Government and Politics", credits: 3, subject: "PLS", school: "Northern Virginia Community College" },
+  { code: "PSY 200", name: "Principles of Psychology", credits: 3, subject: "PSY", school: "Northern Virginia Community College" },
+  { code: "SOC 200", name: "Introduction to Sociology", credits: 3, subject: "SOC", school: "Northern Virginia Community College" },
+  { code: "EGR 121", name: "Foundations of Engineering", credits: 2, subject: "EGR", school: "Northern Virginia Community College" },
+  { code: "EGR 270", name: "Fundamentals of Computer Engineering", credits: 4, subject: "EGR", school: "Northern Virginia Community College" },
+  { code: "CST 100", name: "Principles of Public Speaking", credits: 3, subject: "CST", school: "Northern Virginia Community College" },
+  { code: "CST 110", name: "Introduction to Human Communication", credits: 3, subject: "CST", school: "Northern Virginia Community College" },
+]
+
+export const courseCatalog: Record<string, CatalogCourse[]> = {
+  "Brightpoint Community College": BRIGHTPOINT_COURSES,
+  "Northern Virginia Community College": NOVA_COURSES,
+}
+
+export function getCoursesBySchool(school: string): CatalogCourse[] {
+  return courseCatalog[school] ?? []
+}
+
+export function groupCoursesBySubject(courses: CatalogCourse[]): Record<string, CatalogCourse[]> {
+  const groups: Record<string, CatalogCourse[]> = {}
+  for (const course of courses) {
+    if (!groups[course.subject]) groups[course.subject] = []
+    groups[course.subject].push(course)
+  }
+  return groups
+}
