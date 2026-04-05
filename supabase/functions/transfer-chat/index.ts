@@ -92,15 +92,13 @@ Deno.serve(async (req: Request) => {
 
     const openaiMessages = [
       { role: "system", content: SYSTEM_PROMPT },
-      ...messages.map((m) => ({ role: m.role, content: m.content })),
+      ...messages.map((m, i) => ({
+        role: m.role,
+        content: i === messages.length - 1 && m.role === "user"
+          ? `${m.content}\n\nIMPORTANT: Respond ONLY with valid JSON in this exact format: {"text": "your response here", "showAdvisor": false}`
+          : m.content,
+      })),
     ];
-
-    const lastUserMessage = messages[messages.length - 1]?.content ?? "";
-    openaiMessages[openaiMessages.length] = {
-      role: "user",
-      content: `${lastUserMessage}\n\nIMPORTANT: Respond ONLY with valid JSON in this exact format: {"text": "your response here", "showAdvisor": false}`,
-    };
-    openaiMessages.splice(openaiMessages.length - 2, 1);
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -119,8 +117,9 @@ Deno.serve(async (req: Request) => {
 
     if (!response.ok) {
       const error = await response.text();
+      console.error("OpenAI error:", response.status, error);
       return new Response(
-        JSON.stringify({ error: `OpenAI API error: ${error}` }),
+        JSON.stringify({ error: `OpenAI API error: ${response.status} ${error}` }),
         { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
