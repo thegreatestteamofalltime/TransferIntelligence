@@ -1,0 +1,224 @@
+﻿Computer Science, A.S.
+Northern Virginia Community College
+Transfer Degree
+
+
+Option 1: If PreCalculus is Needed
+
+PreCalculus Prerequisite: 5 credits
+MTH 167 PreCalculus with Trigonometry
+
+
+Program Requirements: 32 credits
+
+
+CSC Requirements
+CSC 221 Introduction to Problem Solving and Programming 3
+CSC 222 Object Oriented Programming 4
+CSC 223 Data Structures and Analysis of Algorithms 4
+CSC 205 Computer Organization 3
+or
+CSC 215 Computer Systems 3
+or
+MTH 265 Calculus III 4
+
+
+MTH Requirements
+CSC 208 Introduction to Discrete Structures 3
+or
+MTH 288 Discrete Mathematics 3
+MTH 263 Calculus I 4
+MTH 264 Calculus II1 4
+
+
+ENG Requirements
+ENG 111 College Composition I 3
+ENG 112 College Composition II 3
+
+
+SDV Requirements
+SDV 100 College Success Skills 1
+or
+SDV 101 Orientation 1
+
+
+General Education Requirements: 20–22 credits
+
+Physical/Life Science Course Options
+8 credits required
+BIO 101 General Biology I 4
+BIO 102 General Biology II 4
+CHM 111 General Chemistry I 4
+CHM 112 General Chemistry II 4
+PHY 241 University Physics I 4
+PHY 242 University Physics II 4
+GOL 105 Physical Geology 4
+GOL 106 Historical Geology 4
+
+
+Humanities/Fine Arts Course Options
+6–8 credits required, must be in two different areas
+ART
+ART 100    Art Appreciation    3
+ART 101    History of Art: Prehistoric to Gothic    3
+ART 102    History of Art: Renaissance to Modern    3
+ART 150    History of Film & Animation    3
+ART 215    History of Modern Art    3
+ART 250    History of Design    3
+CST 130    Introduction to The Theatre    3
+CST 141    Theatre Appreciation I    3
+CST 151    Film Appreciation I    3
+MUS 121    Music in Society    3
+MUS 221    History of Western Music pre-1750    3
+MUS 222    History of Western Music 1750 to Present    3
+MUS 225    The History of Jazz    3
+MUS 226    World Music (Not currently offered at NOVA)    3
+PHT 110    History of Photography    3
+
+HUMANITIES
+ARC 200    History of Architecture    4
+ASL 201    Intermediate American Sign Language I *    3
+ASL 202    Intermediate American Sign Language II *    3
+HUM 201    Early Humanities    3
+HUM 202    Modern Humanities    3
+HUM 210    Introduction to Women and Gender Studies    3
+HUM 216    Introduction to Non-Western Cultures (Not currently offered at NOVA)    3
+HUM 220    Introduction to African American Studies    3
+HUM 256    Mythology in Literature and the Arts (Not currently offered at NOVA)    3
+HUM 259    The Greek and Roman Tradition    3
+PHI 100    Introduction to Philosophy    3
+PHI 111    Logic    3
+PHI 220    Ethics and Society    3
+PHI 227    Biomedical Ethics    3
+REL 100    Introduction to the Study of Religion    3
+REL 230    Religions of the World    3
+REL 233    Introduction to Islam    3
+REL 237    Religions of the East    3
+REL 238    Religions of the West    3
+REL 240    Religions in America (Not currently offered at NOVA)    3
+ARA 201    Intermediate Arabic I    4
+ARA 202    Intermediate Arabic II    4
+CHI 201    Intermediate Chinese I    4
+CHI 202    Intermediate Chinese II    4
+FRE 201    Intermediate French I    3
+FRE 202    Intermediate French II    3
+GER 201    Intermediate German I    3
+GER 202    Intermediate German II    3
+JPN 201    Intermediate Japanese I    4
+JPN 202    Intermediate Japanese II    4
+LAT 201    Intermediate Latin I    3
+LAT 202    Intermediate Latin II    3
+RUS 201    Intermediate Russian I    4
+RUS 202    Intermediate Russian II    4
+SPA 201    Intermediate Spanish I    3
+SPA 202    Intermediate Spanish II    3
+* Check with your advisor to see if ASL meets the foreign language requirement at your transfer school.
+
+
+LITERATURE
+ENG 225    Reading Literature: Culture and Ideas    3
+ENG 230    Mystery in Literature & Film    3
+ENG 236    Introduction to the Short Story    3
+ENG 237    Introduction to Poetry    3
+ENG 245    British Literature    3
+ENG 246    American Literature    3
+ENG 250    Children's Literature    3
+ENG 255    World Literature    3
+ENG 256    Literature of Science Fiction    3
+ENG 257    Mythological Literature    3
+ENG 258    African American Literature    3
+ENG 271    The Works of Shakespeare I    3
+ENG 275    Women in Literature    3
+ENG 279    Film And Literature    3
+
+
+History Course Options
+3 credits required
+HIS 101    Western Civilizations Pre-1600 CE    3
+HIS 102    Western Civilizations Post-1600 CE    3
+HIS 111    World Civilizations Pre-1500 CE    3
+HIS 112    World Civilizations Post-1500 CE    3
+HIS 121    United States History to 1877    3
+HIS 122    United States History Since 1865    3
+HIS 203    History of African Civilizations    3
+HIS 231    Introduction to Latin American History    3
+HIS 254    History of Modern East Asian Civilizations    3
+
+Social/Behavioral Sciences Course Options
+3 credits required
+ADJ 100    Survey of Criminal Justice    3
+ECO 150    Economic Essentials: Theory and Application    3
+ECO 201    Principles of Macroeconomics    3
+ECO 202    Principles of Microeconomics    3
+GEO 200    Introduction to Physical Geography    3
+GEO 210    People & the Land: Intro. to Cultural Geography   3
+GEO 220    World Regional Geography    3
+PLS 135    U.S. Government and Politics    3
+PLS 140    Introduction to Comparative Politics    3
+PLS 200    Introduction to Political and Democratic Theory    3
+PLS 241    Introduction to International Relations    3
+PSY 200    Principles of Psychology    3
+PSY 216    Social Psychology    3
+PSY 219    Cross-Cultural Psychology    3
+PSY 230    Developmental Psychology    3
+SOC 200    Introduction to Sociology    3
+SOC 211    Cultural Anthropology    3
+SOC 268    Social Problems    3
+
+
+Electives Requirements: 3–4 credits
+
+
+Approved Electives
+PHY 201    General College Physics I    4
+CSC 205    Computer Organization    3
+CSC 215    Computer Systems    3
+CSC 195    Topics In:    1-5
+CSC 295    Topics In:    1-5
+EGR 121    Foundations of Engineering    2
+EGR 122    Engineering Design    3
+EGR 270    Fundamentals of Computer Engineering    4
+CST 100    Principles of Public Speaking    3
+CST 110    Introduction to Human Communication    3
+MTH 265    Calculus III    4
+MTH 266    Linear Algebra    3
+MTH 283    Probability and Statistics    3
+BIO 101    General Biology I    4
+BIO 102    General Biology II    4
+CHM 111    General Chemistry I    4
+CHM 112    General Chemistry II    4
+PHY 241    University Physics I    4
+PHY 242    University Physics II    4
+GOL 105    Physical Geology    4
+GOL 106    Historical Geology    4
+
+
+1 MTH 245 Statistics I may satisfy this area if required by the intended transfer institution; consult the intended transfer institution for best selection.
+
+
+Option 2: If placed out of PreCalculus, replace MTH 167 with one of the courses below:
+
+
+CSC 205    Computer Organization    3
+CSC 208    Introduction to Discrete Structures    3
+CSC 215    Computer Systems    3
+MTH 265    Calculus III    4
+MTH 266    Linear Algebra    3
+MTH 288    Discrete Mathematics    3
+PHY 201    General College Physics I    4
+BIO 101    General Biology I    4
+BIO 102    General Biology II    4
+CHM 111    General Chemistry I    4
+CHM 112    General Chemistry II    4
+PHY 241    University Physics I    4
+PHY 242    University Physics II    4
+GOL 105    Physical Geology    4
+GOL 106    Historical Geology    4
+
+Summary
+(Option 1) PreCalculus Prerequisite: 5 credits
+(Option 2) Elective: 3–4 credits
+Program Requirements: 32 credits
+General Education Requirements: 20–22 credits
+Electives Requirements: 3–4 credits
+Total Credit Hours: 58–63 credits
