@@ -98,6 +98,7 @@ function CourseRow({ code, name, credits, note, textClass, bgClass, borderClass 
 export function VSUDegreePanel() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const [expandedElective, setExpandedElective] = useState<string | null>(null)
+  const [expandedGenEd, setExpandedGenEd] = useState<string | null>(null)
 
   const coreReqs = requirements.filter((r) => r.category === "core")
   const mathReqs = requirements.filter((r) => r.category === "math")
@@ -189,29 +190,47 @@ export function VSUDegreePanel() {
                   </div>
 
                   {isGenEd ? (
-                    <div className="space-y-3">
-                      {vsuCSGenEd.map((item, idx) => (
-                        <div key={idx} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
-                          <div className={cn("flex items-center justify-between px-3 py-2", section.bgClass)}>
-                            <span className={cn("text-xs font-semibold", section.textClass)}>{item.label}</span>
-                            <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>{item.creditsRequired} credits required</span>
-                          </div>
-                          {item.note && (
-                            <div className="px-3 py-1.5 bg-white border-b border-slate-100">
-                              <p className="text-xs text-slate-500 italic leading-snug">{item.note}</p>
-                            </div>
-                          )}
-                          <div className="bg-white px-3 py-2 space-y-1">
-                            {item.courses.map((c) => (
-                              <div key={c.code} className={cn("flex items-center gap-2 px-2 py-1.5 rounded border", section.borderClass, section.bgClass)}>
-                                <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", section.textClass)}>{c.code}</span>
-                                <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
-                                <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", section.textClass)}>{c.credits} cr</span>
+                    <div className="space-y-2">
+                      {vsuCSGenEd.map((item, idx) => {
+                        const isGEOpen = expandedGenEd === item.label
+                        return (
+                          <div key={idx} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                            <button
+                              className={cn("w-full flex items-center justify-between px-3 py-2.5 text-left transition-colors", section.bgClass, "hover:brightness-95")}
+                              onClick={() => setExpandedGenEd(isGEOpen ? null : item.label)}
+                              aria-expanded={isGEOpen}
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className={cn("text-xs font-semibold", section.textClass)}>{item.label}</span>
+                                <span className="text-xs text-slate-500">— {item.courses.length} options</span>
                               </div>
-                            ))}
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>{item.creditsRequired} cr required</span>
+                                <ChevronDown
+                                  className={cn("h-3.5 w-3.5 transition-transform duration-200", section.textClass)}
+                                  style={{ transform: isGEOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                                />
+                              </div>
+                            </button>
+                            {isGEOpen && (
+                              <div className="bg-white px-3 py-3">
+                                {item.note && (
+                                  <p className="text-xs text-slate-500 italic mb-2 leading-relaxed">{item.note}</p>
+                                )}
+                                <div className="space-y-1">
+                                  {item.courses.map((c) => (
+                                    <div key={c.code} className={cn("flex items-center gap-2 px-2 py-1.5 rounded border", section.borderClass, section.bgClass)}>
+                                      <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", section.textClass)}>{c.code}</span>
+                                      <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
+                                      <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", section.textClass)}>{c.credits} cr</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   ) : isElective ? (
                     <div className="space-y-4">
@@ -266,11 +285,6 @@ export function VSUDegreePanel() {
                         <div className={cn("flex items-center justify-between px-3 py-2.5", section.bgClass)}>
                           <span className={cn("text-xs font-bold", section.textClass)}>Unrestricted Electives</span>
                           <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>6 credits</span>
-                        </div>
-                        <div className="bg-white px-3 py-3">
-                          <p className="text-xs text-slate-500 leading-relaxed">
-                            Any 6 credits from courses offered at VSU. These can be used to explore other interests, pick up a minor, or complete additional CSCI/MATH coursework.
-                          </p>
                         </div>
                       </div>
                     </div>
