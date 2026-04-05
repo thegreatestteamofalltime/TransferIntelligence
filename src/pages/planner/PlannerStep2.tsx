@@ -20,7 +20,7 @@ interface Props {
 const SUBJECT_LABELS: Record<string, string> = {
   CSC: "Computer Science",
   MTH: "Mathematics",
-  ENG: "English / Composition",
+  ENG: "English",
   BIO: "Biology",
   CHM: "Chemistry",
   PHY: "Physics",
@@ -33,11 +33,11 @@ const SUBJECT_LABELS: Record<string, string> = {
   SOC: "Sociology",
   PLS: "Political Science",
   GEO: "Geography",
-  ART: "Art History",
+  ART: "Arts",
   MUS: "Music",
   EGR: "Engineering",
-  ITE: "Information Technology",
-  CST: "Communication / Speech",
+  ITE: "Information Technology Essentials",
+  CST: "Communication Studies and Theatre",
   SDV: "Student Development",
 }
 
@@ -265,6 +265,13 @@ export function PlannerStep2({
           </div>
         </CardContent>
       </Card>
+
+      <div className="mt-3 rounded-lg border bg-muted/30 px-4 py-3 flex items-center justify-between">
+        <span className="text-sm text-muted-foreground">Total credits selected</span>
+        <span className="text-sm font-semibold tabular-nums" style={{ color: "var(--brand)" }}>
+          {totalCompletedCredits} cr
+        </span>
+      </div>
 
       <Separator className="my-6" />
 
