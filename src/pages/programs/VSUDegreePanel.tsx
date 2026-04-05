@@ -3,70 +3,11 @@ import { ChevronDown, ArrowRight, BookOpen, Calculator, Lightbulb, GraduationCap
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { vsuCSBachelorfull } from "@/data/vsuCSDegree"
+import { vsuCSBachelorfull, vsuCSGenEd } from "@/data/vsuCSDegree"
 import { navigate } from "@/lib/router"
 import { cn } from "@/lib/utils"
 
 const { creditSummary, requirements, electiveOptions } = vsuCSBachelorfull
-
-type GenEdItem =
-  | { type: "course"; code: string; name: string; credits: number }
-  | { type: "group"; label: string; courses: { code: string; name: string; credits: number }[] }
-
-const GEN_ED_COURSES: GenEdItem[] = [
-  { type: "course", code: "ENGL 110", name: "English Composition I", credits: 3 },
-  { type: "course", code: "ENGL 111", name: "English Composition II", credits: 3 },
-  { type: "course", code: "ENGL 342", name: "Technical Writing", credits: 3 },
-  {
-    type: "group",
-    label: "Choose one philosophy/ethics course",
-    courses: [
-      { code: "PHIL 275", name: "Introduction to Ethics", credits: 3 },
-      { code: "PHIL 450", name: "Philosophy of Technology", credits: 3 },
-    ],
-  },
-  {
-    type: "group",
-    label: "Choose one history course",
-    courses: [
-      { code: "HIST 101", name: "World History I", credits: 3 },
-      { code: "HIST 102", name: "World History II", credits: 3 },
-      { code: "HIST 201", name: "American History I", credits: 3 },
-      { code: "HIST 202", name: "American History II", credits: 3 },
-    ],
-  },
-  {
-    type: "group",
-    label: "Choose one social science course",
-    courses: [
-      { code: "SOCI 101", name: "Introduction to Sociology", credits: 3 },
-      { code: "PSYC 101", name: "Introduction to Psychology", credits: 3 },
-      { code: "ECON 201", name: "Principles of Economics I", credits: 3 },
-      { code: "POLS 101", name: "Introduction to Political Science", credits: 3 },
-    ],
-  },
-  {
-    type: "group",
-    label: "Choose one literature course",
-    courses: [
-      { code: "ENGL 211", name: "Introduction to Literature", credits: 3 },
-      { code: "ENGL 212", name: "World Literature", credits: 3 },
-      { code: "ENGL 215", name: "African American Literature", credits: 3 },
-    ],
-  },
-  {
-    type: "group",
-    label: "Choose one global studies / humanities course",
-    courses: [
-      { code: "GLBL 201", name: "Introduction to Global Studies", credits: 3 },
-      { code: "GLBL 210", name: "Cross-Cultural Communication", credits: 3 },
-    ],
-  },
-  { type: "course", code: "HLTH 101", name: "Health and Wellness", credits: 2 },
-  { type: "course", code: "PHED 101", name: "Physical Education Activity", credits: 1 },
-  { type: "course", code: "GEN ED XXX", name: "General Education Elective", credits: 3 },
-  { type: "course", code: "GEN ED XXX", name: "General Education Elective", credits: 3 },
-]
 
 const sections = [
   {
@@ -248,35 +189,29 @@ export function VSUDegreePanel() {
                   </div>
 
                   {isGenEd ? (
-                    <div className="space-y-1.5">
-                      {GEN_ED_COURSES.map((item, idx) =>
-                        item.type === "course" ? (
-                          <CourseRow
-                            key={idx}
-                            code={item.code}
-                            name={item.name}
-                            credits={item.credits}
-                            textClass={section.textClass}
-                            bgClass={section.bgClass}
-                            borderClass={section.borderClass}
-                          />
-                        ) : (
-                          <div key={idx} className="space-y-1">
-                            <p className="text-xs font-medium text-slate-400 italic px-1 pt-1">{item.label}</p>
+                    <div className="space-y-3">
+                      {vsuCSGenEd.map((item, idx) => (
+                        <div key={idx} className={cn("rounded-lg border overflow-hidden", section.borderClass)}>
+                          <div className={cn("flex items-center justify-between px-3 py-2", section.bgClass)}>
+                            <span className={cn("text-xs font-semibold", section.textClass)}>{item.label}</span>
+                            <span className={cn("text-xs font-bold tabular-nums", section.textClass)}>{item.creditsRequired} credits required</span>
+                          </div>
+                          {item.note && (
+                            <div className="px-3 py-1.5 bg-white border-b border-slate-100">
+                              <p className="text-xs text-slate-500 italic leading-snug">{item.note}</p>
+                            </div>
+                          )}
+                          <div className="bg-white px-3 py-2 space-y-1">
                             {item.courses.map((c) => (
-                              <CourseRow
-                                key={c.code}
-                                code={c.code}
-                                name={c.name}
-                                credits={c.credits}
-                                textClass={section.textClass}
-                                bgClass={section.bgClass}
-                                borderClass={section.borderClass}
-                              />
+                              <div key={c.code} className={cn("flex items-center gap-2 px-2 py-1.5 rounded border", section.borderClass, section.bgClass)}>
+                                <span className={cn("text-xs font-mono font-bold flex-shrink-0 w-20", section.textClass)}>{c.code}</span>
+                                <span className="text-xs text-slate-600 leading-tight flex-1">{c.name}</span>
+                                <span className={cn("text-xs font-bold tabular-nums flex-shrink-0", section.textClass)}>{c.credits} cr</span>
+                              </div>
                             ))}
                           </div>
-                        )
-                      )}
+                        </div>
+                      ))}
                     </div>
                   ) : isElective ? (
                     <div className="space-y-3">
