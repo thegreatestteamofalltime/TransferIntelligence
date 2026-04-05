@@ -209,7 +209,6 @@ export function PlannerStep2({
                         {completedInGroup} selected
                       </Badge>
                     )}
-                    <span className="text-xs text-muted-foreground">{courses.length}</span>
                     {!searchQuery && (
                       <ChevronDown
                         className={cn(
