@@ -79,57 +79,8 @@ export const brightpointCSAssociate: DegreePlan = {
   ],
 }
 
-export const vsuCSBachelor: DegreePlan = {
-  id: "vsu-cs-bs",
-  school: "Virginia State University",
-  abbreviation: "VSU",
-  degree: "Bachelor of Science (B.S.)",
-  program: "Computer Science",
-  totalCredits: 120,
-  source: "VSU Undergraduate Catalog",
-  requirements: [
-    { code: "CSCI 101", name: "Intro to Computer Science Profession", credits: 2, category: "core", year: "freshman" },
-    { code: "CSCI 150", name: "Programming I", credits: 3, category: "core", year: "freshman" },
-    { code: "CSCI 151", name: "Programming I Lab", credits: 1, category: "core", year: "freshman" },
-    { code: "MATH 260", name: "Calculus I", credits: 4, category: "math", year: "freshman" },
-    { code: "ENGL 110", name: "Composition I", credits: 3, category: "general-ed", year: "freshman" },
-    { code: "GE Wellness", name: "GE Wellness/Health Elective", credits: 2, category: "general-ed", year: "freshman", notes: "General Education requirement" },
-    { code: "CSCI 250", name: "Programming II", credits: 3, category: "core", year: "freshman" },
-    { code: "CSCI 251", name: "Programming II Lab", credits: 1, category: "core", year: "freshman" },
-    { code: "MATH 261", name: "Calculus II", credits: 4, category: "math", year: "freshman" },
-    { code: "ENGL 111", name: "Composition II", credits: 3, category: "general-ed", year: "freshman" },
-    { code: "GE History", name: "GE History Elective", credits: 3, category: "general-ed", year: "freshman", notes: "General Education requirement" },
-    { code: "GE Social Sci", name: "GE Social Science Elective", credits: 3, category: "general-ed", year: "freshman", notes: "General Education requirement" },
-    { code: "CSCI 287", name: "Data Structures", credits: 3, category: "core", year: "sophomore" },
-    { code: "CSCI 303", name: "Computer Org & Architecture", credits: 3, category: "core", year: "sophomore" },
-    { code: "MATH 280", name: "Discrete Math Computer Science", credits: 3, category: "math", year: "sophomore" },
-    { code: "ENGL 342", name: "Technical Communication", credits: 3, category: "general-ed", year: "sophomore", notes: "or ENGL 310 Advanced Communications Skills" },
-    { code: "CSCI 281", name: "Discrete Structures", credits: 3, category: "core", year: "sophomore" },
-    { code: "GE Global Studies", name: "GE Global Studies Elective", credits: 3, category: "general-ed", year: "sophomore", notes: "General Education requirement" },
-    { code: "CSCI 296", name: "Web Programming", credits: 3, category: "core", year: "sophomore" },
-    { code: "CSCI 356", name: "Database Systems", credits: 3, category: "core", year: "sophomore" },
-    { code: "PHIL 275", name: "Ethics (Humanities Elective)", credits: 3, category: "general-ed", year: "sophomore", notes: "or PHIL 450 Applied Ethics" },
-    { code: "GE Literature", name: "GE Literature Elective", credits: 3, category: "general-ed", year: "sophomore", notes: "General Education requirement" },
-    { code: "STAT 340", name: "Probability & Statistics for CS", credits: 3, category: "core", year: "junior" },
-    { code: "CSCI 392", name: "Algorithms & Advanced Data Structures", credits: 3, category: "core", year: "junior" },
-    { code: "CSCI 487", name: "Software Design and Development", credits: 3, category: "core", year: "junior" },
-    { code: "CSCI 445", name: "Computer Communication Networks", credits: 3, category: "core", year: "junior" },
-    { code: "Lab Science I", name: "BIOL/CHEM/PHYS Laboratory Science", credits: 4, category: "science", year: "junior", notes: "Must be intended for science/engineering majors" },
-    { code: "Unrestricted Elec", name: "Unrestricted Elective", credits: 3, category: "elective", year: "junior" },
-    { code: "CSCI/MATH/STAT", name: "CSCI/MATH/STAT Elective", credits: 3, category: "elective", year: "junior" },
-    { code: "CSCI 489", name: "Operating Systems", credits: 3, category: "core", year: "junior" },
-    { code: "CSCI 400", name: "Computer Science Seminar", credits: 2, category: "core", year: "junior" },
-    { code: "CSCI 358", name: "Introduction to Information Assurance", credits: 3, category: "core", year: "junior" },
-    { code: "CSCI 493", name: "Senior Project I", credits: 3, category: "core", year: "senior" },
-    { code: "CSCI Elective", name: "CSCI Elective (330-level or higher)", credits: 3, category: "elective", year: "senior" },
-    { code: "CSCI 471", name: "Parallel & Distributed Programming", credits: 3, category: "core", year: "senior" },
-    { code: "Unrestricted Elec", name: "Unrestricted Elective", credits: 3, category: "elective", year: "senior" },
-    { code: "Lab Science II", name: "BIOL/CHEM/PHYS Laboratory Science", credits: 4, category: "science", year: "senior", notes: "Must be intended for science/engineering majors" },
-    { code: "CSCI 485", name: "Programming Languages", credits: 3, category: "core", year: "senior" },
-    { code: "CSCI 494", name: "Senior Project II", credits: 3, category: "core", year: "senior" },
-    { code: "CSCI Elective", name: "CSCI Elective (330-level or higher)", credits: 3, category: "elective", year: "senior" },
-    { code: "MATH Elective", name: "MATH Restricted Elective", credits: 3, category: "math", year: "senior", notes: "Select from approved MATH elective list" },
-  ],
-}
+export { vsuCSBachelorfull as vsuCSBachelor } from "./vsuCSDegree"
 
-export const degreePlans: DegreePlan[] = [novaCSAssociate, brightpointCSAssociate, vsuCSBachelor]
+import { vsuCSBachelorfull } from "./vsuCSDegree"
+
+export const degreePlans: DegreePlan[] = [novaCSAssociate, brightpointCSAssociate, vsuCSBachelorfull]

@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { GraduationCap, BookOpen, ArrowRight, Clock, ChevronDown } from "lucide-react"
+import { GraduationCap, BookOpen, ArrowRight, Clock, ChevronDown, ChevronRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { degreePlans, type DegreePlan } from "@/data/degrees"
+import { vsuCSBachelorfull } from "@/data/vsuCSDegree"
 import { navigate } from "@/lib/router"
 
 const associateDegrees = degreePlans.filter((p) =>
@@ -30,6 +31,12 @@ const categoryLabels: Record<string, string> = {
   "general-ed": "Gen Ed",
   science: "Science",
   elective: "Elective",
+}
+
+const electiveCategoryColors: Record<string, string> = {
+  csci: "var(--brand)",
+  math: "oklch(0.55 0.18 250)",
+  science: "oklch(0.55 0.18 60)",
 }
 
 export function ProgramsPage() {
@@ -107,10 +114,14 @@ export function ProgramsPage() {
 
 function ProgramCard({ plan }: { plan: DegreePlan }) {
   const [open, setOpen] = useState(false)
+  const [electiveOpen, setElectiveOpen] = useState<string | null>(null)
 
   const isAssociate = plan.degree.toLowerCase().includes("associate")
   const accentColor = isAssociate ? "var(--brand)" : "oklch(0.55 0.15 145)"
   const accentMuted = isAssociate ? "var(--brand-muted)" : "oklch(0.97 0.03 145)"
+
+  const isVSU = plan.id === "vsu-cs-bs"
+  const electiveOptions = isVSU ? vsuCSBachelorfull.electiveOptions : []
 
   const categoryCounts = plan.requirements.reduce<Record<string, number>>((acc, r) => {
     acc[r.category] = (acc[r.category] ?? 0) + r.credits
@@ -207,6 +218,93 @@ function ProgramCard({ plan }: { plan: DegreePlan }) {
                   </div>
                 )}
               </div>
+
+              {isVSU && electiveOptions.length > 0 && (
+                <div className="mt-5 pt-4 border-t border-border">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                    Elective Options
+                  </p>
+                  <div className="space-y-2">
+                    {electiveOptions.map((group) => {
+                      const isOpen = electiveOpen === group.category
+                      const color = electiveCategoryColors[group.category] ?? "var(--muted-foreground)"
+                      return (
+                        <div key={group.category} className="rounded-lg border border-border overflow-hidden">
+                          <button
+                            className="w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-muted/40 transition-colors"
+                            onClick={() => setElectiveOpen(isOpen ? null : group.category)}
+                          >
+                            <div className="flex items-center gap-2">
+                              <div
+                                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                                style={{ backgroundColor: color }}
+                              />
+                              <span className="text-xs font-semibold" style={{ color }}>
+                                {group.label}
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                ({group.courses.length} options)
+                              </span>
+                            </div>
+                            <ChevronRight
+                              className="h-3.5 w-3.5 text-muted-foreground transition-transform duration-200"
+                              style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+                            />
+                          </button>
+                          {isOpen && (
+                            <div className="px-3 pb-3 pt-1 bg-background/50">
+                              {group.note && (
+                                <p className="text-xs text-muted-foreground mb-2 italic">{group.note}</p>
+                              )}
+                              <div className="space-y-1">
+                                {group.courses.map((c) => (
+                                  <div key={c.code} className="flex items-baseline gap-2">
+                                    <span
+                                      className="text-xs font-mono font-semibold whitespace-nowrap"
+                                      style={{ color }}
+                                    >
+                                      {c.code}
+                                    </span>
+                                    <span className="text-xs text-muted-foreground flex-1 truncate">{c.name}</span>
+                                    <span className="text-xs font-medium flex-shrink-0 text-muted-foreground">
+                                      {c.credits}cr
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {isVSU && (
+                <div className="mt-4 pt-3 border-t border-border">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                    Credit Summary
+                  </p>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                    {[
+                      { label: "General Education", credits: 33 },
+                      { label: "Core Requirements", credits: 54 },
+                      { label: "Major / Concentration", credits: 14 },
+                      { label: "Electives", credits: 19 },
+                    ].map(({ label, credits }) => (
+                      <div key={label} className="flex items-center justify-between text-xs py-0.5">
+                        <span className="text-muted-foreground">{label}</span>
+                        <span className="font-semibold tabular-nums">{credits} cr</span>
+                      </div>
+                    ))}
+                    <div className="col-span-2 flex items-center justify-between text-xs pt-1 mt-0.5 border-t border-border">
+                      <span className="font-semibold">Total</span>
+                      <span className="font-bold tabular-nums" style={{ color: accentColor }}>120 cr</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                 <p className="text-xs text-muted-foreground">Source: {plan.source}</p>
