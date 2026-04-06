@@ -211,9 +211,26 @@ export function HomePage() {
               <h2 className="text-3xl font-bold tracking-tight mb-3">
                 Built for students like you
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 Transfer rules are complex and change often, making the process confusing. TransferIntelligence combines a transfer planning tool, an AI assistant, and a real advisor network so you always know your next step.
               </p>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  variant="outline"
+                  className="gap-2"
+                  style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
+                  onClick={() => navigate("/contact")}
+                >
+                  Contact
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="gap-2"
+                  onClick={() => navigate("/about")}
+                >
+                  About Us
+                </Button>
+              </div>
             </div>
           </div>
         </div>
