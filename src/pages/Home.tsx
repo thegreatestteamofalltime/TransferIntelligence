@@ -71,35 +71,37 @@ export function HomePage() {
         className="relative pt-8 pb-20 sm:pt-10 sm:pb-28 px-4 sm:px-6 overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
+            "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
         }}
       >
         <div
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-5"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.65 0.14 210) 0%, transparent 50%)",
           }}
         />
         <div className="relative max-w-4xl mx-auto text-center">
 
 
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-2">
             <LogoHero />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white text-balance mb-6">
-            Plan Your College Transfer with Confidence
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground text-balance mb-6">
+            Plan Your College Transfer
+            <span style={{ color: "var(--brand)" }}> with Confidence</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-10 leading-relaxed">
-            See exactly which classes count at your new school. Get AI help, real advisor support, and clear guidance every step of the way.
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            TransferIntelligence helps Virginia community college students see exactly which classes count at their new school — with AI guidance, real advisor support, and up-to-date school agreements.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               size="lg"
-              className="gap-2 bg-white text-brand px-8 py-6 text-base font-semibold hover:bg-white/90"
+              className="gap-2 text-white px-8 py-6 text-base"
+              style={{ backgroundColor: "var(--brand)" }}
               onClick={() => navigate("/get-started")}
             >
               Get Started
@@ -108,7 +110,8 @@ export function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="gap-2 px-8 py-6 text-base border-white text-white hover:bg-white/10"
+              className="gap-2 px-8 py-6 text-base"
+              style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
               onClick={() => navigate("/colleges")}
             >
               Browse Colleges
@@ -116,7 +119,7 @@ export function HomePage() {
             <Button
               size="lg"
               variant="ghost"
-              className="gap-2 px-8 py-6 text-base text-white hover:bg-white/10"
+              className="gap-2 px-8 py-6 text-base"
               onClick={() => navigate("/advisors")}
             >
               <Users className="h-4 w-4" />
@@ -126,26 +129,32 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 bg-white">
+      <section className="py-20 px-4 sm:px-6 bg-background">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 text-foreground">
-              Everything You Need to Transfer Successfully
+            <h2 className="font-extrabold tracking-tight leading-tight mb-4">
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-foreground">
+                <span className="text-brand">Learn How</span> to
+              </span>
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-brand">
+                Transfer Your Intelligence
+              </span>
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-foreground mt-2">
+                in <span className="text-brand">Minutes</span>
+              </span>
             </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto text-lg leading-relaxed">
-              Built for community college students like you. Simple tools, real answers.
+            <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed mt-6">
+              Everything you need to plan a successful transfer from a Virginia community college to a 4-year university.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {features.map((feature) => (
-              <Card key={feature.title} className="border border-border bg-white hover:shadow-md transition-all duration-200 rounded-xl">
-                <CardContent className="p-6 flex flex-col items-center text-center">
+              <Card key={feature.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl">
+                <CardContent className="p-7 flex flex-col items-center text-center">
                   <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-white"
-                    style={{
-                      background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
-                    }}
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 text-white shadow-sm"
+                    style={{ backgroundColor: "var(--brand)" }}
                   >
                     {feature.icon}
                   </div>
@@ -158,29 +167,26 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 bg-gray-50">
+      <section className="py-16 px-4 sm:px-6" style={{ backgroundColor: "var(--brand-muted)" }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge
-                className="mb-4 text-xs font-semibold text-white"
-                style={{
-                  background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
-                }}
+                className="mb-4 text-xs font-semibold"
+                style={{ backgroundColor: "var(--brand)", color: "white" }}
               >
                 How It Works
               </Badge>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-foreground">
-                Four Simple Steps to Your Transfer Plan
+              <h2 className="text-3xl font-bold tracking-tight mb-4">
+                Four steps to your transfer plan
               </h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed text-base">
-                Our streamlined process takes the guesswork out of transferring. From entering your courses to seeing your complete transfer plan — it takes minutes.
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                Our streamlined process takes the guesswork out of transferring. From entering your
+                courses to seeing your complete transfer plan — it takes minutes.
               </p>
               <Button
-                className="gap-2 text-white font-semibold"
-                style={{
-                  background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
-                }}
+                className="gap-2 text-white"
+                style={{ backgroundColor: "var(--brand)" }}
                 onClick={() => navigate("/planner")}
               >
                 Start Transfer Plan
@@ -190,18 +196,14 @@ export function HomePage() {
 
             <div className="grid grid-cols-2 gap-4">
               {steps.map((step) => (
-                <div key={step.number} className="bg-white rounded-lg p-6 border border-border">
+                <div key={step.number} className="bg-background rounded-xl p-5 border border-border">
                   <div
-                    className="text-3xl font-black mb-3 leading-none"
-                    style={{
-                      background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
+                    className="text-2xl font-black mb-2 leading-none"
+                    style={{ color: "var(--brand)" }}
                   >
                     {step.number}
                   </div>
-                  <h4 className="font-semibold text-foreground text-sm mb-2">{step.title}</h4>
+                  <h4 className="font-semibold text-foreground text-sm mb-1">{step.title}</h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
                 </div>
               ))}
@@ -210,44 +212,37 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 bg-white">
+      <section className="py-16 px-4 sm:px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-4">
+            <div className="space-y-3">
               {highlights.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors">
-                  <div className="flex-shrink-0 mt-1">
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-white"
-                      style={{
-                        background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
-                      }}
-                    >
-                      {item.icon}
-                    </div>
-                  </div>
-                  <span className="text-sm font-medium text-foreground leading-relaxed">{item.text}</span>
+                <div key={idx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                  <div className={`flex-shrink-0 ${item.color}`}>{item.icon}</div>
+                  <span className="text-sm font-medium">{item.text}</span>
                 </div>
               ))}
             </div>
 
             <div>
               <Badge
-                className="mb-4 text-xs font-semibold text-white"
-                style={{
-                  background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
-                }}
+                className="mb-4 text-xs font-semibold"
+                style={{ backgroundColor: "var(--brand)", color: "white" }}
               >
                 Our Mission
               </Badge>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-foreground">
-                Transfer Planning for Everyone
+              <h2 className="text-3xl font-bold tracking-tight mb-4">
+                Making transfer planning accessible for every student
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4 text-base">
-                We built TransferIntelligence for first-generation college students, working students, and anyone who finds the transfer process confusing. Transfer policies are complex — but your path forward shouldn't be.
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                We built TransferIntelligence for first-generation college students, working students,
+                and anyone who finds the transfer process confusing. Transfer policies are complex —
+                but your path forward shouldn't be.
               </p>
-              <p className="text-muted-foreground leading-relaxed text-base">
-                By combining up-to-date school agreement data with an AI assistant and a network of academic advisors, we give every student the information they need to transfer confidently — without surprises.
+              <p className="text-muted-foreground leading-relaxed">
+                By combining up-to-date school agreement data with an AI assistant and a network of
+                academic advisors, we give every student the information they need to transfer
+                confidently — without surprises.
               </p>
             </div>
           </div>
@@ -257,20 +252,21 @@ export function HomePage() {
       <section
         className="py-20 px-4 sm:px-6 text-center text-white"
         style={{
-          background: "linear-gradient(135deg, oklch(0.68 0.14 196) 0%, oklch(0.65 0.14 210) 100%)",
+          background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.6 0.14 210) 100%)",
         }}
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
-            Ready to Plan Your Transfer?
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            Ready to plan your transfer?
           </h2>
-          <p className="text-white/90 text-lg mb-10 leading-relaxed">
-            See your transfer plan in minutes. Free. Instant. Built for you.
+          <p className="text-white/80 text-lg mb-8">
+            Enter your courses and see your transfer plan in minutes. It's free, instant, and built for you.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               size="lg"
-              className="bg-white text-brand px-8 py-6 font-semibold hover:bg-white/90"
+              className="bg-white text-brand px-8 font-semibold hover:bg-white/90"
+              style={{ color: "var(--brand)" }}
               onClick={() => navigate("/planner")}
             >
               Start Transfer Plan
@@ -279,7 +275,7 @@ export function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white/10 px-8 py-6"
+              className="border-white/50 text-white hover:bg-white/10 hover:text-white px-8"
               onClick={() => navigate("/get-started")}
             >
               Learn How It Works
