@@ -6,28 +6,28 @@ import { openTransferBuddyChat } from "@/components/TransferBuddyLink"
 
 const contactOptions = [
   {
-    icon: <MessageCircle className="h-6 w-6" />,
+    icon: <MessageCircle className="h-5 w-5" />,
     title: "TransferBuddy",
     description: "Get instant answers to common transfer questions from our AI assistant — available anytime.",
     action: "Open Chat",
     handler: openTransferBuddyChat,
   },
   {
-    icon: <Users className="h-6 w-6" />,
+    icon: <Users className="h-5 w-5" />,
     title: "Academic Advisors",
     description: "Connect with a real academic advisor at your target school for personalized guidance.",
     action: "View Advisors",
     handler: () => navigate("/advisors"),
   },
   {
-    icon: <HelpCircle className="h-6 w-6" />,
+    icon: <HelpCircle className="h-5 w-5" />,
     title: "FAQ",
     description: "Browse our frequently asked questions for quick answers to common transfer questions.",
     action: "View FAQ",
     handler: () => navigate("/faq"),
   },
   {
-    icon: <Mail className="h-6 w-6" />,
+    icon: <Mail className="h-5 w-5" />,
     title: "General Inquiry",
     description: "Have a question about TransferIntelligence? Reach our team directly by email.",
     action: "Send Email",
@@ -68,8 +68,8 @@ export function ContactPage() {
           <Card key={option.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl group">
             <CardContent className="p-7 flex flex-col items-center text-center">
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-white"
-                style={{ backgroundColor: "var(--brand)" }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-white"
+                style={{ background: "var(--brand-gradient)" }}
               >
                 {option.icon}
               </div>
