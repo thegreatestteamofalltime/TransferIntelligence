@@ -120,7 +120,13 @@ export function FloatingChat() {
   const isWelcomeState = messages.length === 1
 
   useEffect(() => {
-    const handler = () => setOpen(true)
+    const handler = (e: Event) => {
+      setOpen(true)
+      const detail = (e as CustomEvent<{ prompt?: string }>).detail
+      if (detail?.prompt) {
+        setTimeout(() => sendMessage(detail.prompt), 100)
+      }
+    }
     window.addEventListener("open-transfer-buddy", handler)
     return () => window.removeEventListener("open-transfer-buddy", handler)
   }, [])

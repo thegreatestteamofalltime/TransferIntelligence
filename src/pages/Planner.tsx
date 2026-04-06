@@ -44,6 +44,9 @@ export function PlannerPage() {
         completedCourses={completedCourses}
         agreement={agreement}
         onEdit={handleEdit}
+        onChangeProgram={() => setStep("step1")}
+        onChangeSchool={() => setStep("step1")}
+        onEditCourses={() => setStep("step2")}
       />
     )
   }
