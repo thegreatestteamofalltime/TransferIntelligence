@@ -47,12 +47,12 @@ const highlights = [
   },
   {
     icon: <FileText className="h-5 w-5" />,
-    text: "Plain-English glossary with hover definitions",
+    text: "Easy to understand glossary of transfer-related terms",
     color: "text-brand",
   },
   {
     icon: <MapPin className="h-5 w-5" />,
-    text: "Advisor directory for 6 Virginia institutions",
+    text: <><button onClick={() => navigate("/advisors")} className="font-semibold underline underline-offset-2 hover:opacity-80 transition-opacity" style={{ color: "var(--brand)" }}>Advisor directory</button> for Virginia colleges <button onClick={() => navigate("/colleges")} className="font-semibold underline underline-offset-2 hover:opacity-80 transition-opacity" style={{ color: "var(--brand)" }}>in our network</button></>,
     color: "text-brand",
   },
 ]
@@ -209,10 +209,10 @@ export function HomePage() {
 
             <div>
               <h2 className="text-3xl font-bold tracking-tight mb-3">
-                Built for students who find the process confusing
+                Built for students like you
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Transfer rules are complex and change often. TransferIntelligence combines current articulation agreement data, an AI assistant, and a real advisor network so you always know your next step — without surprises.
+                Transfer rules are complex and change often, making the process confusing. TransferIntelligence combines a transfer planning tool, an AI assistant, and a real advisor network so you always know your next step.
               </p>
             </div>
           </div>
