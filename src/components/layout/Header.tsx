@@ -24,13 +24,13 @@ const menuLinks: { label: string; route: Route; icon: React.ReactNode }[] = [
 ]
 
 const categoryBg: Record<string, string> = {
-  Page: "bg-muted text-muted-foreground",
-  College: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-  Advisor: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-  Term: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-  FAQ: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-  Course: "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
-  Program: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
+  Page: "bg-zinc-100 text-zinc-600",
+  College: "bg-blue-100 text-blue-700",
+  Advisor: "bg-green-100 text-green-700",
+  Term: "bg-amber-100 text-amber-700",
+  FAQ: "bg-orange-100 text-orange-700",
+  Course: "bg-sky-100 text-sky-700",
+  Program: "bg-teal-100 text-teal-700",
 }
 
 interface DropdownPortalProps {
@@ -205,7 +205,7 @@ export function Header({ currentRoute }: HeaderProps) {
 
             {showDropdown && (
               <DropdownPortal anchorRef={searchWrapperRef}>
-                <div className="bg-popover border border-border rounded-lg shadow-xl overflow-hidden">
+                <div className="light bg-white border border-zinc-200 rounded-lg shadow-xl overflow-hidden text-zinc-900">
                   {results.length > 0 ? (
                     <>
                       <ul role="listbox" className="py-1 max-h-72 overflow-y-auto">
@@ -213,35 +213,37 @@ export function Header({ currentRoute }: HeaderProps) {
                           <li key={result.id} role="option" aria-selected={index === activeIndex}>
                             <button
                               className={`w-full flex items-start gap-3 px-3 py-2.5 text-left transition-colors ${
-                                index === activeIndex ? "bg-accent" : "hover:bg-accent"
+                                index === activeIndex ? "bg-zinc-100" : "hover:bg-zinc-50"
                               }`}
+                              onMouseDown={(e) => e.preventDefault()}
                               onClick={() => handleSelectResult(result)}
                               onMouseEnter={() => setActiveIndex(index)}
                             >
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-0.5">
                                   <span
-                                    className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 ${categoryBg[result.category] ?? "bg-muted text-muted-foreground"}`}
+                                    className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 ${categoryBg[result.category] ?? "bg-zinc-100 text-zinc-600"}`}
                                   >
                                     {result.category}
                                   </span>
-                                  <span className="text-sm font-medium text-foreground truncate">
+                                  <span className="text-sm font-medium text-zinc-900 truncate">
                                     {result.title}
                                   </span>
                                 </div>
                                 {result.subtitle && (
-                                  <p className="text-xs text-muted-foreground truncate pl-0.5">
+                                  <p className="text-xs text-zinc-500 truncate pl-0.5">
                                     {result.subtitle}
                                   </p>
                                 )}
                               </div>
-                              <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-1" />
+                              <ArrowRight className="h-3.5 w-3.5 text-zinc-400 shrink-0 mt-1" />
                             </button>
                           </li>
                         ))}
                       </ul>
-                      <div className="border-t border-border px-3 py-2">
+                      <div className="border-t border-zinc-200 px-3 py-2">
                         <button
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => {
                             const q = searchValue.trim()
                             if (q) {
@@ -249,18 +251,18 @@ export function Header({ currentRoute }: HeaderProps) {
                               navigate("/search", { q })
                             }
                           }}
-                          className="w-full flex items-center justify-between text-xs text-muted-foreground hover:text-foreground transition-colors py-0.5"
+                          className="w-full flex items-center justify-between text-xs text-zinc-500 hover:text-zinc-900 transition-colors py-0.5"
                         >
-                          <span>See all results for <span className="font-medium text-foreground">"{searchValue}"</span></span>
+                          <span>See all results for <span className="font-medium text-zinc-900">"{searchValue}"</span></span>
                           <ArrowRight className="h-3 w-3" />
                         </button>
                       </div>
                     </>
                   ) : (
                     <div className="px-4 py-3">
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-zinc-500">
                         No results for{" "}
-                        <span className="font-medium text-foreground">"{searchValue}"</span>
+                        <span className="font-medium text-zinc-900">"{searchValue}"</span>
                       </p>
                     </div>
                   )}
