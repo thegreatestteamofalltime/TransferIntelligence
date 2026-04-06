@@ -8,22 +8,22 @@ import { TransferBuddyLink } from "@/components/TransferBuddyLink"
 
 const features = [
   {
-    icon: <Route className="h-6 w-6" />,
+    icon: <Route className="h-5 w-5" />,
     title: "Transfer Planning",
     description: "Map your classes from community college to your target 4-year university and see what counts.",
   },
   {
-    icon: <ArrowLeftRight className="h-6 w-6" />,
+    icon: <ArrowLeftRight className="h-5 w-5" />,
     title: "Course Matching",
     description: "See which of your classes transfer — and get suggestions when a class doesn't have a direct match.",
   },
   {
-    icon: <MessageCircle className="h-6 w-6" />,
+    icon: <MessageCircle className="h-5 w-5" />,
     title: "AI Assistant",
     description: <><TransferBuddyLink /> answers your transfer questions 24/7 in plain language.</>,
   },
   {
-    icon: <GraduationCap className="h-6 w-6" />,
+    icon: <GraduationCap className="h-5 w-5" />,
     title: "Advisor Support",
     description: "Connect with real academic advisors at Virginia institutions when you need a human answer.",
   },
@@ -144,7 +144,7 @@ export function HomePage() {
             {features.map((feature) => (
               <Card key={feature.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl">
                 <CardContent className="p-7 flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-white" style={{ backgroundColor: "var(--brand)" }}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-white" style={{ background: "var(--brand-gradient)" }}>
                     {feature.icon}
                   </div>
                   <h3 className="font-semibold text-foreground mb-2 text-base">{feature.title}</h3>

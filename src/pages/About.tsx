@@ -77,7 +77,7 @@ export function AboutPage() {
           <div className="grid sm:grid-cols-2 gap-4 mb-12">
             {values.map((value) => (
               <Card key={value.title} className="border border-border shadow-none hover:shadow-sm transition-shadow rounded-2xl">
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex flex-col items-center text-center">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-4"
                     style={{ background: "var(--brand-gradient)" }}
