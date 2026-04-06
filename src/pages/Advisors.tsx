@@ -1,5 +1,5 @@
 import { Mail, Clock, Tag, Search, Users } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -28,41 +28,83 @@ const AVATAR_COLORS = [
   "oklch(0.55 0.16 170)",
 ]
 
+const ALL_SCHOOLS = Array.from(new Set(advisors.map((a) => a.school))).sort()
+
+function getHashParams(): { college?: string; universities?: string[] } {
+  const hash = window.location.hash
+  const qIdx = hash.indexOf("?")
+  if (qIdx === -1) return {}
+  const params = new URLSearchParams(hash.slice(qIdx + 1))
+  const college = params.get("college") ?? undefined
+  const universitiesRaw = params.get("universities")
+  const universities = universitiesRaw ? universitiesRaw.split(",").map((u) => u.trim()).filter(Boolean) : undefined
+  return { college, universities }
+}
+
 export function AdvisorsPage() {
   const [query, setQuery] = useState("")
+  const [collegeFilter, setCollegeFilter] = useState<string>("all")
 
-  const filtered = advisors.filter(
-    (a) =>
+  useEffect(() => {
+    const { college, universities } = getHashParams()
+    if (college) {
+      const match = ALL_SCHOOLS.find((s) => s.toLowerCase().includes(college.toLowerCase()))
+      if (match) setCollegeFilter(match)
+    } else if (universities?.length) {
+      const match = ALL_SCHOOLS.find((s) =>
+        universities.some((u) => s.toLowerCase().includes(u.toLowerCase()))
+      )
+      if (match) setCollegeFilter(match)
+    }
+  }, [])
+
+  const filtered = advisors.filter((a) => {
+    const matchesCollege = collegeFilter === "all" || a.school === collegeFilter
+    const matchesQuery =
+      !query ||
       a.name.toLowerCase().includes(query.toLowerCase()) ||
       a.school.toLowerCase().includes(query.toLowerCase()) ||
       a.program.toLowerCase().includes(query.toLowerCase()) ||
       a.specialties.some((s) => s.toLowerCase().includes(query.toLowerCase()))
-  )
+    return matchesCollege && matchesQuery
+  })
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Academic Advisors</h1>
         <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Connect with transfer advisors at Virginia institutions. These advisors can help you understand which of your classes count, and answer questions about the <TermTooltip termId="articulation-agreement">official transfer agreements</TermTooltip> between your schools.
         </p>
       </div>
 
-      <div className="relative mb-8">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          className="pl-9"
-          placeholder="Search by name, school, program, or specialty..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            className="pl-9"
+            placeholder="Search by name, program, or specialty..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <select
+          className="h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring sm:w-56"
+          value={collegeFilter}
+          onChange={(e) => setCollegeFilter(e.target.value)}
+          aria-label="Filter by college"
+        >
+          <option value="all">All Colleges</option>
+          {ALL_SCHOOLS.map((school) => (
+            <option key={school} value={school}>{school}</option>
+          ))}
+        </select>
       </div>
 
       {filtered.length === 0 && (
         <div className="text-center py-16 text-muted-foreground">
           <Users className="h-12 w-12 mx-auto mb-3 opacity-30" />
-          <p>No advisors found for "{query}"</p>
+          <p>No advisors found{query ? ` for "${query}"` : ""}{collegeFilter !== "all" ? ` at ${collegeFilter}` : ""}</p>
         </div>
       )}
 

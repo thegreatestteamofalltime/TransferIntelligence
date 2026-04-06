@@ -3,13 +3,13 @@ import { X, Send, GraduationCap, UserCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { navigate } from "@/lib/router"
 
 interface Message {
   id: string
   role: "user" | "assistant"
   text: string
   showAdvisor?: boolean
+  advisorFilter?: { college?: string; universities?: string[] }
 }
 
 interface ChatMessage {
@@ -17,10 +17,19 @@ interface ChatMessage {
   content: string
 }
 
+interface UserContext {
+  currentCollege?: string
+  targetUniversities?: string[]
+  major?: string
+}
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-async function getAIResponse(history: ChatMessage[]): Promise<{ text: string; showAdvisor: boolean }> {
+async function getAIResponse(
+  history: ChatMessage[],
+  userContext: UserContext
+): Promise<{ text: string; showAdvisor: boolean; isCannotHelp: boolean; endOfConversation: boolean }> {
   try {
     const res = await fetch(`${SUPABASE_URL}/functions/v1/transfer-chat`, {
       method: "POST",
@@ -28,24 +37,44 @@ async function getAIResponse(history: ChatMessage[]): Promise<{ text: string; sh
         "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ messages: history }),
+      body: JSON.stringify({ messages: history, userContext }),
     })
 
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`)
-    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
     const data = await res.json()
     return {
       text: data.text ?? "I'm not sure how to answer that. Try rephrasing, or speak with an academic advisor.",
       showAdvisor: data.showAdvisor ?? false,
+      isCannotHelp: data.isCannotHelp ?? false,
+      endOfConversation: data.endOfConversation ?? false,
     }
   } catch {
     return {
       text: "I'm having trouble connecting right now. Please try again in a moment, or contact an academic advisor for assistance.",
       showAdvisor: true,
+      isCannotHelp: false,
+      endOfConversation: false,
     }
   }
+}
+
+const INSTITUTIONAL_KEYWORDS = [
+  "apply for graduation",
+  "applying for graduation",
+  "graduation application",
+  "apply to transfer",
+  "applying to transfer",
+  "transfer application",
+  "apply for admission",
+  "applying for admission",
+  "enrollment application",
+  "register for graduation",
+]
+
+function isInstitutionalQuery(text: string): boolean {
+  const lower = text.toLowerCase()
+  return INSTITUTIONAL_KEYWORDS.some((kw) => lower.includes(kw))
 }
 
 const suggestedQuestions = [
@@ -60,13 +89,15 @@ export function FloatingChat() {
     {
       id: "welcome",
       role: "assistant",
-      text: "Hi! I'm Transfer Buddy. I can help you understand which Brightpoint or NOVA classes transfer to Virginia State University and what the results mean. What would you like to know?",
+      text: "Hi, I'm TransferBuddy! Ask me anything about transferring your credits to a Virginia four-year university.",
       showAdvisor: false,
     },
   ])
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [userContext] = useState<UserContext>({})
+  const [cannotHelpStreak, setCannotHelpStreak] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const isWelcomeState = messages.length === 1
@@ -76,6 +107,19 @@ export function FloatingChat() {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
   }, [messages, open, isWelcomeState])
+
+  const addAdvisorEscalation = (filter?: { college?: string; universities?: string[] }) => {
+    const aiMsg: Message = {
+      id: (Date.now() + 2).toString(),
+      role: "assistant",
+      text: "It looks like I'm having trouble helping with this. For the best guidance on your specific situation, please reach out to an academic advisor directly.",
+      showAdvisor: true,
+      advisorFilter: filter,
+    }
+    setMessages((prev) => [...prev, aiMsg])
+    setChatHistory((prev) => [...prev, { role: "assistant", content: aiMsg.text }])
+    setCannotHelpStreak(0)
+  }
 
   const sendMessage = async (text?: string) => {
     const messageText = (text ?? input).trim()
@@ -94,7 +138,18 @@ export function FloatingChat() {
     setIsTyping(true)
     setChatHistory(newHistory)
 
-    const { text: responseText, showAdvisor } = await getAIResponse(newHistory)
+    if (isInstitutionalQuery(messageText)) {
+      setIsTyping(false)
+      addAdvisorEscalation(userContext.currentCollege || userContext.targetUniversities
+        ? { college: userContext.currentCollege, universities: userContext.targetUniversities }
+        : undefined)
+      return
+    }
+
+    const { text: responseText, showAdvisor, isCannotHelp, endOfConversation } = await getAIResponse(newHistory, userContext)
+
+    const newStreak = isCannotHelp ? cannotHelpStreak + 1 : 0
+    setCannotHelpStreak(newStreak)
 
     const aiMsg: Message = {
       id: (Date.now() + 1).toString(),
@@ -106,6 +161,28 @@ export function FloatingChat() {
     setMessages((prev) => [...prev, aiMsg])
     setChatHistory((prev) => [...prev, { role: "assistant", content: responseText }])
     setIsTyping(false)
+
+    if (newStreak >= 5) {
+      setTimeout(() => {
+        addAdvisorEscalation(userContext.currentCollege || userContext.targetUniversities
+          ? { college: userContext.currentCollege, universities: userContext.targetUniversities }
+          : undefined)
+      }, 100)
+    } else if (endOfConversation) {
+      const reminderMsg: Message = {
+        id: (Date.now() + 3).toString(),
+        role: "assistant",
+        text: "Remember: always verify your transfer plan with an official academic advisor to make sure everything is accurate and ready to go.",
+        showAdvisor: true,
+        advisorFilter: userContext.currentCollege || userContext.targetUniversities
+          ? { college: userContext.currentCollege, universities: userContext.targetUniversities }
+          : undefined,
+      }
+      setTimeout(() => {
+        setMessages((prev) => [...prev, reminderMsg])
+        setChatHistory((prev) => [...prev, { role: "assistant", content: reminderMsg.text }])
+      }, 600)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -115,6 +192,35 @@ export function FloatingChat() {
     }
   }
 
+  const handleAdvisorNav = (filter?: { college?: string; universities?: string[] }) => {
+    setOpen(false)
+    const params: string[] = []
+    if (filter?.college) params.push(`college=${encodeURIComponent(filter.college)}`)
+    if (filter?.universities?.length) params.push(`universities=${encodeURIComponent(filter.universities.join(","))}`)
+    const hash = params.length ? `/advisors?${params.join("&")}` : "/advisors"
+    window.location.hash = hash
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const ChatHeader = () => (
+    <div
+      className="relative flex items-center justify-center px-4 py-3 text-white"
+      style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
+    >
+      <div className="flex flex-col items-center">
+        <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
+        <p className="text-xs text-white/80">Transfer AI Assistant</p>
+      </div>
+      <button
+        onClick={() => setOpen(false)}
+        className="absolute right-4 text-white/80 hover:text-white transition-colors"
+        aria-label="Close chat"
+      >
+        <X className="h-5 w-5" />
+      </button>
+    </div>
+  )
+
   return (
     <>
       {open && (
@@ -122,22 +228,7 @@ export function FloatingChat() {
 
           {isWelcomeState ? (
             <>
-              <div
-                className="relative flex items-center justify-center px-4 py-3 text-white"
-                style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
-              >
-                <div className="flex flex-col items-center">
-                  <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
-                  <p className="text-xs text-white/80">Transfer AI Assistant</p>
-                </div>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="absolute right-4 text-white/80 hover:text-white transition-colors"
-                  aria-label="Close chat"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
+              <ChatHeader />
 
               <div className="flex flex-col items-center px-5 pb-4 pt-2">
                 <img
@@ -196,22 +287,7 @@ export function FloatingChat() {
             </>
           ) : (
             <>
-              <div
-                className="relative flex items-center justify-center px-4 py-3 text-white"
-                style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
-              >
-                <div className="flex flex-col items-center">
-                  <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
-                  <p className="text-xs text-white/80">Transfer AI Assistant</p>
-                </div>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="absolute right-4 text-white/80 hover:text-white transition-colors"
-                  aria-label="Close chat"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
+              <ChatHeader />
 
               <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0 max-h-[380px]">
                 {messages.map((msg) => (
@@ -240,16 +316,13 @@ export function FloatingChat() {
                         >
                           {msg.text}
                         </div>
-                        {msg.showAdvisor && (
+                        {(msg.showAdvisor) && (
                           <Button
                             size="sm"
                             variant="outline"
                             className="mt-2 text-xs h-7 gap-1.5"
                             style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
-                            onClick={() => {
-                              setOpen(false)
-                              navigate("/advisors")
-                            }}
+                            onClick={() => handleAdvisorNav(msg.advisorFilter)}
                           >
                             <UserCheck className="h-3 w-3" />
                             Contact an Advisor
