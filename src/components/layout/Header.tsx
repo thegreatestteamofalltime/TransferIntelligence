@@ -1,9 +1,10 @@
-import { useState } from "react"
-import { Menu, Mail, Info, Circle as HelpCircle, Search } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import { Menu, Mail, Info, Circle as HelpCircle, Search, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { navigate, type Route } from "@/lib/router"
+import { search, type SearchResult } from "@/lib/searchIndex"
 
 const navLinks: { label: string; route: Route }[] = [
   { label: "Home", route: "/" },
@@ -21,6 +22,16 @@ const menuLinks: { label: string; route: Route; icon: React.ReactNode }[] = [
   { label: "About", route: "/about", icon: <Info className="h-4 w-4" /> },
 ]
 
+const categoryColors: Record<string, string> = {
+  Page: "bg-muted text-muted-foreground",
+  College: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+  Advisor: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+  Term: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+  FAQ: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+  Course: "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
+  Program: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
+}
+
 interface HeaderProps {
   currentRoute: Route
 }
@@ -28,21 +39,68 @@ interface HeaderProps {
 export function Header({ currentRoute }: HeaderProps) {
   const [open, setOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("")
+  const [results, setResults] = useState<SearchResult[]>([])
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const searchRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleNav = (route: Route) => {
     navigate(route)
     setOpen(false)
   }
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    const term = searchValue.trim()
-    if (!term) return
-    navigate("/terminology")
-    window.dispatchEvent(new CustomEvent("terminology-search", { detail: term }))
-    setSearchValue("")
-    setOpen(false)
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value)
+    const res = search(value)
+    setResults(res)
+    setDropdownOpen(value.trim().length >= 2)
+    setActiveIndex(-1)
   }
+
+  const handleSelectResult = (result: SearchResult) => {
+    navigate(result.route)
+    if (result.category === "Term") {
+      window.dispatchEvent(new CustomEvent("terminology-search", { detail: result.title }))
+    }
+    setSearchValue("")
+    setResults([])
+    setDropdownOpen(false)
+    setActiveIndex(-1)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!dropdownOpen || results.length === 0) return
+    if (e.key === "ArrowDown") {
+      e.preventDefault()
+      setActiveIndex((i) => Math.min(i + 1, results.length - 1))
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault()
+      setActiveIndex((i) => Math.max(i - 1, -1))
+    } else if (e.key === "Enter") {
+      e.preventDefault()
+      if (activeIndex >= 0) {
+        handleSelectResult(results[activeIndex])
+      } else if (results.length > 0) {
+        handleSelectResult(results[0])
+      }
+    } else if (e.key === "Escape") {
+      setDropdownOpen(false)
+      setActiveIndex(-1)
+      inputRef.current?.blur()
+    }
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false)
+        setActiveIndex(-1)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
   return (
     <header className="w-full bg-background border-b border-border">
@@ -77,17 +135,65 @@ export function Header({ currentRoute }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-3 ml-auto">
-          <form onSubmit={handleSearch} className="hidden md:flex items-center relative">
-            <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
-            <Input
-              type="search"
-              placeholder="Search"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="h-9 pl-8 pr-3 w-52 text-sm rounded-lg"
-              aria-label="Search transfer terms"
-            />
-          </form>
+          <div ref={searchRef} className="hidden md:block relative">
+            <div className="relative flex items-center">
+              <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none z-10" />
+              <Input
+                ref={inputRef}
+                type="search"
+                placeholder="Search"
+                value={searchValue}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onFocus={() => searchValue.trim().length >= 2 && setDropdownOpen(true)}
+                className="h-9 pl-8 pr-3 w-52 text-sm rounded-lg"
+                aria-label="Search all pages"
+                aria-expanded={dropdownOpen}
+                aria-autocomplete="list"
+                autoComplete="off"
+              />
+            </div>
+
+            {dropdownOpen && results.length > 0 && (
+              <div className="absolute top-full left-0 mt-1 w-80 bg-popover border border-border rounded-lg shadow-lg z-50 overflow-hidden">
+                <ul role="listbox" className="py-1 max-h-80 overflow-y-auto">
+                  {results.map((result, index) => (
+                    <li key={result.id} role="option" aria-selected={index === activeIndex}>
+                      <button
+                        className={`w-full flex items-start gap-3 px-3 py-2.5 text-left transition-colors ${
+                          index === activeIndex
+                            ? "bg-accent"
+                            : "hover:bg-accent"
+                        }`}
+                        onClick={() => handleSelectResult(result)}
+                        onMouseEnter={() => setActiveIndex(index)}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 ${categoryColors[result.category] ?? "bg-muted text-muted-foreground"}`}>
+                              {result.category}
+                            </span>
+                            <span className="text-sm font-medium text-foreground truncate">{result.title}</span>
+                          </div>
+                          {result.subtitle && (
+                            <p className="text-xs text-muted-foreground truncate">{result.subtitle}</p>
+                          )}
+                        </div>
+                        <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-1" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {dropdownOpen && searchValue.trim().length >= 2 && results.length === 0 && (
+              <div className="absolute top-full left-0 mt-1 w-72 bg-popover border border-border rounded-lg shadow-lg z-50 px-4 py-3">
+                <p className="text-sm text-muted-foreground">No results for <span className="font-medium text-foreground">"{searchValue}"</span></p>
+              </div>
+            )}
+          </div>
+
           <Button
             size="sm"
             className="hidden md:flex text-white font-semibold text-sm px-5 h-9 border-0"
