@@ -230,7 +230,7 @@ export const VCCS_GMU_GAA: ArticulationAgreement = {
   pdfPath: "/src/data/agreements/VSU.pdf",
 }
 
-export const ALL_AGREEMENTS: ArticulationAgreement[] = [VCCS_VSU_GAA, VCCS_VCU_GAA, VCCS_GMU_GAA]
+export const ALL_AGREEMENTS: ArticulationAgreement[] = [VCCS_VSU_GAA]
 
 const VCCS_SCHOOLS = [
   "brightpoint", "nova", "northern virginia", "germanna", "reynolds", "tidewater",
