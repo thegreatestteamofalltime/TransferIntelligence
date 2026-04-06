@@ -77,6 +77,23 @@ function isInstitutionalQuery(text: string): boolean {
   return INSTITUTIONAL_KEYWORDS.some((kw) => lower.includes(kw))
 }
 
+const ADVISOR_KEYWORDS = [
+  "advisor",
+  "adviser",
+  "academic advisor",
+  "speak to someone",
+  "talk to someone",
+  "talk to a person",
+  "speak with someone",
+  "human help",
+  "real person",
+]
+
+function isAdvisorQuery(text: string): boolean {
+  const lower = text.toLowerCase()
+  return ADVISOR_KEYWORDS.some((kw) => lower.includes(kw))
+}
+
 const suggestedQuestions = [
   "How does transfer credit work?",
   "What is an articulation agreement?",
@@ -138,11 +155,19 @@ export function FloatingChat() {
     setIsTyping(true)
     setChatHistory(newHistory)
 
-    if (isInstitutionalQuery(messageText)) {
+    if (isInstitutionalQuery(messageText) || isAdvisorQuery(messageText)) {
       setIsTyping(false)
-      addAdvisorEscalation(userContext.currentCollege || userContext.targetUniversities
-        ? { college: userContext.currentCollege, universities: userContext.targetUniversities }
-        : undefined)
+      const advisorMsg: Message = {
+        id: (Date.now() + 2).toString(),
+        role: "assistant",
+        text: "For personalized guidance, I recommend reaching out to an academic advisor directly. They can review your specific situation and give you official guidance.",
+        showAdvisor: true,
+        advisorFilter: userContext.currentCollege || userContext.targetUniversities
+          ? { college: userContext.currentCollege, universities: userContext.targetUniversities }
+          : undefined,
+      }
+      setMessages((prev) => [...prev, advisorMsg])
+      setChatHistory((prev) => [...prev, { role: "assistant", content: advisorMsg.text }])
       return
     }
 

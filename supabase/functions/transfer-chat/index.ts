@@ -64,7 +64,7 @@ Only ask for context that is actually missing and relevant to the user's questio
 Return ONLY valid JSON: { "text": string, "showAdvisor": boolean, "isCannotHelp": boolean, "endOfConversation": boolean }
 - isCannotHelp: true when you cannot address the question and respond with something like "Let me know if I can help with something else" or similar deflection
 - endOfConversation: true when the conversation appears to be wrapping up satisfactorily
-- showAdvisor: true when the situation is complex, requires a transcript, or involves institutional-specific processes
+- showAdvisor: true when the situation is complex, requires a transcript, involves institutional-specific processes, OR whenever your response text mentions an advisor, advising, or recommends speaking with someone at the institution
 `;
 
 interface Message {
