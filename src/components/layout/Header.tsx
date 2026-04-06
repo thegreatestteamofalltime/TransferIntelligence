@@ -47,7 +47,7 @@ export function Header({ currentRoute }: HeaderProps) {
           />
         </button>
 
-        <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
+        <nav className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
           {navLinks.map((link) => (
             <button
               key={link.route}
@@ -68,7 +68,7 @@ export function Header({ currentRoute }: HeaderProps) {
           <Button
             size="sm"
             className="hidden md:flex text-white font-semibold text-sm px-5 h-9 border-0"
-            style={{ background: "linear-gradient(135deg, oklch(0.72 0.12 215), oklch(0.65 0.15 185), oklch(0.60 0.14 165))" }}
+            style={{ background: "linear-gradient(135deg, #3d9ab5, #4cbabb)" }}
             onClick={() => handleNav("/planner")}
           >
             Start Planning
