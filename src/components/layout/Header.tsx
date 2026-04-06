@@ -35,10 +35,11 @@ const categoryBg: Record<string, string> = {
 
 interface DropdownPortalProps {
   anchorRef: React.RefObject<HTMLDivElement | null>
+  portalRef: React.RefObject<HTMLDivElement | null>
   children: React.ReactNode
 }
 
-function DropdownPortal({ anchorRef, children }: DropdownPortalProps) {
+function DropdownPortal({ anchorRef, portalRef, children }: DropdownPortalProps) {
   const [rect, setRect] = useState<DOMRect | null>(null)
 
   useEffect(() => {
@@ -58,6 +59,7 @@ function DropdownPortal({ anchorRef, children }: DropdownPortalProps) {
 
   return createPortal(
     <div
+      ref={portalRef}
       style={{
         position: "fixed",
         top: rect.bottom + 6,
@@ -84,6 +86,7 @@ export function Header({ currentRoute }: HeaderProps) {
   const [activeIndex, setActiveIndex] = useState(-1)
   const searchWrapperRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const portalRef = useRef<HTMLDivElement>(null)
 
   const handleNav = (route: Route) => {
     navigate(route)
@@ -140,7 +143,10 @@ export function Header({ currentRoute }: HeaderProps) {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (searchWrapperRef.current && !searchWrapperRef.current.contains(e.target as Node)) {
+      const target = e.target as Node
+      const inWrapper = searchWrapperRef.current?.contains(target)
+      const inPortal = portalRef.current?.contains(target)
+      if (!inWrapper && !inPortal) {
         setDropdownOpen(false)
         setActiveIndex(-1)
       }
@@ -204,7 +210,7 @@ export function Header({ currentRoute }: HeaderProps) {
             </div>
 
             {showDropdown && (
-              <DropdownPortal anchorRef={searchWrapperRef}>
+              <DropdownPortal anchorRef={searchWrapperRef} portalRef={portalRef}>
                 <div className="light bg-white border border-zinc-200 rounded-lg shadow-xl overflow-hidden text-zinc-900">
                   {results.length > 0 ? (
                     <>
