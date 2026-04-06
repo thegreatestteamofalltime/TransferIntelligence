@@ -88,10 +88,25 @@ export function HomePage() {
             <LogoHero />
           </div>
 
-          <h1 className="font-extrabold tracking-tight text-foreground mb-4 leading-tight">
-            <span className="text-2xl sm:text-3xl md:text-4xl block">Learn How to</span>
-            <span className="text-4xl sm:text-5xl md:text-6xl italic block" style={{ color: "var(--brand)" }}>Transfer Your Intelligence</span>
-            <span className="text-2xl sm:text-3xl md:text-4xl block">in Minutes</span>
+          <h1 className="font-extrabold tracking-tight text-foreground mb-4 leading-none">
+            <span className="text-lg sm:text-xl md:text-2xl font-semibold tracking-widest uppercase text-muted-foreground block mb-2" style={{ letterSpacing: "0.2em" }}>
+              Your Transfer, Simplified
+            </span>
+            <span
+              className="text-5xl sm:text-6xl md:text-7xl block"
+              style={{
+                background: "var(--brand-gradient)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                lineHeight: 1.1,
+              }}
+            >
+              Transfer
+            </span>
+            <span className="text-5xl sm:text-6xl md:text-7xl block" style={{ lineHeight: 1.1 }}>
+              Intelligence
+            </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
