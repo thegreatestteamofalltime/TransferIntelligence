@@ -7,6 +7,7 @@ export interface Advisor {
   email: string
   specialties: string[]
   availability: string
+  gender?: "male" | "female"
 }
 
 export const advisors: Advisor[] = [
@@ -19,6 +20,7 @@ export const advisors: Advisor[] = [
     email: "s.mitchell@vsu.edu",
     specialties: ["CS Transfer", "Articulation Agreements", "STEM Pathways"],
     availability: "Mon–Fri, 9am–5pm",
+    gender: "female",
   },
   {
     id: "4",
@@ -29,6 +31,7 @@ export const advisors: Advisor[] = [
     email: "j.rivera@brightpoint.edu",
     specialties: ["CS Transfer", "Transfer Planning", "First-Generation Students"],
     availability: "Mon–Fri, 9am–3pm",
+    gender: "male",
   },
   {
     id: "5",
@@ -39,6 +42,7 @@ export const advisors: Advisor[] = [
     email: "p.sharma@nvcc.edu",
     specialties: ["CS Transfer", "STEM Pathways", "Articulation Agreements"],
     availability: "Mon, Wed, Fri, 9am–5pm",
+    gender: "female",
   },
 ]
 

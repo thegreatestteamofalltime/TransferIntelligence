@@ -1,4 +1,4 @@
-import { Mail, Clock, Tag, Search, Users } from "lucide-react"
+import { Mail, Search, Users } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -10,11 +10,21 @@ import { TermTooltip } from "@/components/TermTooltip"
 function getInitials(name: string) {
   return name
     .split(" ")
-    .filter((p) => !p.startsWith("Dr.") && p.length > 1)
+    .filter((p) => !p.startsWith("Dr.") && !p.startsWith("Mr.") && !p.startsWith("Ms.") && p.length > 1)
     .slice(0, 2)
     .map((p) => p[0])
     .join("")
     .toUpperCase()
+}
+
+function getContactLabel(name: string, gender?: "male" | "female"): string {
+  const parts = name.split(" ")
+  const lastName = parts[parts.length - 1]
+  if (name.startsWith("Dr.")) return `Contact Dr. ${lastName}`
+  if (name.startsWith("Mr.")) return `Contact Mr. ${lastName}`
+  if (name.startsWith("Ms.") || name.startsWith("Mrs.")) return `Contact Ms. ${lastName}`
+  if (gender === "male") return `Contact Mr. ${lastName}`
+  return `Contact Ms. ${lastName}`
 }
 
 const AVATAR_COLORS = [
@@ -156,29 +166,6 @@ export function AdvisorsPage() {
                     <p className="text-xs text-muted-foreground">
                       <strong className="text-foreground">Program:</strong> {advisor.program}
                     </p>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Clock className="h-3 w-3 flex-shrink-0" />
-                      {advisor.availability}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
-                      <Tag className="h-3 w-3 flex-shrink-0" />
-                      Specialties
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {advisor.specialties.slice(0, 2).map((s) => (
-                        <Badge key={s} variant="outline" className="text-xs">
-                          {s}
-                        </Badge>
-                      ))}
-                      {advisor.specialties.length > 2 && (
-                        <Badge variant="outline" className="text-xs text-muted-foreground">
-                          +{advisor.specialties.length - 2}
-                        </Badge>
-                      )}
-                    </div>
                   </div>
 
                   <Button
@@ -189,7 +176,7 @@ export function AdvisorsPage() {
                   >
                     <a href={`mailto:${advisor.email}`}>
                       <Mail className="h-3.5 w-3.5" />
-                      Contact {advisor.name.split(" ")[0]}
+                      {getContactLabel(advisor.name, advisor.gender)}
                     </a>
                   </Button>
                 </CardContent>
