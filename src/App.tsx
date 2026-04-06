@@ -13,6 +13,7 @@ import { ContactPage } from "@/pages/Contact"
 import { AboutPage } from "@/pages/About"
 import { ProgramsPage } from "@/pages/Programs"
 import { AgreementsPage } from "@/pages/Agreements"
+import { SearchPage } from "@/pages/Search"
 
 function RouterView({ route }: { route: Route }) {
   switch (route) {
@@ -38,6 +39,8 @@ function RouterView({ route }: { route: Route }) {
       return <ContactPage />
     case "/about":
       return <AboutPage />
+    case "/search":
+      return <SearchPage />
     default:
       return <HomePage />
   }
