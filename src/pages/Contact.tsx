@@ -65,22 +65,22 @@ export function ContactPage() {
         <div className="max-w-3xl mx-auto">
       <div className="grid sm:grid-cols-2 gap-5 mb-10">
         {contactOptions.map((option) => (
-          <Card key={option.title} className="overflow-hidden hover:shadow-md transition-shadow group">
-            <CardContent className="p-5">
+          <Card key={option.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl group">
+            <CardContent className="p-7 flex flex-col items-center text-center">
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4"
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-white"
                 style={{ backgroundColor: "var(--brand)" }}
               >
                 {option.icon}
               </div>
-              <h3 className="font-semibold mb-2">{option.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              <h3 className="font-semibold text-foreground mb-2 text-base">{option.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                 {option.description}
               </p>
               <Button
                 size="sm"
                 variant="outline"
-                className="gap-2 w-full group-hover:border-brand"
+                className="gap-2 mt-auto"
                 style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
                 onClick={option.handler}
               >
