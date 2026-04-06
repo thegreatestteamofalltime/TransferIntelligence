@@ -21,6 +21,7 @@ import {
   computeTargetDegreeGap,
 } from "./plannerUtils"
 import { VCCS_VSU_GAA, isVCCSInstitution } from "@/data/agreements/vccs-vsu-gaa"
+import { TransferVisualMap } from "./TransferVisualMap"
 
 function openTransferBuddy(prompt?: string) {
   window.dispatchEvent(
@@ -248,6 +249,17 @@ export function PlannerResults({
         <h1 className="text-3xl font-extrabold tracking-tight mb-1">Your Results Are Ready!</h1>
         <p className="text-muted-foreground text-sm">Here's a breakdown of how your credits transfer.</p>
       </div>
+
+      {/* Visual Transfer Map */}
+      <TransferVisualMap
+        currentSchool={currentSchool}
+        targetSchool={targetSchool}
+        currentProgram={`${currentDegree.degree} — ${currentDegree.program}`}
+        targetProgram={`${targetDegree.degree} — ${targetDegree.program}`}
+        degreeGap={degreeGap}
+        transferResult={transferResult}
+        targetGap={targetGap}
+      />
 
       {/* SECTION 1: Current Degree Progress */}
       <Card className="mb-4">
