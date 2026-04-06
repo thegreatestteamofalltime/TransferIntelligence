@@ -49,8 +49,9 @@ export function LogoHero() {
   return (
     <div className="flex flex-col items-center">
       <img
-        src="/transfer_intelligence.png"
+        src="/logo_full.png"
         alt="TransferIntelligence logo"
+        className="mix-blend-multiply dark:mix-blend-normal dark:invert"
         style={{ width: 420, maxWidth: "80vw", objectFit: "contain" }}
       />
     </div>
