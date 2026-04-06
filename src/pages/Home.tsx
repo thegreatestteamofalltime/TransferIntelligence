@@ -68,7 +68,7 @@ export function HomePage() {
   return (
     <div className="flex flex-col">
       <section
-        className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden"
+        className="relative pt-8 pb-20 sm:pt-10 sm:pb-28 px-4 sm:px-6 overflow-hidden"
         style={{
           background:
             "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
