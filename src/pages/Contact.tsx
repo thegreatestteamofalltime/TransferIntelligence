@@ -96,7 +96,7 @@ export function ContactPage() {
       <Alert className="mb-6 border-border bg-muted/40">
         <Info className="h-4 w-4" />
         <AlertDescription className="text-xs text-muted-foreground leading-relaxed">
-          <strong>Heads up:</strong> TransferIntelligence is for reference only. For official transfer guidance, always consult your institution's academic advising office directly.
+          <strong>Heads up:</strong> TransferIntelligence is a hackathon prototype. For official transfer guidance, always consult your institution's academic advising office directly.
         </AlertDescription>
       </Alert>
         </div>
