@@ -643,7 +643,12 @@ export function PlannerResults({
         <Button
           className="gap-2 text-white flex-1"
           style={{ background: "var(--brand-gradient)" }}
-          onClick={() => navigate("/advisors")}
+          onClick={() =>
+            navigate("/advisors", {
+              college: currentSchool,
+              universities: targetSchool,
+            })
+          }
         >
           <Users className="h-4 w-4" />
           Contact an Advisor

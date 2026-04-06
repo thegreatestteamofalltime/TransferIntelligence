@@ -54,22 +54,29 @@ function getHashParams(): { college?: string; universities?: string[] } {
 export function AdvisorsPage() {
   const [query, setQuery] = useState("")
   const [collegeFilter, setCollegeFilter] = useState<string>("all")
+  const [pinnedSchools, setPinnedSchools] = useState<string[]>([])
 
   useEffect(() => {
     const { college, universities } = getHashParams()
+    const pinned: string[] = []
     if (college) {
       const match = ALL_SCHOOLS.find((s) => s.toLowerCase().includes(college.toLowerCase()))
-      if (match) setCollegeFilter(match)
-    } else if (universities?.length) {
-      const match = ALL_SCHOOLS.find((s) =>
-        universities.some((u) => s.toLowerCase().includes(u.toLowerCase()))
-      )
-      if (match) setCollegeFilter(match)
+      if (match) pinned.push(match)
     }
+    if (universities?.length) {
+      for (const u of universities) {
+        const match = ALL_SCHOOLS.find((s) => s.toLowerCase().includes(u.toLowerCase()))
+        if (match && !pinned.includes(match)) pinned.push(match)
+      }
+    }
+    if (pinned.length > 0) setPinnedSchools(pinned)
   }, [])
 
   const filtered = advisors.filter((a) => {
-    const matchesCollege = collegeFilter === "all" || a.school === collegeFilter
+    const matchesCollege =
+      collegeFilter === "all"
+        ? pinnedSchools.length === 0 || pinnedSchools.includes(a.school)
+        : a.school === collegeFilter
     const matchesQuery =
       !query ||
       a.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -106,6 +113,25 @@ export function AdvisorsPage() {
 
       <section className="py-10 px-4 sm:px-6 bg-background">
         <div className="max-w-5xl mx-auto">
+          {pinnedSchools.length > 0 && collegeFilter === "all" && (
+            <div
+              className="mb-6 rounded-xl border px-4 py-3 flex items-center justify-between gap-3 flex-wrap"
+              style={{ borderColor: "oklch(0.72 0.14 196 / 0.35)", backgroundColor: "var(--brand-muted)" }}
+            >
+              <div className="flex items-center gap-2 text-sm">
+                <Users className="h-4 w-4 flex-shrink-0" style={{ color: "var(--brand)" }} />
+                <span className="text-foreground font-medium">Showing advisors for your transfer path:</span>
+                <span className="text-muted-foreground">{pinnedSchools.join(" → ")}</span>
+              </div>
+              <button
+                className="text-xs underline text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+                onClick={() => setPinnedSchools([])}
+              >
+                Show all
+              </button>
+            </div>
+          )}
+
           <div className="flex flex-col sm:flex-row gap-3 mb-8">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
