@@ -23,6 +23,11 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -571,33 +576,18 @@ export function PlannerStep2({
                           .map((req, i) => {
                             const choiceCourses = getCoursesForRequirement(req, allCourses)
                             if (choiceCourses.length === 0) return null
+                            const selectedInSub = choiceCourses.filter((c) => completedCodes.has(c.code)).length
                             return (
-                              <div key={`${req.code}-${i}`} className="mt-2">
-                                <div className={cn("flex flex-wrap items-start gap-1 px-3 py-1.5 rounded border mb-1", group.borderClass, group.bgClass)}>
-                                  <span className={cn("text-xs font-medium", group.textClass)}>{req.name}</span>
-                                  {req.notes && (
-                                    <span className="text-xs text-slate-500 leading-snug">— {req.notes}</span>
-                                  )}
-                                </div>
-                                <div className="space-y-1 pl-2">
-                                  {choiceCourses.map((course) => {
-                                    const selected = completedCodes.has(course.code)
-                                    return (
-                                      <CourseRow
-                                        key={course.code}
-                                        course={course}
-                                        selected={selected}
-                                        isRequired={false}
-                                        iconColor={group.iconColor}
-                                        textClass={group.textClass}
-                                        bgClass={group.bgClass}
-                                        borderClass={group.borderClass}
-                                        onClick={() => toggleCourse(course)}
-                                      />
-                                    )
-                                  })}
-                                </div>
-                              </div>
+                              <ChoiceSubgroup
+                                key={`${req.code}-${i}`}
+                                req={req}
+                                courses={choiceCourses}
+                                selectedCount={selectedInSub}
+                                completedCodes={completedCodes}
+                                group={group}
+                                onToggle={toggleCourse}
+                                forceOpen={!!searchQuery}
+                              />
                             )
                           })}
                       </div>
@@ -703,6 +693,79 @@ export function PlannerStep2({
         </DialogContent>
       </Dialog>
     </div>
+  )
+}
+
+interface ChoiceSubgroupProps {
+  req: DegreeRequirement
+  courses: CatalogCourse[]
+  selectedCount: number
+  completedCodes: Set<string>
+  group: DegreeGroup
+  onToggle: (course: CatalogCourse) => void
+  forceOpen: boolean
+}
+
+function ChoiceSubgroup({ req, courses, selectedCount, completedCodes, group, onToggle, forceOpen }: ChoiceSubgroupProps) {
+  const [open, setOpen] = useState(false)
+  const isOpen = forceOpen || open
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={forceOpen ? undefined : setOpen} className="mt-2">
+      <CollapsibleTrigger asChild disabled={forceOpen}>
+        <button
+          className={cn(
+            "w-full flex items-center gap-2 px-3 py-2 rounded-lg border text-left transition-colors hover:brightness-95",
+            group.borderClass,
+            group.bgClass
+          )}
+        >
+          <div className="flex-1 min-w-0 flex flex-wrap items-center gap-1.5">
+            <span className={cn("text-xs font-semibold", group.textClass)}>{req.name}</span>
+            {req.notes && (
+              <span className="text-xs text-slate-500 leading-snug">— {req.notes}</span>
+            )}
+            <span className="text-xs text-slate-400">— choose from list</span>
+          </div>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            {selectedCount > 0 && (
+              <Badge
+                className="text-[10px] font-bold px-1.5 py-0 h-4 text-white border-0"
+                style={{ backgroundColor: group.iconColor }}
+              >
+                {selectedCount}
+              </Badge>
+            )}
+            {!forceOpen && (
+              <ChevronDown
+                className={cn("h-3.5 w-3.5 transition-transform duration-200", group.textClass)}
+                style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+              />
+            )}
+          </div>
+        </button>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="space-y-1 pl-3 pt-1 border-l-2 ml-3 mt-1" style={{ borderColor: group.iconColor + "55" }}>
+          {courses.map((course) => {
+            const selected = completedCodes.has(course.code)
+            return (
+              <CourseRow
+                key={course.code}
+                course={course}
+                selected={selected}
+                isRequired={false}
+                iconColor={group.iconColor}
+                textClass={group.textClass}
+                bgClass={group.bgClass}
+                borderClass={group.borderClass}
+                onClick={() => onToggle(course)}
+              />
+            )
+          })}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }
 
