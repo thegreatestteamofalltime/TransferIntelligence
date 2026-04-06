@@ -46,7 +46,7 @@ export function Header({ currentRoute }: HeaderProps) {
 
   return (
     <header className="w-full bg-background border-b border-border">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
         <button
           onClick={() => handleNav("/")}
           className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-ring rounded-lg"
@@ -59,7 +59,7 @@ export function Header({ currentRoute }: HeaderProps) {
           />
         </button>
 
-        <nav className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
+        <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
           {navLinks.map((link) => (
             <button
               key={link.route}
@@ -84,7 +84,7 @@ export function Header({ currentRoute }: HeaderProps) {
               placeholder="Search"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="h-8 pl-8 pr-3 w-36 text-xs rounded-lg"
+              className="h-9 pl-8 pr-3 w-52 text-sm rounded-lg"
               aria-label="Search transfer terms"
             />
           </form>
