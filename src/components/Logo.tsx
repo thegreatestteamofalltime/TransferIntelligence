@@ -18,7 +18,7 @@ export function Logo({ size = "md", variant = "full", className = "" }: LogoProp
     return (
       <div className={`flex items-center ${className}`}>
         <img
-          src="/t.png"
+          src="/logo_inital.png"
           alt="TransferIntelligence"
           style={{ width: imgSize, height: imgSize, objectFit: "contain" }}
         />
@@ -29,7 +29,7 @@ export function Logo({ size = "md", variant = "full", className = "" }: LogoProp
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <img
-        src="/t.png"
+        src="/logo_inital.png"
         alt="TransferIntelligence"
         style={{ width: imgSize, height: imgSize, objectFit: "contain" }}
       />
