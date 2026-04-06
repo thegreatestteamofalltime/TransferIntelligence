@@ -10,18 +10,17 @@ import {
   FlaskConical,
   BookOpen,
   Calculator,
-  Lightbulb,
   Users,
   Palette,
   History,
   Star,
+  Info,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
@@ -50,6 +49,11 @@ interface DegreeGroup {
   label: string
   description: string
   icon: React.ReactNode
+  iconColor: string
+  bgClass: string
+  textClass: string
+  borderClass: string
+  noteText: string
   requirements: DegreeRequirement[]
   availableCourses: CatalogCourse[]
   isChoiceGroup: boolean
@@ -112,55 +116,138 @@ function getCoursesForRequirement(req: DegreeRequirement, catalog: CatalogCourse
   return []
 }
 
+const CATEGORY_META: Record<string, {
+  label: string
+  description: string
+  noteText: string
+  iconColor: string
+  bgClass: string
+  textClass: string
+  borderClass: string
+  icon: React.ReactNode
+}> = {
+  core: {
+    label: "Core / Major Courses",
+    description: "Required courses specific to your major",
+    noteText: "These are the required courses at the heart of your major — check off each one you've completed.",
+    iconColor: "var(--brand)",
+    bgClass: "bg-blue-50",
+    textClass: "text-blue-700",
+    borderClass: "border-blue-200",
+    icon: <BookOpen className="h-4 w-4 text-white" />,
+  },
+  math: {
+    label: "Mathematics",
+    description: "Required mathematics coursework",
+    noteText: "Calculus and discrete math courses — many can be completed at your community college before transferring.",
+    iconColor: "oklch(0.55 0.18 250)",
+    bgClass: "bg-sky-50",
+    textClass: "text-sky-700",
+    borderClass: "border-sky-200",
+    icon: <Calculator className="h-4 w-4 text-white" />,
+  },
+  science: {
+    label: "Science",
+    description: "Lab science requirements",
+    noteText: "Lab science credits — check which ones you've already taken at your current school.",
+    iconColor: "oklch(0.55 0.15 145)",
+    bgClass: "bg-emerald-50",
+    textClass: "text-emerald-700",
+    borderClass: "border-emerald-200",
+    icon: <FlaskConical className="h-4 w-4 text-white" />,
+  },
+  "general-ed": {
+    label: "General Education",
+    description: "General education requirements",
+    noteText: "Standard college-wide requirements — many of these transfer directly from your community college.",
+    iconColor: "oklch(0.55 0.15 145)",
+    bgClass: "bg-emerald-50",
+    textClass: "text-emerald-700",
+    borderClass: "border-emerald-200",
+    icon: <BookOpen className="h-4 w-4 text-white" />,
+  },
+  elective: {
+    label: "Electives",
+    description: "Approved elective credits",
+    noteText: "Select any approved elective courses you've already completed.",
+    iconColor: "oklch(0.55 0.12 320)",
+    bgClass: "bg-pink-50",
+    textClass: "text-pink-700",
+    borderClass: "border-pink-200",
+    icon: <Star className="h-4 w-4 text-white" />,
+  },
+}
+
+const GEN_ED_SUB_META: Record<string, {
+  label: string
+  iconColor: string
+  bgClass: string
+  textClass: string
+  borderClass: string
+  icon: React.ReactNode
+}> = {
+  eng: {
+    label: "English / Writing",
+    iconColor: "oklch(0.55 0.15 145)",
+    bgClass: "bg-emerald-50",
+    textClass: "text-emerald-700",
+    borderClass: "border-emerald-200",
+    icon: <BookOpen className="h-4 w-4 text-white" />,
+  },
+  his: {
+    label: "History",
+    iconColor: "oklch(0.55 0.14 55)",
+    bgClass: "bg-amber-50",
+    textClass: "text-amber-700",
+    borderClass: "border-amber-200",
+    icon: <History className="h-4 w-4 text-white" />,
+  },
+  hum: {
+    label: "Humanities & Fine Arts",
+    iconColor: "oklch(0.55 0.12 320)",
+    bgClass: "bg-pink-50",
+    textClass: "text-pink-700",
+    borderClass: "border-pink-200",
+    icon: <Palette className="h-4 w-4 text-white" />,
+  },
+  soc: {
+    label: "Social & Behavioral Sciences",
+    iconColor: "oklch(0.55 0.14 30)",
+    bgClass: "bg-orange-50",
+    textClass: "text-orange-700",
+    borderClass: "border-orange-200",
+    icon: <Users className="h-4 w-4 text-white" />,
+  },
+  arts: {
+    label: "Arts & Literature",
+    iconColor: "oklch(0.55 0.12 320)",
+    bgClass: "bg-pink-50",
+    textClass: "text-pink-700",
+    borderClass: "border-pink-200",
+    icon: <Palette className="h-4 w-4 text-white" />,
+  },
+  sdv: {
+    label: "Student Development",
+    iconColor: "var(--brand)",
+    bgClass: "bg-blue-50",
+    textClass: "text-blue-700",
+    borderClass: "border-blue-200",
+    icon: <GraduationCap className="h-4 w-4 text-white" />,
+  },
+}
+
+function genEdSubKey(req: DegreeRequirement): string {
+  const u = req.code.trim().toUpperCase()
+  if (u === "SDV 100/101" || u.startsWith("SDV")) return "sdv"
+  if (u.startsWith("ENG")) return "eng"
+  if (u.startsWith("HIS")) return "his"
+  if (u.startsWith("HUM/FA") || u.startsWith("HUM")) return "hum"
+  if (u.startsWith("SOC/") || u.startsWith("SOC ")) return "soc"
+  if (u.startsWith("ARTS/")) return "arts"
+  return "eng"
+}
+
 function buildDegreeGroups(degree: DegreePlan, catalog: CatalogCourse[]): DegreeGroup[] {
-  const categoryMeta: Record<string, { label: string; description: string; icon: React.ReactNode }> = {
-    core: {
-      label: "Core / Major Courses",
-      description: "Required courses specific to your major",
-      icon: <BookOpen className="h-4 w-4" />,
-    },
-    math: {
-      label: "Mathematics",
-      description: "Required mathematics coursework",
-      icon: <Calculator className="h-4 w-4" />,
-    },
-    science: {
-      label: "Science",
-      description: "Lab science requirements",
-      icon: <FlaskConical className="h-4 w-4" />,
-    },
-    "general-ed": {
-      label: "General Education",
-      description: "General education requirements",
-      icon: <Lightbulb className="h-4 w-4" />,
-    },
-    elective: {
-      label: "Electives",
-      description: "Approved elective credits",
-      icon: <Star className="h-4 w-4" />,
-    },
-  }
-
-  const genEdSubGroups: Record<string, { label: string; icon: React.ReactNode }> = {
-    eng: { label: "English / Writing", icon: <BookOpen className="h-4 w-4" /> },
-    his: { label: "History", icon: <History className="h-4 w-4" /> },
-    hum: { label: "Humanities & Fine Arts", icon: <Palette className="h-4 w-4" /> },
-    soc: { label: "Social & Behavioral Sciences", icon: <Users className="h-4 w-4" /> },
-    arts: { label: "Arts & Literature", icon: <Palette className="h-4 w-4" /> },
-    sdv: { label: "Student Development", icon: <GraduationCap className="h-4 w-4" /> },
-  }
-
-  function genEdSubKey(req: DegreeRequirement): string {
-    const u = req.code.trim().toUpperCase()
-    if (u === "SDV 100/101" || u.startsWith("SDV")) return "sdv"
-    if (u.startsWith("ENG")) return "eng"
-    if (u.startsWith("HIS")) return "his"
-    if (u.startsWith("HUM/FA") || u.startsWith("HUM")) return "hum"
-    if (u.startsWith("SOC/") || u.startsWith("SOC ")) return "soc"
-    if (u.startsWith("ARTS/")) return "arts"
-    return "eng"
-  }
-
   const groupMap = new Map<string, DegreeGroup>()
 
   for (const req of degree.requirements) {
@@ -168,29 +255,30 @@ function buildDegreeGroups(degree: DegreePlan, catalog: CatalogCourse[]): Degree
     const isChoice = isChoicePlaceholder(req.code)
 
     let key: string
-    let label: string
-    let description: string
-    let icon: React.ReactNode
+    let meta: typeof CATEGORY_META[string]
 
     if (cat === "general-ed") {
       const subKey = genEdSubKey(req)
       key = `genEd-${subKey}`
-      label = genEdSubGroups[subKey]?.label ?? "General Education"
-      description = "General education requirement"
-      icon = genEdSubGroups[subKey]?.icon ?? <Lightbulb className="h-4 w-4" />
+      meta = GEN_ED_SUB_META[subKey]
+        ? { ...GEN_ED_SUB_META[subKey], description: "General education requirement", noteText: "Standard requirement — check the courses you've completed." }
+        : { ...CATEGORY_META["general-ed"] }
     } else {
       key = cat
-      label = categoryMeta[cat]?.label ?? cat
-      description = categoryMeta[cat]?.description ?? ""
-      icon = categoryMeta[cat]?.icon ?? <BookOpen className="h-4 w-4" />
+      meta = CATEGORY_META[cat] ?? CATEGORY_META["general-ed"]
     }
 
     if (!groupMap.has(key)) {
       groupMap.set(key, {
         key,
-        label,
-        description,
-        icon,
+        label: meta.label,
+        description: meta.description,
+        noteText: meta.noteText,
+        iconColor: meta.iconColor,
+        bgClass: meta.bgClass,
+        textClass: meta.textClass,
+        borderClass: meta.borderClass,
+        icon: meta.icon,
         requirements: [],
         availableCourses: [],
         isChoiceGroup: false,
@@ -298,7 +386,6 @@ export function PlannerStep2({
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Courses You've Completed</h1>
         <p className="text-muted-foreground leading-relaxed">
           Courses are organized by your degree requirements. Select every course you've already taken.
@@ -410,104 +497,113 @@ export function PlannerStep2({
               const totalInGroup = group.availableCourses.length
 
               return (
-                <Collapsible
-                  key={group.key}
-                  open={isOpen}
-                  onOpenChange={() => !searchQuery && toggleGroup(group.key)}
-                >
-                  <CollapsibleTrigger
-                    className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-muted/40 hover:bg-muted/70 transition-colors text-left"
+                <div key={group.key} className={cn("rounded-xl border overflow-hidden transition-all", group.borderClass)}>
+                  <button
+                    className={cn("w-full flex items-center gap-3 px-4 py-3 text-left transition-colors hover:brightness-95", group.bgClass)}
+                    onClick={() => !searchQuery && toggleGroup(group.key)}
+                    aria-expanded={isOpen}
                     disabled={!!searchQuery}
                   >
-                    <span className="text-muted-foreground flex-shrink-0">{group.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <span className="text-xs font-semibold text-foreground">{group.label}</span>
-                      {group.isChoiceGroup && (
-                        <span className="ml-2 text-xs text-muted-foreground">— choose from list</span>
-                      )}
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: group.iconColor }}
+                    >
+                      {group.icon}
                     </div>
-                    {completedInGroup > 0 && (
-                      <Badge
-                        className="text-xs flex-shrink-0"
-                        style={{
-                          backgroundColor: "oklch(0.72 0.14 196 / 0.15)",
-                          color: "var(--brand)",
-                          border: "1px solid oklch(0.72 0.14 196 / 0.3)",
-                        }}
-                      >
-                        {completedInGroup}/{totalInGroup}
-                      </Badge>
-                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={cn("text-sm font-semibold", group.textClass)}>{group.label}</span>
+                        {group.isChoiceGroup && (
+                          <span className="text-xs text-slate-500">— choose from list</span>
+                        )}
+                        {completedInGroup > 0 && (
+                          <Badge
+                            className="text-xs font-bold px-2 py-0 text-white border-0"
+                            style={{ backgroundColor: group.iconColor }}
+                          >
+                            {completedInGroup}/{totalInGroup}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-snug">{group.description}</p>
+                    </div>
                     {!searchQuery && (
                       <ChevronDown
-                        className={cn(
-                          "h-3.5 w-3.5 text-muted-foreground transition-transform flex-shrink-0",
-                          isOpen && "rotate-180"
-                        )}
+                        className={cn("h-4 w-4 flex-shrink-0 transition-transform duration-200", group.textClass)}
+                        style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
                       />
                     )}
-                  </CollapsibleTrigger>
+                  </button>
 
-                  <CollapsibleContent>
-                    <div className="mt-1 space-y-1 pl-2">
-                      {group.requirements
-                        .filter((req) => !isChoicePlaceholder(req.code))
-                        .length > 0 && (
-                        <div className="space-y-1">
-                          {group.requirements
-                            .filter((req) => !isChoicePlaceholder(req.code))
-                            .map((req) => {
-                              const course = group.availableCourses.find(
-                                (c) => c.code.trim().toUpperCase() === req.code.trim().toUpperCase()
-                              )
-                              if (!course) return null
-                              const selected = completedCodes.has(course.code)
-                              return (
-                                <CourseRow
-                                  key={course.code}
-                                  course={course}
-                                  selected={selected}
-                                  isRequired
-                                  onClick={() => toggleCourse(course)}
-                                />
-                              )
-                            })}
-                        </div>
-                      )}
+                  {isOpen && (
+                    <div className="bg-white dark:bg-background px-4 pt-3 pb-4">
+                      <div className="flex gap-2 mb-3 p-2.5 rounded-lg bg-slate-100 dark:bg-muted/40">
+                        <Info className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-slate-400" />
+                        <p className="text-xs text-slate-500 leading-relaxed">{group.noteText}</p>
+                      </div>
 
-                      {group.requirements
-                        .filter((req) => isChoicePlaceholder(req.code))
-                        .map((req, i) => {
-                          const choiceCourses = getCoursesForRequirement(req, allCourses)
-                          if (choiceCourses.length === 0) return null
-                          return (
-                            <div key={`${req.code}-${i}`} className="mt-2">
-                              <div className="flex flex-wrap items-start gap-1 px-3 py-1.5 rounded bg-muted/50 mb-1">
-                                <span className="text-xs font-medium text-muted-foreground">{req.name}</span>
-                                {req.notes && (
-                                  <span className="text-xs text-muted-foreground/60 leading-snug">— {req.notes}</span>
-                                )}
+                      <div className="space-y-1">
+                        {group.requirements
+                          .filter((req) => !isChoicePlaceholder(req.code))
+                          .map((req) => {
+                            const course = group.availableCourses.find(
+                              (c) => c.code.trim().toUpperCase() === req.code.trim().toUpperCase()
+                            )
+                            if (!course) return null
+                            const selected = completedCodes.has(course.code)
+                            return (
+                              <CourseRow
+                                key={course.code}
+                                course={course}
+                                selected={selected}
+                                isRequired
+                                iconColor={group.iconColor}
+                                textClass={group.textClass}
+                                bgClass={group.bgClass}
+                                borderClass={group.borderClass}
+                                onClick={() => toggleCourse(course)}
+                              />
+                            )
+                          })}
+
+                        {group.requirements
+                          .filter((req) => isChoicePlaceholder(req.code))
+                          .map((req, i) => {
+                            const choiceCourses = getCoursesForRequirement(req, allCourses)
+                            if (choiceCourses.length === 0) return null
+                            return (
+                              <div key={`${req.code}-${i}`} className="mt-2">
+                                <div className={cn("flex flex-wrap items-start gap-1 px-3 py-1.5 rounded border mb-1", group.borderClass, group.bgClass)}>
+                                  <span className={cn("text-xs font-medium", group.textClass)}>{req.name}</span>
+                                  {req.notes && (
+                                    <span className="text-xs text-slate-500 leading-snug">— {req.notes}</span>
+                                  )}
+                                </div>
+                                <div className="space-y-1 pl-2">
+                                  {choiceCourses.map((course) => {
+                                    const selected = completedCodes.has(course.code)
+                                    return (
+                                      <CourseRow
+                                        key={course.code}
+                                        course={course}
+                                        selected={selected}
+                                        isRequired={false}
+                                        iconColor={group.iconColor}
+                                        textClass={group.textClass}
+                                        bgClass={group.bgClass}
+                                        borderClass={group.borderClass}
+                                        onClick={() => toggleCourse(course)}
+                                      />
+                                    )
+                                  })}
+                                </div>
                               </div>
-                              <div className="space-y-1 pl-2">
-                                {choiceCourses.map((course) => {
-                                  const selected = completedCodes.has(course.code)
-                                  return (
-                                    <CourseRow
-                                      key={course.code}
-                                      course={course}
-                                      selected={selected}
-                                      isRequired={false}
-                                      onClick={() => toggleCourse(course)}
-                                    />
-                                  )
-                                })}
-                              </div>
-                            </div>
-                          )
-                        })}
+                            )
+                          })}
+                      </div>
                     </div>
-                  </CollapsibleContent>
-                </Collapsible>
+                  )}
+                </div>
               )
             })}
           </div>
@@ -614,27 +710,30 @@ interface CourseRowProps {
   course: CatalogCourse
   selected: boolean
   isRequired: boolean
+  iconColor: string
+  textClass: string
+  bgClass: string
+  borderClass: string
   onClick: () => void
 }
 
-function CourseRow({ course, selected, isRequired, onClick }: CourseRowProps) {
+function CourseRow({ course, selected, isRequired, iconColor, textClass, bgClass, borderClass, onClick }: CourseRowProps) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border text-left transition-all",
-        selected
-          ? "border-[oklch(0.72_0.14_196_/_0.4)] bg-[oklch(0.72_0.14_196_/_0.08)]"
-          : "border-border bg-background hover:bg-muted/40"
+        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border text-left transition-all hover:brightness-95",
+        selected ? borderClass : "border-border bg-background hover:bg-muted/40",
+        selected ? bgClass : ""
       )}
     >
       <div
-        className={cn(
-          "h-4 w-4 rounded border flex-shrink-0 flex items-center justify-center transition-all",
+        className="w-4 h-4 rounded flex-shrink-0 flex items-center justify-center transition-all border"
+        style={
           selected
-            ? "border-[var(--brand)] bg-[var(--brand)]"
-            : "border-muted-foreground/40"
-        )}
+            ? { backgroundColor: iconColor, borderColor: iconColor }
+            : { borderColor: "oklch(0.6 0 0 / 0.4)" }
+        }
       >
         {selected && (
           <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 12 12">
@@ -643,22 +742,21 @@ function CourseRow({ course, selected, isRequired, onClick }: CourseRowProps) {
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-mono font-bold text-sm text-foreground">{course.code}</span>
-          <span className="text-xs text-muted-foreground leading-snug">{course.name}</span>
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className={cn("font-mono font-bold text-xs flex-shrink-0", selected ? textClass : "text-foreground")}>{course.code}</span>
+          <span className="text-sm font-medium text-slate-800 leading-snug">{course.name}</span>
         </div>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
         {isRequired && (
           <Badge
-            variant="outline"
-            className="text-[10px] px-1.5 py-0 h-4 hidden sm:flex"
-            style={{ borderColor: "oklch(0.72 0.14 196 / 0.3)", color: "var(--brand)" }}
+            className="text-[10px] px-1.5 py-0 h-4 hidden sm:flex text-white border-0"
+            style={{ backgroundColor: iconColor }}
           >
             req
           </Badge>
         )}
-        <abbr title="credits" className="text-xs text-muted-foreground no-underline">{course.credits}</abbr>
+        <abbr title="credits" className={cn("text-xs font-bold tabular-nums no-underline", selected ? textClass : "text-muted-foreground")}>{course.credits}</abbr>
       </div>
     </button>
   )
