@@ -1,4 +1,4 @@
-import { ArrowRight, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin } from "lucide-react"
+import { ArrowRight, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin, Route, ArrowLeftRight, MessageCircle, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { LogoHero } from "@/components/Logo"
@@ -7,28 +7,24 @@ import { TermTooltip } from "@/components/TermTooltip"
 
 const features = [
   {
-    icon: <img src="/feature-transfer-planning.webp" alt="Transfer Planning" className="h-10 w-10 object-contain" />,
+    icon: <Route className="h-6 w-6" />,
     title: "Transfer Planning",
     description: "Map your classes from community college to your target 4-year university and see what counts.",
-    iconBg: "white",
   },
   {
-    icon: <img src="/feature-course-matching.webp" alt="Course Matching" className="h-10 w-10 object-contain" />,
+    icon: <ArrowLeftRight className="h-6 w-6" />,
     title: "Course Matching",
     description: "See which of your classes transfer — and get suggestions when a class doesn't have a direct match.",
-    iconBg: "white",
   },
   {
-    icon: <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="h-8 w-8 object-contain" />,
+    icon: <MessageCircle className="h-6 w-6" />,
     title: "AI Assistant",
     description: "Transfer Buddy answers your transfer questions 24/7 in plain language.",
-    iconBg: "white",
   },
   {
-    icon: <img src="/feature-advisor-support.webp" alt="Advisor Support" className="h-10 w-10 object-contain" />,
+    icon: <GraduationCap className="h-6 w-6" />,
     title: "Advisor Support",
     description: "Connect with real academic advisors at Virginia institutions when you need a human answer.",
-    iconBg: "white",
   },
 ]
 
@@ -147,10 +143,7 @@ export function HomePage() {
             {features.map((feature) => (
               <Card key={feature.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl">
                 <CardContent className="p-7 flex flex-col items-center text-center">
-                  <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-sm overflow-hidden ${(feature as any).iconBg === "white" ? "bg-white border border-border" : "text-white"}`}
-                    style={(feature as any).iconBg === "white" ? {} : { backgroundColor: "var(--brand)" }}
-                  >
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 bg-muted text-foreground">
                     {feature.icon}
                   </div>
                   <h3 className="font-semibold text-foreground mb-2 text-base">{feature.title}</h3>
