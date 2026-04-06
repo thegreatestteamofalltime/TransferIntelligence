@@ -608,22 +608,32 @@ export function PlannerResults({
             {degreeGap.remainingCredits > 0 && (
               <li className="flex items-start gap-2">
                 <ArrowRight className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" style={{ color: "var(--brand)" }} />
-                You have <strong className="text-foreground mx-1">{degreeGap.remainingCredits} credits left</strong> at {currentSchool} — finish those before you transfer
+                <span>You have <strong className="text-foreground">{degreeGap.remainingCredits} credits left</strong> at {currentSchool} — finish those before you transfer</span>
               </li>
             )}
             {transferResult.conditional.length > 0 && (
               <li className="flex items-start gap-2">
                 <ArrowRight className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" style={{ color: "var(--brand)" }} />
-                Some of your courses need advisor review — they might still count with conditions
+                <span>Some of your courses need advisor review — they might still count with conditions</span>
               </li>
             )}
             <li className="flex items-start gap-2">
               <ArrowRight className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" style={{ color: "var(--brand)" }} />
-              Bring your <strong className="text-foreground mx-1">unofficial transcript</strong> to your advising appointment
+              <span>Bring your <strong className="text-foreground">unofficial transcript</strong> to your advising appointment</span>
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" style={{ color: "var(--brand)" }} />
-              Contact a transfer advisor at <strong className="text-foreground mx-1">{targetSchool}</strong> to confirm this plan
+              <span>
+                Contact a transfer advisor at{" "}
+                <button
+                  onClick={() => navigate("/advisors", { college: currentSchool, universities: targetSchool })}
+                  className="font-semibold underline underline-offset-2 hover:opacity-80 transition-opacity"
+                  style={{ color: "var(--brand)" }}
+                >
+                  {targetSchool}
+                </button>
+                {" "}to confirm this plan
+              </span>
             </li>
           </ul>
         </CardContent>
