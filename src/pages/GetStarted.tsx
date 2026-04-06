@@ -1,4 +1,4 @@
-import { School, BookOpen, FileSearch, CircleCheck as CheckCircle2, ArrowRight } from "lucide-react"
+import { School, BookOpen, FileSearch, CircleCheck as CheckCircle2, ArrowRight, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { navigate } from "@/lib/router"
@@ -57,9 +57,18 @@ export function GetStartedPage() {
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground text-balance mb-4">
             How It <span style={{ color: "var(--brand)" }}>Works</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed mb-8">
             Four steps to your transfer plan. Fast, clear, and free.
           </p>
+          <Button
+            size="lg"
+            className="gap-2 text-white px-10 py-6 text-base font-semibold"
+            style={{ background: "var(--brand-gradient)" }}
+            onClick={() => navigate("/planner")}
+          >
+            All set? Get Started!
+            <ArrowRight className="h-5 w-5" />
+          </Button>
         </div>
       </section>
 
@@ -127,6 +136,15 @@ export function GetStartedPage() {
               variant="outline"
               className="gap-2 px-8"
               style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
+              onClick={() => navigate("/colleges")}
+            >
+              <Building2 className="h-4 w-4" />
+              View Colleges
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="gap-2 px-8"
               onClick={() => navigate("/terminology")}
             >
               <BookOpen className="h-4 w-4" />
