@@ -89,12 +89,12 @@ export function HomePage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground text-balance mb-4">
-            See Which Credits Transfer
-            <span style={{ color: "var(--brand)" }}> — Instantly</span>
+            See How to Transfer
+            <span style={{ color: "var(--brand)" }}> Your Intelligence</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
-            Enter your Virginia community college courses. See what counts at your target 4-year school. Get a step-by-step transfer plan — free.
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+            Enter your Virginia community college courses and see exactly what counts at your target 4-year school — with a step-by-step transfer plan.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
