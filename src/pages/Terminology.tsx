@@ -1,5 +1,5 @@
 import { BookOpen, ExternalLink, Search } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
@@ -8,6 +8,14 @@ import { terms } from "@/data/terminology"
 
 export function TerminologyPage() {
   const [query, setQuery] = useState("")
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setQuery((e as CustomEvent).detail as string)
+    }
+    window.addEventListener("terminology-search", handler)
+    return () => window.removeEventListener("terminology-search", handler)
+  }, [])
 
   const filtered = terms.filter(
     (t) =>
@@ -18,11 +26,9 @@ export function TerminologyPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Transfer Terminology</h1>
-        <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto">
-          Understand the key terms used in college transfer planning. Hover over highlighted terms
-          anywhere on the site for quick definitions.
+        <p className="text-muted-foreground max-w-lg mx-auto">
+          Key terms used in Virginia college transfer. Hover over highlighted words anywhere on the site for instant definitions.
         </p>
       </div>
 
@@ -30,9 +36,10 @@ export function TerminologyPage() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           className="pl-9"
-          placeholder="Search terms..."
+          placeholder="Search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          aria-label="Search transfer terms"
         />
       </div>
 

@@ -88,13 +88,13 @@ export function HomePage() {
             <LogoHero />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground text-balance mb-6">
-            Plan Your College Transfer
-            <span style={{ color: "var(--brand)" }}> with Confidence</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground text-balance mb-4">
+            See Which Credits Transfer
+            <span style={{ color: "var(--brand)" }}> — Instantly</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            TransferIntelligence helps Virginia community college students see exactly which classes count at their new school — with AI guidance, real advisor support, and up-to-date school agreements.
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+            Enter your Virginia community college courses. See what counts at your target 4-year school. Get a step-by-step transfer plan — free.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -102,9 +102,9 @@ export function HomePage() {
               size="lg"
               className="gap-2 text-white px-8 py-6 text-base"
               style={{ background: "var(--brand-gradient)" }}
-              onClick={() => navigate("/get-started")}
+              onClick={() => navigate("/planner")}
             >
-              Get Started
+              Start My Transfer Plan
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
@@ -112,9 +112,9 @@ export function HomePage() {
               variant="outline"
               className="gap-2 px-8 py-6 text-base"
               style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
-              onClick={() => navigate("/colleges")}
+              onClick={() => navigate("/get-started")}
             >
-              Browse Colleges
+              How It Works
             </Button>
             <Button
               size="lg"
@@ -123,7 +123,7 @@ export function HomePage() {
               onClick={() => navigate("/advisors")}
             >
               <Users className="h-4 w-4" />
-              Contact Advisor
+              Talk to an Advisor
             </Button>
           </div>
         </div>
@@ -131,20 +131,12 @@ export function HomePage() {
 
       <section className="py-20 px-4 sm:px-6 bg-background">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-extrabold tracking-tight leading-tight mb-4">
-              <span className="block text-4xl sm:text-5xl lg:text-6xl text-foreground">
-                <span className="text-brand">Learn How</span> to
-              </span>
-              <span className="block text-4xl sm:text-5xl lg:text-6xl text-brand">
-                Transfer Your Intelligence
-              </span>
-              <span className="block text-4xl sm:text-5xl lg:text-6xl text-foreground mt-2">
-                in <span className="text-brand">Minutes</span>
-              </span>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+              Everything you need to transfer successfully
             </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed mt-6">
-              Everything you need to plan a successful transfer from a Virginia community college to a 4-year university.
+            <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
+              From course matching to advisor support — all in one place.
             </p>
           </div>
 
@@ -177,12 +169,11 @@ export function HomePage() {
               >
                 How It Works
               </Badge>
-              <h2 className="text-3xl font-bold tracking-tight mb-4">
+              <h2 className="text-3xl font-bold tracking-tight mb-3">
                 Four steps to your transfer plan
               </h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                Our streamlined process takes the guesswork out of transferring. From entering your
-                courses to seeing your complete transfer plan — it takes minutes.
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                Enter your courses. See what transfers. Takes minutes.
               </p>
               <Button
                 className="gap-2 text-white"
@@ -231,18 +222,11 @@ export function HomePage() {
               >
                 Our Mission
               </Badge>
-              <h2 className="text-3xl font-bold tracking-tight mb-4">
-                Making transfer planning accessible for every student
+              <h2 className="text-3xl font-bold tracking-tight mb-3">
+                Built for students who find the process confusing
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                We built TransferIntelligence for first-generation college students, working students,
-                and anyone who finds the transfer process confusing. Transfer policies are complex —
-                but your path forward shouldn't be.
-              </p>
               <p className="text-muted-foreground leading-relaxed">
-                By combining up-to-date school agreement data with an AI assistant and a network of
-                academic advisors, we give every student the information they need to transfer
-                confidently — without surprises.
+                Transfer rules are complex and change often. TransferIntelligence combines current articulation agreement data, an AI assistant, and a real advisor network so you always know your next step — without surprises.
               </p>
             </div>
           </div>
@@ -256,11 +240,11 @@ export function HomePage() {
         }}
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Ready to plan your transfer?
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+            Ready to see what transfers?
           </h2>
           <p className="text-white/80 text-lg mb-8">
-            Enter your courses and see your transfer plan in minutes. It's free, instant, and built for you.
+            Enter your courses and get your transfer plan in minutes — free.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button

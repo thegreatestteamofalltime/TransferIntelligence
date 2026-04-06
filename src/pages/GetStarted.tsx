@@ -10,51 +10,48 @@ const steps = [
     number: 1,
     icon: <School className="h-7 w-7" />,
     title: "Enter Your Current College",
-    description: "Tell us which community college you're currently attending or planning to leave from. We support all major Virginia community colleges.",
-    detail: "Example: Brightpoint Community College, Northern Virginia Community College (NOVA)",
+    description: "Pick which Virginia community college you attend.",
+    detail: "Example: Brightpoint Community College, NOVA",
   },
   {
     number: 2,
     icon: <BookOpen className="h-7 w-7" />,
-    title: "Select Your Target School",
-    description: "Choose the 4-year Virginia university you want to attend and the program (major) you're interested in.",
-    detail: "Example: Virginia State University (VSU) — Computer Science",
+    title: "Choose Your Target School",
+    description: "Select the 4-year university and major you're transferring into.",
+    detail: "Example: Virginia State University — Computer Science",
   },
   {
     number: 3,
     icon: <FileSearch className="h-7 w-7" />,
-    title: "Enter Your Classes",
-    description: "Add the classes you've completed or are currently taking. Use course codes like ENG 111, MTH 167, CSC 201. Don't worry — we'll guide you.",
+    title: "Enter Your Courses",
+    description: "Add the courses you've completed or are taking. Use standard course codes — we'll help identify them.",
     detail: "Example: ENG 111, MTH 167, CSC 201, ITE 115",
   },
   {
     number: 4,
     icon: <CheckCircle2 className="h-7 w-7" />,
-    title: "View Your Transfer Plan",
-    description: (
-      <>See which of your classes count at the new school, which need review, and which don't transfer. We also suggest what classes to take to fill any gaps.</>
-    ),
+    title: "Get Your Transfer Plan",
+    description: "See which credits transfer, which need review, and what courses to take next to fill gaps.",
     detail: "ENG 111 → VSU ENGL 110 (Accepted), CSC 223 → VSU CSCI 250 + CSCI 251 (Expanded)",
   },
 ]
 
 const tips = [
-  "Keep a copy of your unofficial transcript handy when entering your classes",
-  "Check with your advisor before dropping any classes based on this tool",
-  "Transfer rules change — always confirm with your target school before making big decisions",
-  "Finishing your Associate's degree before transferring gives you the strongest chance of full credit acceptance",
+  "Have your unofficial transcript handy when entering courses",
+  "Confirm results with your advisor before making enrollment decisions",
+  "Transfer rules change — always verify with your target school",
+  "Finishing your Associate's degree before transferring maximizes accepted credits",
 ]
 
 export function GetStartedPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-12">
-
-        <h1 className="text-4xl font-extrabold tracking-tight mb-4">
-          How TransferIntelligence Works
+        <h1 className="text-4xl font-extrabold tracking-tight mb-3">
+          How It Works
         </h1>
-        <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-          Follow these four steps to build your personalized transfer plan in minutes.
+        <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+          Four steps to your transfer plan.
         </p>
       </div>
 
@@ -91,11 +88,11 @@ export function GetStartedPage() {
         ))}
       </div>
 
-      <Alert className="mb-8 border-brand" style={{ borderColor: "var(--brand)", backgroundColor: "var(--brand-muted)" }}>
+      <Alert className="mb-8" style={{ borderColor: "var(--brand)", backgroundColor: "var(--brand-muted)" }}>
         <Lightbulb className="h-4 w-4" style={{ color: "var(--brand)" }} />
         <AlertDescription className="text-sm">
-          <strong style={{ color: "var(--brand)" }}>Pro Tip:</strong>{" "}
-          Completing an Associate of Science (A.S.) or Associate of Arts (A.A.) degree at your community college before transferring can guarantee admission to many Virginia universities through the VCCS Transfer Pathways program. Finishing the degree means more of your classes are guaranteed to count at your new school.
+          <strong style={{ color: "var(--brand)" }}>Tip:</strong>{" "}
+          Completing your Associate's degree before transferring gives you the best chance of full credit acceptance through the VCCS Transfer Pathways program.
         </AlertDescription>
       </Alert>
 

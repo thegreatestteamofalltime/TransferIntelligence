@@ -1,6 +1,20 @@
+import { ChevronRight, Hop as Home } from "lucide-react"
 import { Header } from "./Header"
 import { FloatingChat } from "./FloatingChat"
-import type { Route } from "@/lib/router"
+import { navigate, type Route } from "@/lib/router"
+
+const routeLabels: Partial<Record<Route, string>> = {
+  "/get-started": "Get Started",
+  "/planner": "Transfer Planner",
+  "/terminology": "Terminology",
+  "/colleges": "Colleges",
+  "/programs": "Programs",
+  "/advisors": "Advisors",
+  "/agreements": "Agreements",
+  "/faq": "FAQ",
+  "/contact": "Contact",
+  "/about": "About",
+}
 
 interface LayoutProps {
   currentRoute: Route
@@ -27,6 +41,23 @@ export function Layout({ currentRoute, children }: LayoutProps) {
           className="rounded-xl overflow-hidden shadow-sm bg-background flex-1 min-h-0"
           style={{ border: "1px solid oklch(0.80 0.06 245)" }}
         >
+          {currentRoute !== "/" && routeLabels[currentRoute] && (
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 border-b border-border text-xs text-muted-foreground"
+            >
+              <button
+                onClick={() => navigate("/")}
+                className="flex items-center gap-1 hover:text-foreground transition-colors"
+                aria-label="Home"
+              >
+                <Home className="h-3 w-3" />
+                <span>Home</span>
+              </button>
+              <ChevronRight className="h-3 w-3 flex-shrink-0" />
+              <span className="font-medium text-foreground">{routeLabels[currentRoute]}</span>
+            </nav>
+          )}
           <main>{children}</main>
         </div>
 

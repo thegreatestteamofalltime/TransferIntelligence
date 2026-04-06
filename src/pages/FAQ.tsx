@@ -11,11 +11,9 @@ export function FAQPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Frequently Asked Questions</h1>
-        <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
-          Answers to common questions about college transfer in Virginia. Can't find what you need?
-          Ask Transfer Buddy or contact an advisor.
+        <p className="text-muted-foreground max-w-xl mx-auto">
+          Common questions about Virginia college transfer. Still stuck? Ask Transfer Buddy or contact an advisor.
         </p>
       </div>
 
@@ -55,9 +53,9 @@ export function FAQPage() {
         style={{ backgroundColor: "var(--brand-muted)" }}
       >
         <MessageCircle className="h-8 w-8 mx-auto mb-3" style={{ color: "var(--brand)" }} />
-        <h3 className="font-semibold mb-2">Still have questions?</h3>
+        <h3 className="font-semibold mb-1">Still have questions?</h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Ask Transfer Buddy — our AI assistant — or connect with a real academic advisor.
+          Ask Transfer Buddy or connect with a real academic advisor.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button

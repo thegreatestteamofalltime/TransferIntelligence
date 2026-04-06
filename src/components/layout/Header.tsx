@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { Menu, Mail, Info, Circle as HelpCircle } from "lucide-react"
+import { Menu, Mail, Info, Circle as HelpCircle, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { navigate, type Route } from "@/lib/router"
 
@@ -26,9 +27,20 @@ interface HeaderProps {
 
 export function Header({ currentRoute }: HeaderProps) {
   const [open, setOpen] = useState(false)
+  const [searchValue, setSearchValue] = useState("")
 
   const handleNav = (route: Route) => {
     navigate(route)
+    setOpen(false)
+  }
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    const term = searchValue.trim()
+    if (!term) return
+    navigate("/terminology")
+    window.dispatchEvent(new CustomEvent("terminology-search", { detail: term }))
+    setSearchValue("")
     setOpen(false)
   }
 
@@ -65,6 +77,17 @@ export function Header({ currentRoute }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-3 ml-auto">
+          <form onSubmit={handleSearch} className="hidden md:flex items-center relative">
+            <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+            <Input
+              type="search"
+              placeholder="Search"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="h-8 pl-8 pr-3 w-36 text-xs rounded-lg"
+              aria-label="Search transfer terms"
+            />
+          </form>
           <Button
             size="sm"
             className="hidden md:flex text-white font-semibold text-sm px-5 h-9 border-0"
