@@ -74,7 +74,14 @@ export function HomePage() {
             "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
         }}
       >
-<div className="relative max-w-4xl mx-auto text-center">
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.65 0.14 210) 0%, transparent 50%)",
+          }}
+        />
+        <div className="relative max-w-4xl mx-auto text-center">
           <Badge
             variant="secondary"
             className="mb-6 px-3 py-1 text-xs font-semibold tracking-wide uppercase"
