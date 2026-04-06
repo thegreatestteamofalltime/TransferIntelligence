@@ -2,17 +2,15 @@ import { Mail, MessageCircle, Users, ArrowRight, Circle as HelpCircle } from "lu
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { navigate } from "@/lib/router"
+import { openTransferBuddyChat } from "@/components/TransferBuddyLink"
 
 const contactOptions = [
   {
     icon: <MessageCircle className="h-6 w-6" />,
-    title: "Transfer Buddy",
+    title: "TransferBuddy",
     description: "Get instant answers to common transfer questions from our AI assistant — available anytime.",
     action: "Open Chat",
-    handler: () => {
-      const btn = document.querySelector('[aria-label="Open Transfer Buddy chat"]') as HTMLButtonElement
-      btn?.click()
-    },
+    handler: openTransferBuddyChat,
   },
   {
     icon: <Users className="h-6 w-6" />,

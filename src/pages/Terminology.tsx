@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { terms } from "@/data/terminology"
+import { TransferBuddyLink } from "@/components/TransferBuddyLink"
 
 export function TerminologyPage() {
   const [query, setQuery] = useState("")
@@ -127,7 +128,7 @@ export function TerminologyPage() {
         <h3 className="font-semibold text-lg mb-2">Need a term explained in context?</h3>
         <p className="text-sm text-muted-foreground mb-3">
           Hover over highlighted terms on the Planner and other pages for instant definitions.
-          Or ask Transfer Buddy — our AI assistant — any transfer-related question.
+          Or ask <TransferBuddyLink /> — our AI assistant — any transfer-related question.
         </p>
         <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
           <ExternalLink className="h-3 w-3" />

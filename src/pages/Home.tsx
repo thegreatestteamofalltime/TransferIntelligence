@@ -19,7 +19,7 @@ const features = [
   {
     icon: <MessageCircle className="h-6 w-6" />,
     title: "AI Assistant",
-    description: "Transfer Buddy answers your transfer questions 24/7 in plain language.",
+    description: "TransferBuddy answers your transfer questions 24/7 in plain language.",
   },
   {
     icon: <GraduationCap className="h-6 w-6" />,

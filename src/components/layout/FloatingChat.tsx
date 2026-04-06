@@ -120,6 +120,12 @@ export function FloatingChat() {
   const isWelcomeState = messages.length === 1
 
   useEffect(() => {
+    const handler = () => setOpen(true)
+    window.addEventListener("open-transfer-buddy", handler)
+    return () => window.removeEventListener("open-transfer-buddy", handler)
+  }, [])
+
+  useEffect(() => {
     if (open && !isWelcomeState) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
@@ -258,7 +264,7 @@ export function FloatingChat() {
               <div className="flex flex-col items-center px-5 pb-4 pt-2">
                 <img
                   src="/transferbuddybody.png"
-                  alt="Transfer Buddy"
+                  alt="TransferBuddy"
                   className="w-44 h-44 object-contain"
                 />
                 <p className="text-sm text-muted-foreground text-center mt-3 leading-relaxed">
@@ -292,7 +298,7 @@ export function FloatingChat() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask Transfer Buddy..."
+                    placeholder="Ask TransferBuddy..."
                     className="text-sm"
                     disabled={isTyping}
                     autoFocus
@@ -327,7 +333,7 @@ export function FloatingChat() {
                         {msg.role === "user" ? (
                           <GraduationCap className="h-4 w-4" />
                         ) : (
-                          <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
+                          <img src="/transferbuddyhead.png" alt="TransferBuddy" className="w-7 h-7 object-contain" />
                         )}
                       </div>
                       <div>
@@ -362,7 +368,7 @@ export function FloatingChat() {
                   <div className="flex justify-start">
                     <div className="flex gap-2 items-center">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden bg-white border border-border">
-                        <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
+                        <img src="/transferbuddyhead.png" alt="TransferBuddy" className="w-7 h-7 object-contain" />
                       </div>
                       <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3">
                         <div className="flex gap-1">
@@ -383,7 +389,7 @@ export function FloatingChat() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask Transfer Buddy..."
+                    placeholder="Ask TransferBuddy..."
                     className="text-sm"
                     disabled={isTyping}
                   />
@@ -408,7 +414,7 @@ export function FloatingChat() {
         onClick={() => setOpen((prev) => !prev)}
         className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-white"
         style={{ border: "2px solid var(--brand)" }}
-        aria-label="Open Transfer Buddy chat"
+        aria-label="Open TransferBuddy chat"
       >
         {open ? (
           <X className="h-6 w-6" style={{ color: "var(--brand)" }} />

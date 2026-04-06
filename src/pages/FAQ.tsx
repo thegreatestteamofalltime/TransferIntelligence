@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { faqs } from "@/data/faq"
 import { navigate } from "@/lib/router"
 import { withJargon } from "@/lib/jargon"
+import { TransferBuddyLink } from "@/components/TransferBuddyLink"
 
 const categories = [...new Set(faqs.map((f) => f.category))]
 
@@ -28,7 +29,7 @@ export function FAQPage() {
             Frequently Asked <span style={{ color: "var(--brand)" }}>Questions</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Common questions about Virginia college transfer. Still stuck? Ask Transfer Buddy or contact an advisor.
+            Common questions about Virginia college transfer. Still stuck? Ask <TransferBuddyLink /> or contact an advisor.
           </p>
         </div>
       </section>
@@ -73,7 +74,7 @@ export function FAQPage() {
         <MessageCircle className="h-8 w-8 mx-auto mb-3" style={{ color: "var(--brand)" }} />
         <h3 className="font-semibold text-lg mb-1">Still have questions?</h3>
         <p className="text-sm text-muted-foreground mb-5">
-          Ask Transfer Buddy or connect with a real academic advisor.
+          Ask <TransferBuddyLink /> or connect with a real academic advisor.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button
