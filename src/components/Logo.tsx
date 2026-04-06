@@ -51,7 +51,7 @@ export function LogoHero() {
       <img
         src="/logo_full.png"
         alt="TransferIntelligence logo"
-        className="mix-blend-multiply dark:mix-blend-normal dark:invert"
+        className="mix-blend-multiply"
         style={{ width: 420, maxWidth: "80vw", objectFit: "contain" }}
       />
     </div>
