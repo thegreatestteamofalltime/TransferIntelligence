@@ -39,15 +39,32 @@ const contactOptions = [
 
 export function ContactPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <div className="text-center mb-10">
+    <div className="flex flex-col">
+      <section
+        className="relative pt-12 pb-16 px-4 sm:px-6 overflow-hidden"
+        style={{
+          background: "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.65 0.14 210) 0%, transparent 50%)",
+          }}
+        />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground text-balance mb-4">
+            Contact &amp; <span style={{ color: "var(--brand)" }}>Support</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Have questions? We're here to help. Choose the option that works best for you.
+          </p>
+        </div>
+      </section>
 
-        <h1 className="text-4xl font-extrabold tracking-tight mb-3">Contact & Support</h1>
-        <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
-          Have questions? We're here to help. Choose the option that works best for you.
-        </p>
-      </div>
-
+      <section className="py-10 px-4 sm:px-6 bg-background">
+        <div className="max-w-3xl mx-auto">
       <div className="grid sm:grid-cols-2 gap-5 mb-10">
         {contactOptions.map((option) => (
           <Card key={option.title} className="overflow-hidden hover:shadow-md transition-shadow group">
@@ -83,6 +100,8 @@ export function ContactPage() {
           consult your institution's academic advising office directly.
         </p>
       </div>
+        </div>
+      </section>
     </div>
   )
 }

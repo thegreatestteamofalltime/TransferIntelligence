@@ -48,15 +48,33 @@ export function PlannerStep1({
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
-      <div className="text-center mb-10">
+    <div className="flex flex-col">
+      <section
+        className="relative pt-12 pb-16 px-4 sm:px-6 overflow-hidden"
+        style={{
+          background: "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.65 0.14 210) 0%, transparent 50%)",
+          }}
+        />
+        <div className="relative max-w-2xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground text-balance mb-4">
+            Build Your <span style={{ color: "var(--brand)" }}>Transfer Plan</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Select your schools, current degree, and program to get a personalized plan — based on the official{" "}
+            <TermTooltip termId="articulation-agreement">school transfer agreement</TermTooltip>.
+          </p>
+        </div>
+      </section>
 
-        <h1 className="text-4xl font-extrabold tracking-tight mb-3">Build Your Transfer Plan</h1>
-        <p className="text-muted-foreground leading-relaxed">
-          Select your schools, current degree, and program to get a personalized plan — based on the official{" "}
-          <TermTooltip termId="articulation-agreement">school transfer agreement</TermTooltip>.
-        </p>
-      </div>
+      <section className="py-10 px-4 sm:px-6 bg-background">
+      <div className="max-w-2xl mx-auto">
 
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-1">
@@ -149,6 +167,8 @@ export function PlannerStep1({
       <p className="text-xs text-center text-muted-foreground mt-4 leading-relaxed px-4">
         Transfer equivalency is for reference only. Final decisions are made by your target school after reviewing your official transcript.
       </p>
+      </div>
+      </section>
     </div>
   )
 }

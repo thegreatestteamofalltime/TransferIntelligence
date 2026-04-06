@@ -24,14 +24,32 @@ export function TerminologyPage() {
   )
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-extrabold tracking-tight mb-3">Transfer Terminology</h1>
-        <p className="text-muted-foreground max-w-lg mx-auto">
-          Key terms used in Virginia college transfer. Hover over highlighted words anywhere on the site for instant definitions.
-        </p>
-      </div>
+    <div className="flex flex-col">
+      <section
+        className="relative pt-12 pb-16 px-4 sm:px-6 overflow-hidden"
+        style={{
+          background: "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.65 0.14 210) 0%, transparent 50%)",
+          }}
+        />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground text-balance mb-4">
+            Transfer <span style={{ color: "var(--brand)" }}>Terminology</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Key terms used in Virginia college transfer. Hover over highlighted words anywhere on the site for instant definitions.
+          </p>
+        </div>
+      </section>
 
+      <section className="py-10 px-4 sm:px-6 bg-background">
+        <div className="max-w-3xl mx-auto">
       <div className="relative mb-8">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
@@ -104,9 +122,9 @@ export function TerminologyPage() {
         ))}
       </div>
 
-      <div className="mt-10 p-5 rounded-xl text-center" style={{ backgroundColor: "var(--brand-muted)" }}>
+      <div className="mt-10 p-8 rounded-2xl text-center" style={{ backgroundColor: "var(--brand-muted)" }}>
         <BookOpen className="h-8 w-8 mx-auto mb-3" style={{ color: "var(--brand)" }} />
-        <h3 className="font-semibold mb-2">Need a term explained in context?</h3>
+        <h3 className="font-semibold text-lg mb-2">Need a term explained in context?</h3>
         <p className="text-sm text-muted-foreground mb-3">
           Hover over highlighted terms on the Planner and other pages for instant definitions.
           Or ask Transfer Buddy — our AI assistant — any transfer-related question.
@@ -116,6 +134,8 @@ export function TerminologyPage() {
           <span>Definitions sourced from Virginia VCCS Transfer Policies</span>
         </div>
       </div>
+        </div>
+      </section>
     </div>
   )
 }

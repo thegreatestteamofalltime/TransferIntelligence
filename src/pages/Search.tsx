@@ -101,40 +101,40 @@ export function SearchPage() {
   }, {})
 
   return (
-    <div className="light min-h-screen bg-white text-zinc-900">
-      <div className="border-b border-zinc-200 bg-zinc-50">
+    <div className="flex flex-col min-h-screen bg-background">
+      <div className="border-b border-border bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-          <h1 className="text-2xl font-bold text-zinc-900 mb-1">
+          <h1 className="text-2xl font-bold text-foreground mb-1">
             {query ? (
               <>
                 Results for{" "}
-                <span className="text-zinc-900">"{query}"</span>
+                <span style={{ color: "var(--brand)" }}>"{query}"</span>
               </>
             ) : (
               "Search"
             )}
           </h1>
           {query && results.length > 0 && (
-            <p className="text-sm text-zinc-500 mb-5">
+            <p className="text-sm text-muted-foreground mb-5">
               {results.length} result{results.length !== 1 ? "s" : ""} found
             </p>
           )}
 
           <form onSubmit={handleSubmit} className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <input
               ref={inputRef}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Search colleges, courses, advisors, terminology..."
-              className="w-full h-11 pl-9 pr-10 text-sm rounded-lg border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400"
+              className="w-full h-11 pl-9 pr-10 text-sm rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               autoComplete="off"
             />
             {inputValue && (
               <button
                 type="button"
                 onClick={handleClear}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
@@ -144,7 +144,7 @@ export function SearchPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 w-full">
         {query && (
           <div className="flex flex-wrap gap-2 mb-6">
             {ALL_CATEGORIES.filter((cat) => cat === "All" || categoryCounts[cat] > 0).map((cat) => (
@@ -153,12 +153,13 @@ export function SearchPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border transition-colors ${
                   activeCategory === cat
-                    ? "bg-zinc-900 text-white border-zinc-900"
-                    : "bg-white text-zinc-500 border-zinc-300 hover:text-zinc-900 hover:border-zinc-500"
+                    ? "text-white border-transparent"
+                    : "bg-background text-muted-foreground border-border hover:text-foreground hover:border-muted-foreground"
                 }`}
+                style={activeCategory === cat ? { background: "var(--brand-gradient)" } : {}}
               >
                 {cat}
-                <span className={`text-xs font-semibold tabular-nums ${activeCategory === cat ? "opacity-70" : "opacity-60"}`}>
+                <span className={`text-xs font-semibold tabular-nums ${activeCategory === cat ? "opacity-80" : "opacity-60"}`}>
                   {categoryCounts[cat]}
                 </span>
               </button>
@@ -168,9 +169,11 @@ export function SearchPage() {
 
         {!query && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <Search className="h-12 w-12 text-zinc-300 mb-4" />
-            <p className="text-lg font-medium text-zinc-900 mb-1">Search everything</p>
-            <p className="text-sm text-zinc-500 max-w-sm">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: "var(--brand-muted)" }}>
+              <Search className="h-8 w-8" style={{ color: "var(--brand)" }} />
+            </div>
+            <p className="text-lg font-semibold text-foreground mb-1">Search everything</p>
+            <p className="text-sm text-muted-foreground max-w-sm">
               Find colleges, programs, courses, advisors, terminology, and answers to common questions.
             </p>
           </div>
@@ -178,10 +181,12 @@ export function SearchPage() {
 
         {query && results.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <Search className="h-12 w-12 text-zinc-300 mb-4" />
-            <p className="text-lg font-medium text-zinc-900 mb-1">No results found</p>
-            <p className="text-sm text-zinc-500 max-w-sm">
-              No matches for <span className="font-medium text-zinc-900">"{query}"</span>. Try a different term or browse the pages directly.
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-muted">
+              <Search className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <p className="text-lg font-semibold text-foreground mb-1">No results found</p>
+            <p className="text-sm text-muted-foreground max-w-sm">
+              No matches for <span className="font-medium text-foreground">"{query}"</span>. Try a different term or browse the pages directly.
             </p>
           </div>
         )}
@@ -190,8 +195,8 @@ export function SearchPage() {
           <div className="space-y-8">
             {Object.entries(groupedResults).map(([category, items]) => (
               <div key={category}>
-                <h2 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                  <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${categoryBg[category] ?? "bg-zinc-100 text-zinc-600"}`}>
+                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${categoryBg[category] ?? "bg-muted text-muted-foreground"}`}>
                     {category}
                   </span>
                   <span>{items.length} result{items.length !== 1 ? "s" : ""}</span>
@@ -201,24 +206,24 @@ export function SearchPage() {
                     <button
                       key={result.id}
                       onClick={() => handleSelectResult(result)}
-                      className="w-full flex items-start gap-4 p-4 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-left transition-colors group"
+                      className="w-full flex items-start gap-4 p-4 rounded-lg border border-border bg-card hover:bg-accent text-left transition-colors group"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-zinc-900 truncate">
+                        <p className="text-sm font-semibold text-foreground truncate">
                           {highlight(result.title, query)}
                         </p>
                         {result.subtitle && (
-                          <p className="text-xs text-zinc-500 mt-0.5 truncate">
+                          <p className="text-xs text-muted-foreground mt-0.5 truncate">
                             {highlight(result.subtitle, query)}
                           </p>
                         )}
                         {result.detail && (
-                          <p className="text-xs text-zinc-500 mt-1.5 line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">
                             {highlight(result.detail, query)}
                           </p>
                         )}
                       </div>
-                      <ArrowRight className="h-4 w-4 text-zinc-400 shrink-0 mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+                      <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5 group-hover:translate-x-0.5 transition-transform" />
                     </button>
                   ))}
                 </div>

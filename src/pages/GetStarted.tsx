@@ -45,16 +45,32 @@ const tips = [
 
 export function GetStartedPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold tracking-tight mb-3">
-          How It Works
-        </h1>
-        <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-          Four steps to your transfer plan.
-        </p>
-      </div>
+    <div className="flex flex-col">
+      <section
+        className="relative pt-12 pb-16 px-4 sm:px-6 overflow-hidden"
+        style={{
+          background: "linear-gradient(160deg, oklch(0.97 0.02 196) 0%, oklch(1 0 0) 50%, oklch(0.98 0.01 220) 100%)",
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.65 0.14 210) 0%, transparent 50%)",
+          }}
+        />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground text-balance mb-4">
+            How It <span style={{ color: "var(--brand)" }}>Works</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Four steps to your transfer plan. Fast, clear, and free.
+          </p>
+        </div>
+      </section>
 
+      <section className="py-10 px-4 sm:px-6 bg-background">
+        <div className="max-w-4xl mx-auto">
       <div className="relative space-y-6 mb-12">
         <div className="absolute left-[2.35rem] top-12 bottom-12 w-0.5 bg-border hidden sm:block" />
 
@@ -134,6 +150,8 @@ export function GetStartedPage() {
           View Terminology
         </Button>
       </div>
+        </div>
+      </section>
     </div>
   )
 }
