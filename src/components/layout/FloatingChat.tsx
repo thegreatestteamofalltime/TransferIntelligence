@@ -122,11 +122,14 @@ export function FloatingChat() {
 
           {isWelcomeState ? (
             <>
-              <div className="flex items-center justify-between px-5 pt-5 pb-2">
-                <h2 className="text-lg font-bold" style={{ color: "var(--brand)" }}>TransferBuddy</h2>
+              <div
+                className="relative flex items-center justify-center px-4 py-3 text-white"
+                style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
+              >
+                <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-4 text-white/80 hover:text-white transition-colors"
                   aria-label="Close chat"
                 >
                   <X className="h-5 w-5" />
@@ -191,21 +194,13 @@ export function FloatingChat() {
           ) : (
             <>
               <div
-                className="flex items-center justify-between px-4 py-3 text-white"
+                className="relative flex items-center justify-center px-4 py-3 text-white"
                 style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
-                    <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-9 h-9 object-contain" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm">Transfer Buddy</p>
-                    <p className="text-xs text-white/80">AI Transfer Assistant</p>
-                  </div>
-                </div>
+                <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-white/80 hover:text-white transition-colors"
+                  className="absolute right-4 text-white/80 hover:text-white transition-colors"
                   aria-label="Close chat"
                 >
                   <X className="h-5 w-5" />
@@ -232,9 +227,10 @@ export function FloatingChat() {
                         <div
                           className={`rounded-2xl px-3 py-2 text-sm leading-relaxed ${
                             msg.role === "user"
-                              ? "bg-primary text-primary-foreground rounded-tr-sm"
+                              ? "text-white rounded-tr-sm"
                               : "bg-muted text-foreground rounded-tl-sm"
                           }`}
+                          style={msg.role === "user" ? { backgroundColor: "var(--brand)" } : {}}
                         >
                           {msg.text}
                         </div>
