@@ -1,7 +1,6 @@
 import { ArrowRight, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { LogoHero } from "@/components/Logo"
 import { navigate } from "@/lib/router"
 import { TermTooltip } from "@/components/TermTooltip"
@@ -167,12 +166,6 @@ export function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge
-                className="mb-4 text-xs font-semibold"
-                style={{ backgroundColor: "var(--brand)", color: "white" }}
-              >
-                How It Works
-              </Badge>
               <h2 className="text-3xl font-bold tracking-tight mb-3">
                 Four steps to your transfer plan
               </h2>
@@ -220,12 +213,6 @@ export function HomePage() {
             </div>
 
             <div>
-              <Badge
-                className="mb-4 text-xs font-semibold"
-                style={{ backgroundColor: "var(--brand)", color: "white" }}
-              >
-                Our Mission
-              </Badge>
               <h2 className="text-3xl font-bold tracking-tight mb-3">
                 Built for students who find the process confusing
               </h2>
