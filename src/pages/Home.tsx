@@ -129,32 +129,38 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="py-16 px-4 sm:px-6 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Learn How to Transfer Your Intelligence in Minutes</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 bg-background">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-extrabold tracking-tight leading-tight mb-4">
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-foreground">
+                <span className="text-brand">Learn How</span> to
+              </span>
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-brand">
+                Transfer Your Intelligence
+              </span>
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-foreground mt-2">
+                in <span className="text-brand">Minutes</span>
+              </span>
+            </h2>
+            <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed mt-6">
               Everything you need to plan a successful transfer from a Virginia community college to a 4-year university.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {features.map((feature) => (
-              <Card key={feature.title} className="relative overflow-hidden group hover:shadow-md transition-shadow">
-                <CardContent className="p-6 flex flex-col items-center text-center">
+              <Card key={feature.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl">
+                <CardContent className="p-7 flex flex-col items-center text-center">
                   <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white"
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 text-white shadow-sm"
                     style={{ backgroundColor: "var(--brand)" }}
                   >
                     {feature.icon}
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">{feature.title}</h3>
+                  <h3 className="font-semibold text-foreground mb-2 text-base">{feature.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                 </CardContent>
-                <div
-                  className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-300"
-                  style={{ backgroundColor: "var(--brand)" }}
-                />
               </Card>
             ))}
           </div>
