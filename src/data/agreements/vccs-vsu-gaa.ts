@@ -117,7 +117,135 @@ export const VCCS_VSU_GAA: ArticulationAgreement = {
   pdfPath: "/src/data/agreements/VSU.pdf",
 }
 
-export const ALL_AGREEMENTS: ArticulationAgreement[] = [VCCS_VSU_GAA]
+export const VCCS_VCU_GAA: ArticulationAgreement = {
+  id: "vccs-vcu-gaa-2023",
+  title: "Transfer Agreement with Guaranteed Admission",
+  type: "GAA",
+  sourceSystem: "Virginia Community College System (VCCS)",
+  sourceInstitutions: [
+    "Brightpoint Community College",
+    "Northern Virginia Community College (NOVA)",
+    "All VCCS Member Colleges",
+  ],
+  targetInstitution: "Virginia Commonwealth University",
+  targetInstitutionAbbreviation: "VCU",
+  lastUpdated: "July 1, 2023",
+  effectiveDate: "July 1, 2023",
+  status: "current",
+  admissionRequirements: {
+    applicableDegrees: ["Associate of Arts (AA)", "Associate of Science (AS)", "Associate of Arts & Sciences (AA&S)"],
+    minimumGPA: 2.5,
+    minimumCreditsAtVCCS: 30,
+    maximumTransferCredits: 90,
+    testingRequired: false,
+    applicationDeadlines: [
+      { term: "Fall", deadline: "March 1" },
+      { term: "Spring", deadline: "October 1" },
+    ],
+    courseGradeMinimum: "C",
+  },
+  keyBenefits: [
+    "Guaranteed admission to VCU upon meeting requirements",
+    "AA/AS/AA&S degree satisfies all lower-division general education at VCU",
+    "No standardized testing (SAT/ACT) required",
+    "Up to 90 credits accepted",
+    "Dual enrollment students are eligible",
+  ],
+  sections: [
+    {
+      id: "section-1",
+      title: "What This Agreement Covers",
+      summary: "VCCS students who earn a qualifying transfer associate degree (AA, AS, or AA&S) and meet the GPA requirement (2.5) are guaranteed admission to VCU — but not necessarily to a specific program. Competitive programs like Nursing or Engineering may have additional requirements.",
+    },
+    {
+      id: "section-2",
+      title: "Admission Requirements",
+      summary: "Earn an AA, AS, or AA&S with at least a 2.5 GPA. Complete 30+ credits at a VCCS college. Earn a C or better in every transferring course. Apply by March 1 for Fall or October 1 for Spring. No SAT or ACT needed.",
+    },
+    {
+      id: "section-3",
+      title: "How Your General Education Credits Transfer",
+      summary: "Finishing your associate degree means VCU waives all lower-division general education requirements. You enter as a junior and focus on your major courses. If you earned a D or F in any gen-ed course, you may need to retake it.",
+    },
+    {
+      id: "section-4",
+      title: "Prior Learning & Dual Enrollment",
+      summary: "AP, IB, CLEP, and military (ACE/Joint Services) credits count toward your associate degree for GAA purposes. Dual enrollment students earning an associate degree alongside a high school diploma are also covered.",
+    },
+    {
+      id: "section-5",
+      title: "Program-Specific Requirements",
+      summary: "Admission to VCU is guaranteed; admission to specific competitive programs (e.g., Business, Health Sciences) is not. Check the Transfer Virginia portal for your intended major's transfer guide.",
+    },
+  ],
+  pdfPath: "/src/data/agreements/VSU.pdf",
+}
+
+export const VCCS_GMU_GAA: ArticulationAgreement = {
+  id: "vccs-gmu-gaa-2022",
+  title: "Transfer Agreement with Guaranteed Admission",
+  type: "GAA",
+  sourceSystem: "Virginia Community College System (VCCS)",
+  sourceInstitutions: [
+    "Northern Virginia Community College (NOVA)",
+    "Brightpoint Community College",
+    "All VCCS Member Colleges",
+  ],
+  targetInstitution: "George Mason University",
+  targetInstitutionAbbreviation: "GMU",
+  lastUpdated: "August 15, 2022",
+  effectiveDate: "August 15, 2022",
+  status: "current",
+  admissionRequirements: {
+    applicableDegrees: ["Associate of Arts (AA)", "Associate of Science (AS)", "Associate of Arts & Sciences (AA&S)"],
+    minimumGPA: 2.0,
+    minimumCreditsAtVCCS: 30,
+    maximumTransferCredits: 90,
+    testingRequired: false,
+    applicationDeadlines: [
+      { term: "Fall", deadline: "March 15" },
+      { term: "Spring", deadline: "November 1" },
+    ],
+    courseGradeMinimum: "C",
+  },
+  keyBenefits: [
+    "Guaranteed admission to GMU for students meeting the 2.0 GPA requirement",
+    "Associate degree satisfies all Mason Core (general education) requirements",
+    "No SAT/ACT needed",
+    "Dual enrollment and prior learning credit (AP, IB, CLEP) eligible",
+    "Up to 90 transfer credits accepted",
+  ],
+  sections: [
+    {
+      id: "section-1",
+      title: "What This Agreement Covers",
+      summary: "Any VCCS student who earns a qualifying associate degree (AA, AS, or AA&S) and meets the 2.0 GPA minimum is guaranteed general admission to George Mason University. Program-specific majors (e.g., Computer Science, Nursing) may require a higher GPA or additional steps.",
+    },
+    {
+      id: "section-2",
+      title: "Admission Requirements",
+      summary: "Earn an AA, AS, or AA&S degree with at least a 2.0 GPA. Complete 30+ credits at a VCCS school. Get a C or better in every course you want to transfer. Apply by March 15 for Fall or November 1 for Spring. No SAT or ACT required.",
+    },
+    {
+      id: "section-3",
+      title: "How Your General Education Credits Transfer",
+      summary: "Completing your associate degree satisfies all Mason Core general education requirements at GMU. You'll enter as a junior ready to focus on your major. Courses where you earned a D or F do not count toward satisfying gen-ed.",
+    },
+    {
+      id: "section-4",
+      title: "Prior Learning & Dual Enrollment",
+      summary: "AP, IB, CLEP, and military credits can count toward your degree for GAA eligibility. Dual enrollment students earning an associate degree while in high school are covered by this agreement.",
+    },
+    {
+      id: "section-5",
+      title: "Competitive Programs",
+      summary: "GMU has selective programs (Computer Science, Business, Health Science) with higher GPA requirements. General admission is guaranteed at 2.0 GPA, but check Transfer Virginia or GMU's admissions page for your specific major.",
+    },
+  ],
+  pdfPath: "/src/data/agreements/VSU.pdf",
+}
+
+export const ALL_AGREEMENTS: ArticulationAgreement[] = [VCCS_VSU_GAA, VCCS_VCU_GAA, VCCS_GMU_GAA]
 
 const VCCS_SCHOOLS = [
   "brightpoint", "nova", "northern virginia", "germanna", "reynolds", "tidewater",
