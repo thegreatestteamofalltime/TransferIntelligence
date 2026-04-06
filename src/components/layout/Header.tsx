@@ -52,7 +52,7 @@ export function Header({ currentRoute }: HeaderProps) {
             <button
               key={link.route}
               onClick={() => handleNav(link.route)}
-              className={`px-3 py-1.5 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring ${
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring whitespace-nowrap ${
                 currentRoute === link.route
                   ? "text-foreground font-semibold"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
