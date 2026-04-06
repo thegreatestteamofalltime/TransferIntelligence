@@ -216,16 +216,18 @@ export function HomePage() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button
+                  size="lg"
                   variant="outline"
-                  className="gap-2"
+                  className="gap-2 px-8 py-6 text-base"
                   style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
                   onClick={() => navigate("/contact")}
                 >
                   Contact
                 </Button>
                 <Button
+                  size="lg"
                   variant="ghost"
-                  className="gap-2"
+                  className="gap-2 px-8 py-6 text-base"
                   onClick={() => navigate("/about")}
                 >
                   About Us
