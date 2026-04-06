@@ -41,7 +41,7 @@ export function Header({ currentRoute }: HeaderProps) {
           aria-label="Go to home"
         >
           <img
-            src="/image.png"
+            src="/logo_inital.png"
             alt="TransferIntelligence"
             style={{ height: 32, width: "auto", objectFit: "contain" }}
           />
@@ -86,7 +86,7 @@ export function Header({ currentRoute }: HeaderProps) {
               <SheetHeader className="mb-6">
                 <SheetTitle className="text-left">
                   <img
-                    src="/image.png"
+                    src="/logo_inital.png"
                     alt="TransferIntelligence"
                     style={{ height: 36, width: "auto", objectFit: "contain" }}
                   />
