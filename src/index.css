@@ -89,6 +89,7 @@
   --brand: oklch(0.68 0.14 196);
   --brand-foreground: oklch(1 0 0);
   --brand-muted: oklch(0.95 0.04 196);
+  --brand-gradient: linear-gradient(135deg, #3d9ab5, #4cbabb);
 
   --success: oklch(0.50 0.14 145);
   --success-foreground: oklch(1 0 0);

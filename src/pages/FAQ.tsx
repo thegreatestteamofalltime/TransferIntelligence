@@ -63,7 +63,7 @@ export function FAQPage() {
           <Button
             size="sm"
             className="gap-2 text-white"
-            style={{ backgroundColor: "var(--brand)" }}
+            style={{ background: "var(--brand-gradient)" }}
             onClick={() => navigate("/advisors")}
           >
             Contact an Advisor

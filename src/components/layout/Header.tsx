@@ -68,7 +68,7 @@ export function Header({ currentRoute }: HeaderProps) {
           <Button
             size="sm"
             className="hidden md:flex text-white font-semibold text-sm px-5 h-9 border-0"
-            style={{ background: "linear-gradient(135deg, #3d9ab5, #4cbabb)" }}
+            style={{ background: "var(--brand-gradient)" }}
             onClick={() => handleNav("/planner")}
           >
             Start Planning
@@ -138,7 +138,7 @@ export function Header({ currentRoute }: HeaderProps) {
               <div className="mt-6 pt-6 border-t border-border">
                 <Button
                   className="w-full text-white"
-                  style={{ backgroundColor: "var(--brand)" }}
+                  style={{ background: "var(--brand-gradient)" }}
                   onClick={() => handleNav("/planner")}
                 >
                   Start Transfer Plan

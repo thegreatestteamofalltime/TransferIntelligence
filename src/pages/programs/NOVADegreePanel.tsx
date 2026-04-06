@@ -724,7 +724,7 @@ export function NOVADegreePanel() {
         <Button
           size="sm"
           className="gap-1.5 text-white text-xs"
-          style={{ backgroundColor: "var(--brand)" }}
+          style={{ background: "var(--brand-gradient)" }}
           onClick={() => navigate("/planner")}
         >
           Plan this degree

@@ -120,7 +120,7 @@ export function GetStartedPage() {
         <Button
           size="lg"
           className="gap-2 text-white px-8"
-          style={{ backgroundColor: "var(--brand)" }}
+          style={{ background: "var(--brand-gradient)" }}
           onClick={() => navigate("/planner")}
         >
           Start Transfer Plan

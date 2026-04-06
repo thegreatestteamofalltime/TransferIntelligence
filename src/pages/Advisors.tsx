@@ -124,7 +124,7 @@ export function AdvisorsPage() {
               <Button
                 size="sm"
                 className="w-full gap-2 text-white text-xs"
-                style={{ backgroundColor: "var(--brand)" }}
+                style={{ background: "var(--brand-gradient)" }}
                 asChild
               >
                 <a href={`mailto:${advisor.email}`}>

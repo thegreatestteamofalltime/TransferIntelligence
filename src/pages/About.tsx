@@ -91,7 +91,7 @@ export function AboutPage() {
         </p>
         <Button
           className="gap-2 text-white"
-          style={{ backgroundColor: "var(--brand)" }}
+          style={{ background: "var(--brand-gradient)" }}
           onClick={() => navigate("/planner")}
         >
           Start Transfer Plan

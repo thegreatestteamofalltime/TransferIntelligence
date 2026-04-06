@@ -530,7 +530,7 @@ export function PlannerStep2({
         </Button>
         <Button
           className="flex-1 gap-2 text-white py-5 text-base"
-          style={{ backgroundColor: "var(--brand)" }}
+          style={{ background: "var(--brand-gradient)" }}
           onClick={onNext}
         >
           {completedCourses.length === 0
@@ -598,7 +598,7 @@ export function PlannerStep2({
           <DialogFooter>
             <Button
               className="w-full text-white"
-              style={{ backgroundColor: "var(--brand)" }}
+              style={{ background: "var(--brand-gradient)" }}
               onClick={() => setShowDialog(false)}
             >
               Got it, I'll add the rest

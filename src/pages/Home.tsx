@@ -101,7 +101,7 @@ export function HomePage() {
             <Button
               size="lg"
               className="gap-2 text-white px-8 py-6 text-base"
-              style={{ backgroundColor: "var(--brand)" }}
+              style={{ background: "var(--brand-gradient)" }}
               onClick={() => navigate("/get-started")}
             >
               Get Started
@@ -186,7 +186,7 @@ export function HomePage() {
               </p>
               <Button
                 className="gap-2 text-white"
-                style={{ backgroundColor: "var(--brand)" }}
+                style={{ background: "var(--brand-gradient)" }}
                 onClick={() => navigate("/planner")}
               >
                 Start Transfer Plan

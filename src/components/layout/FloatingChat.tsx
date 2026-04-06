@@ -236,7 +236,7 @@ export function FloatingChat() {
                 size="icon"
                 onClick={() => sendMessage()}
                 disabled={!input.trim() || isTyping}
-                style={{ backgroundColor: "var(--brand)" }}
+                style={{ background: "var(--brand-gradient)" }}
                 className="text-white flex-shrink-0"
                 aria-label="Send message"
               >
@@ -250,7 +250,7 @@ export function FloatingChat() {
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full text-white shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-        style={{ backgroundColor: "var(--brand)" }}
+        style={{ background: "var(--brand-gradient)" }}
         aria-label="Open Transfer Buddy chat"
       >
         {open ? (

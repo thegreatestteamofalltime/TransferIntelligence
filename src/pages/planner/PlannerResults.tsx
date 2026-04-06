@@ -642,7 +642,7 @@ export function PlannerResults({
       <div className="flex flex-col sm:flex-row gap-3">
         <Button
           className="gap-2 text-white flex-1"
-          style={{ backgroundColor: "var(--brand)" }}
+          style={{ background: "var(--brand-gradient)" }}
           onClick={() => navigate("/advisors")}
         >
           <Users className="h-4 w-4" />

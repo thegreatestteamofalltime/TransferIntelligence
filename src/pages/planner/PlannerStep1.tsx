@@ -136,7 +136,7 @@ export function PlannerStep1({
 
           <Button
             className="w-full gap-2 text-white py-5 text-base"
-            style={{ backgroundColor: "var(--brand)" }}
+            style={{ background: "var(--brand-gradient)" }}
             onClick={onNext}
             disabled={!currentDegreeId}
           >
