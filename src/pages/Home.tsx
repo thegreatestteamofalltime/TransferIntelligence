@@ -88,9 +88,9 @@ export function HomePage() {
             <LogoHero />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground text-balance mb-4">
-            See How to Transfer
-            <span style={{ color: "var(--brand)" }}> Your Intelligence</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground mb-4">
+            See How to Transfer<br />
+            <span className="italic" style={{ color: "var(--brand)" }}>Your Intelligence</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
