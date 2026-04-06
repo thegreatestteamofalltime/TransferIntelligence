@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { X, Send, User, UserCheck } from "lucide-react"
+import { X, Send, GraduationCap, UserCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -48,6 +48,12 @@ async function getAIResponse(history: ChatMessage[]): Promise<{ text: string; sh
   }
 }
 
+const suggestedQuestions = [
+  "What does CSC 201 transfer as?",
+  "What is expanded credit?",
+  "What does VSU stand for?",
+]
+
 export function FloatingChat() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
@@ -63,11 +69,13 @@ export function FloatingChat() {
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
+  const isWelcomeState = messages.length === 1
+
   useEffect(() => {
-    if (open) {
+    if (open && !isWelcomeState) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
-  }, [messages, open])
+  }, [messages, open, isWelcomeState])
 
   const sendMessage = async (text?: string) => {
     const messageText = (text ?? input).trim()
@@ -107,139 +115,192 @@ export function FloatingChat() {
     }
   }
 
-  const suggestedQuestions = [
-    "What does CSC 201 transfer as?",
-    "What is expanded credit?",
-    "What does VSU stand for?",
-  ]
-
   return (
     <>
       {open && (
-        <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[580px] flex flex-col rounded-2xl border border-border bg-background shadow-2xl overflow-hidden">
-          <div
-            className="flex items-center justify-between px-4 py-3 text-white"
-            style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
-                <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-9 h-9 object-contain" />
-              </div>
-              <div>
-                <p className="font-semibold text-sm">Transfer Buddy</p>
-                <p className="text-xs text-white/80">AI Transfer Assistant</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-white/80 hover:text-white transition-colors"
-              aria-label="Close chat"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+        <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 flex flex-col rounded-2xl border border-border bg-background shadow-2xl overflow-hidden">
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0 max-h-[380px]">
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`flex gap-2 max-w-[85%] ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                  <div
-                    className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden ${
-                      msg.role === "user" ? "bg-secondary" : "bg-white border border-border"
-                    }`}
+          {isWelcomeState ? (
+            <>
+              <div className="flex items-center justify-between px-5 pt-5 pb-2">
+                <h2 className="text-lg font-bold" style={{ color: "var(--brand)" }}>TransferBuddy</h2>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Close chat"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="flex flex-col items-center px-5 pb-4 pt-2">
+                <img
+                  src="/transferbuddybody.png"
+                  alt="Transfer Buddy"
+                  className="w-44 h-44 object-contain"
+                />
+                <p className="text-sm text-muted-foreground text-center mt-3 leading-relaxed">
+                  Ask me anything about transferring your credits to a Virginia four-year university.
+                </p>
+              </div>
+
+              <div className="px-5 pb-4 flex flex-wrap gap-2 justify-center">
+                {suggestedQuestions.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => sendMessage(q)}
+                    disabled={isTyping}
+                    className="text-xs px-3 py-1.5 rounded-full border transition-colors disabled:opacity-50"
+                    style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.backgroundColor = "color-mix(in oklch, var(--brand) 10%, transparent)"
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.backgroundColor = ""
+                    }}
                   >
-                    {msg.role === "user" ? (
-                      <User className="h-3.5 w-3.5 text-muted-foreground" />
-                    ) : (
-                      <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
-                    )}
+                    {q}
+                  </button>
+                ))}
+              </div>
+
+              <div className="px-4 pb-4 border-t border-border pt-3 bg-background">
+                <div className="flex gap-2">
+                  <Input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Ask Transfer Buddy..."
+                    className="text-sm"
+                    disabled={isTyping}
+                    autoFocus
+                  />
+                  <Button
+                    size="icon"
+                    onClick={() => sendMessage()}
+                    disabled={!input.trim() || isTyping}
+                    className="text-white flex-shrink-0"
+                    style={{ backgroundColor: "var(--brand)" }}
+                    aria-label="Send message"
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className="flex items-center justify-between px-4 py-3 text-white"
+                style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                    <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-9 h-9 object-contain" />
                   </div>
                   <div>
-                    <div
-                      className={`rounded-2xl px-3 py-2 text-sm leading-relaxed ${
-                        msg.role === "user"
-                          ? "bg-primary text-primary-foreground rounded-tr-sm"
-                          : "bg-muted text-foreground rounded-tl-sm"
-                      }`}
-                    >
-                      {msg.text}
-                    </div>
-                    {msg.showAdvisor && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="mt-2 text-xs h-7 gap-1.5"
-                        style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
-                        onClick={() => {
-                          setOpen(false)
-                          navigate("/advisors")
-                        }}
-                      >
-                        <UserCheck className="h-3 w-3" />
-                        Contact an Advisor
-                      </Button>
-                    )}
+                    <p className="font-semibold text-sm">Transfer Buddy</p>
+                    <p className="text-xs text-white/80">AI Transfer Assistant</p>
                   </div>
                 </div>
-              </div>
-            ))}
-
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="flex gap-2 items-center">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden bg-white border border-border">
-                    <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
-                  </div>
-                  <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3">
-                    <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:0ms]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:150ms]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:300ms]" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {messages.length <= 2 && (
-            <div className="px-4 pb-2 flex flex-wrap gap-1.5">
-              {suggestedQuestions.map((q) => (
                 <button
-                  key={q}
-                  onClick={() => sendMessage(q)}
-                  disabled={isTyping}
-                  className="text-xs px-2.5 py-1 rounded-full border border-border bg-muted hover:bg-accent text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                  onClick={() => setOpen(false)}
+                  className="text-white/80 hover:text-white transition-colors"
+                  aria-label="Close chat"
                 >
-                  {q}
+                  <X className="h-5 w-5" />
                 </button>
-              ))}
-            </div>
-          )}
+              </div>
 
-          <div className="p-3 border-t border-border bg-background">
-            <div className="flex gap-2">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask Transfer Buddy..."
-                className="text-sm"
-                disabled={isTyping}
-              />
-              <Button
-                size="icon"
-                onClick={() => sendMessage()}
-                disabled={!input.trim() || isTyping}
-                style={{ background: "var(--brand-gradient)" }}
-                className="text-white flex-shrink-0"
-                aria-label="Send message"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0 max-h-[380px]">
+                {messages.map((msg) => (
+                  <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div className={`flex gap-2 max-w-[85%] ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
+                      <div
+                        className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden ${
+                          msg.role === "user" ? "text-white" : "bg-white border border-border"
+                        }`}
+                        style={msg.role === "user" ? { backgroundColor: "var(--brand)" } : {}}
+                      >
+                        {msg.role === "user" ? (
+                          <GraduationCap className="h-4 w-4" />
+                        ) : (
+                          <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
+                        )}
+                      </div>
+                      <div>
+                        <div
+                          className={`rounded-2xl px-3 py-2 text-sm leading-relaxed ${
+                            msg.role === "user"
+                              ? "bg-primary text-primary-foreground rounded-tr-sm"
+                              : "bg-muted text-foreground rounded-tl-sm"
+                          }`}
+                        >
+                          {msg.text}
+                        </div>
+                        {msg.showAdvisor && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="mt-2 text-xs h-7 gap-1.5"
+                            style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
+                            onClick={() => {
+                              setOpen(false)
+                              navigate("/advisors")
+                            }}
+                          >
+                            <UserCheck className="h-3 w-3" />
+                            Contact an Advisor
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="flex gap-2 items-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden bg-white border border-border">
+                        <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
+                      </div>
+                      <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3">
+                        <div className="flex gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:0ms]" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:150ms]" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:300ms]" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              <div className="p-3 border-t border-border bg-background">
+                <div className="flex gap-2">
+                  <Input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Ask Transfer Buddy..."
+                    className="text-sm"
+                    disabled={isTyping}
+                  />
+                  <Button
+                    size="icon"
+                    onClick={() => sendMessage()}
+                    disabled={!input.trim() || isTyping}
+                    style={{ background: "var(--brand-gradient)" }}
+                    className="text-white flex-shrink-0"
+                    aria-label="Send message"
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       )}
 
