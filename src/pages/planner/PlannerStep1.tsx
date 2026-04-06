@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
 import { TermTooltip } from "@/components/TermTooltip"
 import { degreePlans } from "@/data/degrees"
 
@@ -51,12 +50,7 @@ export function PlannerStep1({
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Transfer Planner
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Build Your Transfer Plan</h1>
         <p className="text-muted-foreground leading-relaxed">
           Select your schools, current degree, and program to get a personalized plan — based on the official{" "}

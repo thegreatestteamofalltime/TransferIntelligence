@@ -14,12 +14,7 @@ export function CollegesPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Virginia Schools
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Colleges & Universities</h1>
         <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Virginia institutions supported by TransferIntelligence. We have <TermTooltip termId="articulation-agreement">formal transfer agreements</TermTooltip> on file for all of these community college and university pairings.

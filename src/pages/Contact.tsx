@@ -1,6 +1,5 @@
 import { Mail, MessageCircle, Users, ArrowRight, Circle as HelpCircle } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { navigate } from "@/lib/router"
 
@@ -42,12 +41,7 @@ export function ContactPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Get Help
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Contact & Support</h1>
         <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Have questions? We're here to help. Choose the option that works best for you.

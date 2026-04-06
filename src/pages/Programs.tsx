@@ -40,12 +40,7 @@ export function ProgramsPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Degree Programs
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Programs</h1>
         <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Browse degree programs offered by colleges in our network. Expand any program to see full course requirements.

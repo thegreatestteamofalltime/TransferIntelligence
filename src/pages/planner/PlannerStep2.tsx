@@ -298,12 +298,7 @@ export function PlannerStep2({
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Transfer Planner
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Courses You've Completed</h1>
         <p className="text-muted-foreground leading-relaxed">
           Courses are organized by your degree requirements. Select every course you've already taken.

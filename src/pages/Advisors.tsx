@@ -42,12 +42,7 @@ export function AdvisorsPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Advisor Directory
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Academic Advisors</h1>
         <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Connect with transfer advisors at Virginia institutions. These advisors can help you understand which of your classes count, and answer questions about the <TermTooltip termId="articulation-agreement">official transfer agreements</TermTooltip> between your schools.

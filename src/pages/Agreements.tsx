@@ -223,12 +223,7 @@ export function AgreementsPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="mb-8">
-        <Badge
-          className="mb-3 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Articulation Agreements
-        </Badge>
+
         <h1 className="text-3xl font-bold tracking-tight">Transfer Agreements</h1>
         <p className="text-muted-foreground mt-2 leading-relaxed max-w-xl">
           Official articulation agreements define how credits transfer between institutions and outline

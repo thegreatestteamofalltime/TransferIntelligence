@@ -367,9 +367,7 @@ export function PlannerResults({
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
-          <Badge className="mb-2 text-xs font-semibold" style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}>
-            Transfer Results
-          </Badge>
+
           <h1 className="text-3xl font-bold tracking-tight">Your Transfer Plan</h1>
           <p className="text-muted-foreground text-sm mt-1">
             {currentSchool} → {targetSchool} &middot; {program}

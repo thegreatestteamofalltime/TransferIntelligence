@@ -1,6 +1,5 @@
 import { Target, Zap, Shield, Heart, ArrowRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { LogoHero } from "@/components/Logo"
 import { navigate } from "@/lib/router"
@@ -36,12 +35,7 @@ export function AboutPage() {
         <div className="flex justify-center mb-8">
           <LogoHero />
         </div>
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          About Us
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-4">
           About TransferIntelligence
         </h1>

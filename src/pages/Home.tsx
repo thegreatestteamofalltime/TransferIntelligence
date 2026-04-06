@@ -82,13 +82,7 @@ export function HomePage() {
           }}
         />
         <div className="relative max-w-4xl mx-auto text-center">
-          <Badge
-            variant="secondary"
-            className="mb-6 px-3 py-1 text-xs font-semibold tracking-wide uppercase"
-            style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-          >
-            Virginia Transfer Pathways
-          </Badge>
+
 
           <div className="flex justify-center mb-8">
             <LogoHero />

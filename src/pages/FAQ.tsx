@@ -1,5 +1,4 @@
 import { Circle as HelpCircle, MessageCircle, ArrowRight } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { faqs } from "@/data/faq"
@@ -12,12 +11,7 @@ export function FAQPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          FAQ
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Frequently Asked Questions</h1>
         <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Answers to common questions about college transfer in Virginia. Can't find what you need?

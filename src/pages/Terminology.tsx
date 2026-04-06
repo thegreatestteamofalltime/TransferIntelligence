@@ -18,12 +18,7 @@ export function TerminologyPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Glossary
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-3">Transfer Terminology</h1>
         <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto">
           Understand the key terms used in college transfer planning. Hover over highlighted terms

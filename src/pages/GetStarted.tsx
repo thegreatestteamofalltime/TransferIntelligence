@@ -49,12 +49,7 @@ export function GetStartedPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-12">
-        <Badge
-          className="mb-4 text-xs font-semibold"
-          style={{ backgroundColor: "var(--brand-muted)", color: "var(--brand)" }}
-        >
-          Getting Started
-        </Badge>
+
         <h1 className="text-4xl font-extrabold tracking-tight mb-4">
           How TransferIntelligence Works
         </h1>
