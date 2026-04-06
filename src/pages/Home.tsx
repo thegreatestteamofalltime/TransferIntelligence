@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, GitMerge, Bot, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin } from "lucide-react"
+import { ArrowRight, BookOpen, GitMerge, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -18,7 +18,7 @@ const features = [
     description: "See which of your classes transfer — and get suggestions when a class doesn't have a direct match.",
   },
   {
-    icon: <Bot className="h-6 w-6" />,
+    icon: <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="h-6 w-6 object-contain" />,
     title: "AI Assistant",
     description: "Transfer Buddy answers your transfer questions 24/7 in plain language.",
   },

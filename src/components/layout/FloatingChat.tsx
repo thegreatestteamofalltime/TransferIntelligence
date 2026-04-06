@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { MessageCircle, X, Send, Bot, User, UserCheck } from "lucide-react"
+import { X, Send, User, UserCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -122,8 +122,8 @@ export function FloatingChat() {
             style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <Bot className="h-4 w-4 text-white" />
+              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+                <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
               </div>
               <div>
                 <p className="font-semibold text-sm">Transfer Buddy</p>
@@ -152,7 +152,7 @@ export function FloatingChat() {
                     {msg.role === "user" ? (
                       <User className="h-3.5 w-3.5 text-muted-foreground" />
                     ) : (
-                      <Bot className="h-3.5 w-3.5 text-white" />
+                      <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-4 h-4 object-contain" />
                     )}
                   </div>
                   <div>
@@ -189,10 +189,10 @@ export function FloatingChat() {
               <div className="flex justify-start">
                 <div className="flex gap-2 items-center">
                   <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center"
+                    className="w-7 h-7 rounded-full flex items-center justify-center overflow-hidden"
                     style={{ backgroundColor: "var(--brand)" }}
                   >
-                    <Bot className="h-3.5 w-3.5 text-white" />
+                    <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-4 h-4 object-contain" />
                   </div>
                   <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3">
                     <div className="flex gap-1">
@@ -256,7 +256,7 @@ export function FloatingChat() {
         {open ? (
           <X className="h-6 w-6" />
         ) : (
-          <MessageCircle className="h-6 w-6" />
+          <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-8 h-8 object-contain" />
         )}
         {!open && (
           <Badge
