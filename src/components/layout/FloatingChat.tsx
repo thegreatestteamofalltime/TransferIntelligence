@@ -122,8 +122,8 @@ export function FloatingChat() {
             style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
-                <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-9 h-9 object-contain" />
               </div>
               <div>
                 <p className="font-semibold text-sm">Transfer Buddy</p>
@@ -144,15 +144,14 @@ export function FloatingChat() {
               <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`flex gap-2 max-w-[85%] ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
                   <div
-                    className={`w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center ${
-                      msg.role === "user" ? "bg-secondary" : ""
+                    className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden ${
+                      msg.role === "user" ? "bg-secondary" : "bg-white border border-border"
                     }`}
-                    style={msg.role === "assistant" ? { backgroundColor: "var(--brand)" } : {}}
                   >
                     {msg.role === "user" ? (
                       <User className="h-3.5 w-3.5 text-muted-foreground" />
                     ) : (
-                      <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-4 h-4 object-contain" />
+                      <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
                     )}
                   </div>
                   <div>
@@ -188,11 +187,8 @@ export function FloatingChat() {
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex gap-2 items-center">
-                  <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center overflow-hidden"
-                    style={{ backgroundColor: "var(--brand)" }}
-                  >
-                    <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-4 h-4 object-contain" />
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden bg-white border border-border">
+                    <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-7 h-7 object-contain" />
                   </div>
                   <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3">
                     <div className="flex gap-1">
@@ -256,7 +252,7 @@ export function FloatingChat() {
         {open ? (
           <X className="h-6 w-6" />
         ) : (
-          <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-8 h-8 object-contain" />
+          <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-10 h-10 object-contain" />
         )}
         {!open && (
           <Badge

@@ -18,9 +18,10 @@ const features = [
     description: "See which of your classes transfer — and get suggestions when a class doesn't have a direct match.",
   },
   {
-    icon: <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="h-6 w-6 object-contain" />,
+    icon: <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="h-8 w-8 object-contain" />,
     title: "AI Assistant",
     description: "Transfer Buddy answers your transfer questions 24/7 in plain language.",
+    iconBg: "white",
   },
   {
     icon: <Users className="h-6 w-6" />,
@@ -145,8 +146,8 @@ export function HomePage() {
               <Card key={feature.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl">
                 <CardContent className="p-7 flex flex-col items-center text-center">
                   <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 text-white shadow-sm"
-                    style={{ backgroundColor: "var(--brand)" }}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-sm overflow-hidden ${(feature as any).iconBg === "white" ? "bg-white border border-border" : "text-white"}`}
+                    style={(feature as any).iconBg === "white" ? {} : { backgroundColor: "var(--brand)" }}
                   >
                     {feature.icon}
                   </div>
