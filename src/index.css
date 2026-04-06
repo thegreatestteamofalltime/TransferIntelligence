@@ -96,7 +96,7 @@
   --warning: oklch(0.68 0.16 75);
   --warning-foreground: oklch(0.22 0.05 75);
 
-  --page-bg: oklch(0.88 0.04 245);
+  --page-bg: oklch(0.94 0.012 196);
 }
 
 @layer base {
