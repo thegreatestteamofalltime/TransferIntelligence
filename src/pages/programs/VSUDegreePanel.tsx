@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ChevronDown, ArrowRight, BookOpen, Calculator, Lightbulb, GraduationCap, Info } from "lucide-react"
+import { ChevronDown, ArrowRight, BookOpen, Calculator, Lightbulb, GraduationCap, Info, ExternalLink, FileText } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -340,17 +340,35 @@ export function VSUDegreePanel() {
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between">
-        <p className="text-xs text-slate-400">Source: {vsuCSBachelorfull.source}</p>
-        <Button
-          size="sm"
-          className="gap-1.5 text-white text-xs"
-          style={{ background: "var(--brand-gradient)" }}
-          onClick={() => navigate("/planner")}
-        >
-          Plan this degree
-          <ArrowRight className="h-3 w-3" />
-        </Button>
+      <div className="mt-4 space-y-3">
+        <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 gap-3">
+          <div className="flex items-center gap-2.5">
+            <FileText className="h-4 w-4 text-slate-400 flex-shrink-0" />
+            <p className="text-sm text-slate-500">View the official degree page</p>
+          </div>
+          <a
+            href="https://catalog.vsu.edu/undergraduate/college-engineering-technology/department-engineering-computer-science/computer-science-major-bs/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-xs font-bold flex-shrink-0 hover:underline"
+            style={{ color: "var(--brand)" }}
+          >
+            VSU
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-slate-400">Source: {vsuCSBachelorfull.source}</p>
+          <Button
+            size="sm"
+            className="gap-1.5 text-white text-xs"
+            style={{ background: "var(--brand-gradient)" }}
+            onClick={() => navigate("/planner")}
+          >
+            Plan this degree
+            <ArrowRight className="h-3 w-3" />
+          </Button>
+        </div>
       </div>
     </div>
   )
