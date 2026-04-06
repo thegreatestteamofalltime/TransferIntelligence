@@ -132,7 +132,7 @@ export function HomePage() {
       <section className="py-16 px-4 sm:px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-3">What We Do</h2>
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Learn How to Transfer Your Intelligence in Minutes</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Everything you need to plan a successful transfer from a Virginia community college to a 4-year university.
             </p>
@@ -141,7 +141,7 @@ export function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature) => (
               <Card key={feature.title} className="relative overflow-hidden group hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex flex-col items-center text-center">
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-white"
                     style={{ backgroundColor: "var(--brand)" }}
