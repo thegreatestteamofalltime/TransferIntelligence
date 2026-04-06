@@ -203,7 +203,7 @@ const GEN_ED_SUB_META: Record<string, {
     icon: <History className="h-4 w-4 text-white" />,
   },
   hum: {
-    label: "Humanities & Fine Arts",
+    label: "Humanities, Fine Arts & Literature",
     iconColor: "oklch(0.55 0.12 320)",
     bgClass: "bg-pink-50",
     textClass: "text-pink-700",
@@ -243,7 +243,7 @@ function genEdSubKey(req: DegreeRequirement): string {
   if (u.startsWith("HIS")) return "his"
   if (u.startsWith("HUM/FA") || u.startsWith("HUM")) return "hum"
   if (u.startsWith("SOC/") || u.startsWith("SOC ")) return "soc"
-  if (u.startsWith("ARTS/")) return "arts"
+  if (u.startsWith("ARTS/")) return "hum"
   return "eng"
 }
 
@@ -297,7 +297,7 @@ function buildDegreeGroups(degree: DegreePlan, catalog: CatalogCourse[]): Degree
     }
   }
 
-  const ORDER = ["core", "math", "science", "genEd-eng", "genEd-sdv", "genEd-his", "genEd-hum", "genEd-soc", "genEd-arts", "elective"]
+  const ORDER = ["core", "math", "science", "genEd-eng", "genEd-sdv", "genEd-his", "genEd-hum", "genEd-soc", "elective"]
   return [...groupMap.values()].sort((a, b) => {
     const ai = ORDER.indexOf(a.key)
     const bi = ORDER.indexOf(b.key)
