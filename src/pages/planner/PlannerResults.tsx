@@ -256,9 +256,6 @@ export function PlannerResults({
         targetSchool={targetSchool}
         currentProgram={`${currentDegree.degree} — ${currentDegree.program}`}
         targetProgram={`${targetDegree.degree} — ${targetDegree.program}`}
-        degreeGap={degreeGap}
-        transferResult={transferResult}
-        targetGap={targetGap}
       />
 
       {/* SECTION 1: Current Degree Progress */}
