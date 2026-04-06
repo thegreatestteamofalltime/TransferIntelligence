@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { LogoHero } from "@/components/Logo"
 import { navigate } from "@/lib/router"
 import { TermTooltip } from "@/components/TermTooltip"
+import { TransferBuddyLink } from "@/components/TransferBuddyLink"
 
 const features = [
   {
@@ -19,7 +20,7 @@ const features = [
   {
     icon: <MessageCircle className="h-6 w-6" />,
     title: "AI Assistant",
-    description: "TransferBuddy answers your transfer questions 24/7 in plain language.",
+    description: <><TransferBuddyLink /> answers your transfer questions 24/7 in plain language.</>,
   },
   {
     icon: <GraduationCap className="h-6 w-6" />,
