@@ -70,7 +70,7 @@ export function FAQPage() {
           <div className="relative max-w-xl mx-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              className="pl-9 bg-white/80 backdrop-blur-sm border-border/60 shadow-sm"
+              className="pl-9"
               placeholder="Search questions..."
               value={query}
               onChange={(e) => handleSearch(e.target.value)}
