@@ -126,7 +126,10 @@ export function FloatingChat() {
                 className="relative flex items-center justify-center px-4 py-3 text-white"
                 style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
               >
-                <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
+                <div className="flex flex-col items-center">
+                  <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
+                  <p className="text-xs text-white/80">Transfer AI Assistant</p>
+                </div>
                 <button
                   onClick={() => setOpen(false)}
                   className="absolute right-4 text-white/80 hover:text-white transition-colors"
@@ -143,7 +146,7 @@ export function FloatingChat() {
                   className="w-44 h-44 object-contain"
                 />
                 <p className="text-sm text-muted-foreground text-center mt-3 leading-relaxed">
-                  Ask me anything about transferring your credits to a Virginia four-year university.
+                  Hi, I'm TransferBuddy! Ask me anything about transferring your credits to a Virginia four-year university.
                 </p>
               </div>
 
@@ -197,7 +200,10 @@ export function FloatingChat() {
                 className="relative flex items-center justify-center px-4 py-3 text-white"
                 style={{ background: "linear-gradient(135deg, var(--brand) 0%, oklch(0.62 0.14 210) 100%)" }}
               >
-                <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
+                <div className="flex flex-col items-center">
+                  <h2 className="text-base font-extrabold tracking-tight text-white">TransferBuddy</h2>
+                  <p className="text-xs text-white/80">Transfer AI Assistant</p>
+                </div>
                 <button
                   onClick={() => setOpen(false)}
                   className="absolute right-4 text-white/80 hover:text-white transition-colors"
