@@ -1,6 +1,7 @@
-import { Mail, MessageCircle, Users, ArrowRight, Circle as HelpCircle } from "lucide-react"
+import { Mail, MessageCircle, Users, ArrowRight, Circle as HelpCircle, Info } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { navigate } from "@/lib/router"
 import { openTransferBuddyChat } from "@/components/TransferBuddyLink"
 
@@ -92,12 +93,12 @@ export function ContactPage() {
         ))}
       </div>
 
-      <div className="text-center p-6 bg-muted/30 rounded-xl border border-border">
-        <p className="text-sm text-muted-foreground">
-          TransferIntelligence is a hackathon prototype. For official transfer guidance, always
-          consult your institution's academic advising office directly.
-        </p>
-      </div>
+      <Alert className="mb-6 border-border bg-muted/40">
+        <Info className="h-4 w-4" />
+        <AlertDescription className="text-xs text-muted-foreground leading-relaxed">
+          <strong>Heads up:</strong> TransferIntelligence is for reference only. For official transfer guidance, always consult your institution's academic advising office directly.
+        </AlertDescription>
+      </Alert>
         </div>
       </section>
     </div>
