@@ -89,7 +89,7 @@ export function HomePage() {
           </div>
 
           <h1 className="font-extrabold tracking-tight text-foreground mb-4 leading-none">
-            <span className="text-lg sm:text-xl md:text-2xl font-semibold tracking-widest uppercase text-muted-foreground block mb-2" style={{ letterSpacing: "0.2em" }}>
+            <span className="text-lg sm:text-xl md:text-2xl font-semibold tracking-widest uppercase italic text-muted-foreground block mb-2" style={{ letterSpacing: "0.2em" }}>
               Your Transfer, Simplified
             </span>
             <span
