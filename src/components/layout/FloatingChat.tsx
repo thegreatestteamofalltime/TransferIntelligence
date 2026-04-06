@@ -78,9 +78,9 @@ function isInstitutionalQuery(text: string): boolean {
 }
 
 const suggestedQuestions = [
-  "What does CSC 201 transfer as?",
-  "What is expanded credit?",
-  "What does VSU stand for?",
+  "How does transfer credit work?",
+  "What is an articulation agreement?",
+  "How do I know if my credits will transfer?",
 ]
 
 export function FloatingChat() {
