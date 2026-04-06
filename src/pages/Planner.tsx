@@ -12,11 +12,9 @@ export function PlannerPage() {
   const [step, setStep] = useState<Step>("step1")
   const [currentSchool, setCurrentSchool] = useState("Brightpoint Community College")
   const [currentDegreeId, setCurrentDegreeId] = useState("brightpoint-cs-as")
-  const [targetSchools, setTargetSchools] = useState<string[]>(["Virginia State University"])
+  const [targetSchool, setTargetSchool] = useState("Virginia State University")
   const [program, setProgram] = useState("Computer Science")
   const [completedCourses, setCompletedCourses] = useState<CatalogCourse[]>([])
-
-  const targetSchool = targetSchools[0] ?? "Virginia State University"
 
   const currentDegree = degreePlans.find((d) => d.id === currentDegreeId) ?? degreePlans[0]
   const targetDegree = degreePlans.find(
@@ -70,8 +68,8 @@ export function PlannerPage() {
       setCurrentSchool={setCurrentSchool}
       currentDegreeId={currentDegreeId}
       setCurrentDegreeId={setCurrentDegreeId}
-      targetSchools={targetSchools}
-      setTargetSchools={setTargetSchools}
+      targetSchool={targetSchool}
+      setTargetSchool={setTargetSchool}
       program={program}
       setProgram={setProgram}
       onNext={() => setStep("step2")}
