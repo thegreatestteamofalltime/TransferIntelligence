@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import { X, Send, GraduationCap, UserCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+
 
 interface Message {
   id: string
@@ -433,12 +433,12 @@ export function FloatingChat() {
           </svg>
         )}
         {!open && (
-          <Badge
-            className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs"
-            style={{ backgroundColor: "oklch(0.577 0.245 27.325)" }}
+          <span
+            className="absolute -top-1 -right-1 h-5 w-5 rounded-full flex items-center justify-center text-white font-bold text-xs"
+            style={{ backgroundColor: "var(--brand)" }}
           >
-            AI
-          </Badge>
+            ?
+          </span>
         )}
       </button>
     </>
