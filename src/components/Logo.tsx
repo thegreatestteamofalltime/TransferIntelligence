@@ -52,7 +52,7 @@ export function LogoHero() {
         src="/logo_full.png"
         alt="TransferIntelligence logo"
         className="mix-blend-multiply"
-        style={{ width: 420, maxWidth: "80vw", objectFit: "contain" }}
+        style={{ width: 640, maxWidth: "90vw", objectFit: "contain" }}
       />
     </div>
   )

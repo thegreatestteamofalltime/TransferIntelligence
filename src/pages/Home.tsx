@@ -84,7 +84,7 @@ export function HomePage() {
         <div className="relative max-w-4xl mx-auto text-center">
 
 
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-2">
             <LogoHero />
           </div>
 
