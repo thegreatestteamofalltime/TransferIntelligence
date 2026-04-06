@@ -1,7 +1,7 @@
-import { ChevronRight, Hop as Home } from "lucide-react"
+import { ChevronLeft, ChevronRight, Hop as Home } from "lucide-react"
 import { Header } from "./Header"
 import { FloatingChat } from "./FloatingChat"
-import { navigate, type Route } from "@/lib/router"
+import { navigate, goBack, canGoBack, type Route } from "@/lib/router"
 
 const routeLabels: Partial<Record<Route, string>> = {
   "/get-started": "Get Started",
@@ -46,6 +46,16 @@ export function Layout({ currentRoute, children }: LayoutProps) {
               aria-label="Breadcrumb"
               className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 border-b border-border text-xs text-muted-foreground"
             >
+              {canGoBack() && (
+                <button
+                  onClick={() => goBack()}
+                  className="flex items-center gap-1 hover:text-foreground transition-colors mr-1 text-muted-foreground"
+                  aria-label="Go back"
+                >
+                  <ChevronLeft className="h-3.5 w-3.5" />
+                  <span>Back</span>
+                </button>
+              )}
               <button
                 onClick={() => navigate("/")}
                 className="flex items-center gap-1 hover:text-foreground transition-colors"

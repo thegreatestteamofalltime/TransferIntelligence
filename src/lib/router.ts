@@ -12,7 +12,13 @@ export type Route =
   | "/about"
   | "/search"
 
+const historyStack: Route[] = []
+
 export function navigate(route: Route, params?: Record<string, string>) {
+  const current = getCurrentRoute()
+  if (current !== route) {
+    historyStack.push(current)
+  }
   let hash = route === "/" ? "" : route
   if (params) {
     const qs = new URLSearchParams(params).toString()
@@ -20,6 +26,19 @@ export function navigate(route: Route, params?: Record<string, string>) {
   }
   window.location.hash = hash
   window.scrollTo({ top: 0, behavior: "smooth" })
+}
+
+export function goBack(): boolean {
+  if (historyStack.length === 0) return false
+  const prev = historyStack.pop()!
+  let hash = prev === "/" ? "" : prev
+  window.location.hash = hash
+  window.scrollTo({ top: 0, behavior: "smooth" })
+  return true
+}
+
+export function canGoBack(): boolean {
+  return historyStack.length > 0
 }
 
 export function getCurrentRoute(): Route {
