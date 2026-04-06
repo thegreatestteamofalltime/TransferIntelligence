@@ -34,16 +34,16 @@ export function Header({ currentRoute }: HeaderProps) {
 
   return (
     <header className="w-full bg-background border-b border-border">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         <button
           onClick={() => handleNav("/")}
-          className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-ring rounded-lg md:static absolute left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto"
+          className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-ring rounded-lg"
           aria-label="Go to home"
         >
           <img
             src="/logo_inital.png"
             alt="TransferIntelligence"
-            style={{ height: 32, width: "auto", objectFit: "contain" }}
+            style={{ height: 42, width: "auto", objectFit: "contain" }}
           />
         </button>
 
@@ -52,7 +52,7 @@ export function Header({ currentRoute }: HeaderProps) {
             <button
               key={link.route}
               onClick={() => handleNav(link.route)}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring ${
+              className={`px-3 py-1.5 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring ${
                 currentRoute === link.route
                   ? "text-foreground font-semibold"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
@@ -64,13 +64,11 @@ export function Header({ currentRoute }: HeaderProps) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden w-8" />
-
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3 ml-auto">
           <Button
             size="sm"
-            className="hidden md:flex text-white text-xs px-3 h-8"
-            style={{ backgroundColor: "var(--brand)" }}
+            className="hidden md:flex text-white font-semibold text-sm px-5 h-9 border-0"
+            style={{ background: "linear-gradient(135deg, oklch(0.72 0.12 215), oklch(0.65 0.15 185), oklch(0.60 0.14 165))" }}
             onClick={() => handleNav("/planner")}
           >
             Start Planning
@@ -78,7 +76,7 @@ export function Header({ currentRoute }: HeaderProps) {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Open menu">
+              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open menu">
                 <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>
