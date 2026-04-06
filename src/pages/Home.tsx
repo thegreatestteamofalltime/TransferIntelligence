@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, GitMerge, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin } from "lucide-react"
+import { ArrowRight, Users, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, TrendingUp, FileText, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -8,14 +8,16 @@ import { TermTooltip } from "@/components/TermTooltip"
 
 const features = [
   {
-    icon: <GitMerge className="h-6 w-6" />,
+    icon: <img src="/feature-transfer-planning.webp" alt="Transfer Planning" className="h-10 w-10 object-contain" />,
     title: "Transfer Planning",
     description: "Map your classes from community college to your target 4-year university and see what counts.",
+    iconBg: "white",
   },
   {
-    icon: <BookOpen className="h-6 w-6" />,
+    icon: <img src="/feature-course-matching.webp" alt="Course Matching" className="h-10 w-10 object-contain" />,
     title: "Course Matching",
     description: "See which of your classes transfer — and get suggestions when a class doesn't have a direct match.",
+    iconBg: "white",
   },
   {
     icon: <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="h-8 w-8 object-contain" />,
@@ -24,9 +26,10 @@ const features = [
     iconBg: "white",
   },
   {
-    icon: <Users className="h-6 w-6" />,
+    icon: <img src="/feature-advisor-support.webp" alt="Advisor Support" className="h-10 w-10 object-contain" />,
     title: "Advisor Support",
     description: "Connect with real academic advisors at Virginia institutions when you need a human answer.",
+    iconBg: "white",
   },
 ]
 
