@@ -245,14 +245,19 @@ export function FloatingChat() {
 
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full text-white shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-        style={{ background: "var(--brand-gradient)" }}
+        className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-white"
+        style={{ border: "2px solid var(--brand)" }}
         aria-label="Open Transfer Buddy chat"
       >
         {open ? (
-          <X className="h-6 w-6" />
+          <X className="h-6 w-6" style={{ color: "var(--brand)" }} />
         ) : (
-          <img src="/transferbuddyhead.png" alt="Transfer Buddy" className="w-10 h-10 object-contain" />
+          <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden="true">
+            <path d="M12 3C7.029 3 3 6.582 3 11c0 2.137.91 4.07 2.388 5.527L4.5 20.5l4.39-1.611A9.7 9.7 0 0 0 12 19c4.971 0 9-3.582 9-8s-4.029-8-9-8Z" fill="var(--brand)" />
+            <circle cx="8.5" cy="11" r="1.2" fill="white" />
+            <circle cx="12" cy="11" r="1.2" fill="white" />
+            <circle cx="15.5" cy="11" r="1.2" fill="white" />
+          </svg>
         )}
         {!open && (
           <Badge

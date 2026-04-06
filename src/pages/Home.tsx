@@ -143,7 +143,7 @@ export function HomePage() {
             {features.map((feature) => (
               <Card key={feature.title} className="border border-border shadow-none hover:shadow-sm transition-shadow duration-200 rounded-2xl">
                 <CardContent className="p-7 flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 bg-muted text-foreground">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-white" style={{ backgroundColor: "var(--brand)" }}>
                     {feature.icon}
                   </div>
                   <h3 className="font-semibold text-foreground mb-2 text-base">{feature.title}</h3>
