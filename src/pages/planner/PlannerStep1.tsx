@@ -227,12 +227,12 @@ export function PlannerStep1({
                     {targetSchools.map((s) => (
                       <Badge
                         key={s}
-                        variant="secondary"
-                        className="text-xs gap-1 cursor-pointer"
+                        className="text-xs gap-1 cursor-pointer text-white border-0"
+                        style={{ backgroundColor: "var(--brand)" }}
                         onClick={() => toggleTargetSchool(s)}
                       >
                         {s}
-                        <span className="text-muted-foreground hover:text-foreground">×</span>
+                        <span className="opacity-70 hover:opacity-100">×</span>
                       </Badge>
                     ))}
                   </div>
